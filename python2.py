@@ -7,9 +7,6 @@ import random
 import platform
 from discord import Game, Embed, Color, Status, ChannelType
 from discord import Spotify
-from spotipy.oauth2 import SpotifyClientCredentials
-import spotipy
-import pprint
 import os
 import functools
 import time
