@@ -158,7 +158,7 @@ async def on_member_remove(member):
     embed2.timestamp = datetime.datetime.utcnow()
     await channel.send(embed=embed)
     await channel2.send(embed=embed2)
-    await userchannel.edit(name= f"User Count: {person_count}")
+    await userchannel.edit(name= f"Weebs: {person_count}")
 
 @client.event
 async def on_member_join(member):
@@ -182,7 +182,7 @@ async def on_member_join(member):
     embed2.timestamp = datetime.datetime.utcnow()
     await channel.send(embed=embed)
     await channel2.send(embed=embed2)
-    await userchannel.edit(name= f"User Count: {person_count}")
+    await userchannel.edit(name= f"Weebs: {person_count}")
 
 @client.event
 async def on_message_edit(before,after):
