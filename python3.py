@@ -39,3 +39,73 @@ async def on_ready():
 @client.command(pass_context = True)
 async def hello(ctx):
     await ctx.send(f"Hello, How's your day today? {ctx.message.author.mention}")
+    
+@client.event
+async def on_message_delete(message):
+    if message.author.bot:
+        return
+    
+    else:
+        channel = client.get_channel(557273459244269582)
+        matter = f"**Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}**"
+        embed = discord.Embed(title=f"{message.author.name}", description=matter, color=0XFF69BF)
+        embed.set_footer(text=f"Author {message.author.id}  | Message ID: {message.id}")
+        embed.timestamp = datetime.datetime.utcnow()
+        await channel.send(embed=embed)
+        
+@client.event
+async def on_member_remove(member):
+    channel = client.get_channel(565768324252958720)
+    channel2 = client.get_channel(557273459244269582)
+    userchannel = client.get_channel(571302888110817281)
+    person_count = len([member for member in member.guild.members if not member.bot])
+    embed=discord.Embed(title=f"Good bye {member.name}... Hope you'll come back again to {member.guild.name}", description="Thank you for being with us all these times...", color=0XFF69B4)
+    embed.set_thumbnail(url='https://media.giphy.com/media/LTFbyWuELIlqlXGLeZ/giphy.gif')
+    embed.add_field(name="__**Members Remaining**__", value='{}'.format(str(member.guild.member_count)), inline=True)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed2=discord.Embed(title="Member Left", description= member.mention, color=0XFF69B4)
+    embed2.set_thumbnail(url=member.avatar_url)
+    embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
+    embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
+    embed2.timestamp = datetime.datetime.utcnow()
+    await channel.send(embed=embed)
+    await channel2.send(embed=embed2)
+    await userchannel.edit(name= f"Weebs: {person_count}")
+
+@client.event
+async def on_member_join(member):
+    gettime = discord.utils.snowflake_time(member.id)
+    channel = client.get_channel(565766644140474368)
+    channel2 = client.get_channel(557273459244269582)
+    text_channel = client.get_channel(565767003533737985)
+    userchannel = client.get_channel(571302888110817281)
+    person_count = len([member for member in member.guild.members if not member.bot])
+    embed=discord.Embed(title=f"Welcome {member.name} to {member.guild.name}", description=f"**Hope you'll be active here... Read rules at {text_channel.mention} channel and don't break any of them...**", color=0XFF69B4)
+    embed.set_thumbnail(url='https://media.giphy.com/media/OF0yOAufcWLfi/giphy.gif')
+    embed.add_field(name="__**Thanks for joining our server**__", value="We hope you a good stay here....")
+    embed.add_field(name="__**Time of joining**__", value=member.joined_at.date(), inline=True)
+    embed.add_field(name="__**Joining position**__", value='{}'.format(str(member.guild.member_count)), inline=True)
+    embed.add_field(name="__**User account created at**__", value=gettime.date(), inline=True)
+    embed.set_footer(text=member.name, icon_url=member.avatar_url)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed2=discord.Embed(title="Member Joined", description=member.mention, color=0XFF69B4)
+    embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
+    embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
+    embed2.timestamp = datetime.datetime.utcnow()
+    await channel.send(embed=embed)
+    await channel2.send(embed=embed2)
+    await userchannel.edit(name= f"Weebs: {person_count}")
+    
+@client.event
+async def on_message_edit(before,after):
+    if before.content != after.content:
+        channel = client.get_channel(557273459244269582)
+        matter = f"**Message edited in {before.channel.mention} **[Jump to message](https://discordapp.com/channels/{before.guild.id}/{after.channel.id}/{after.id})"
+        embed = discord.Embed(title=f"{before.author.name}", description=matter, color=0XFF69B4)
+        embed.add_field(name="Before", value=before.content, inline=False)
+        embed.add_field(name="After", value=after.content, inline=False)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"ID: {before.id}")
+        await channel.send(embed=embed)
+        
+client.run(os.getenv('TOKEN'))
