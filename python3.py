@@ -47,7 +47,7 @@ async def on_message_delete(message):
     
     else:
         channel = client.get_channel(557273459244269582)
-        matter = f*Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}"
+        matter = f"Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}"
         embed = discord.Embed(title=f"{message.author.name}", description=matter, color=0XFF69BF)
         embed.set_footer(text=f"Author {message.author.id}  | Message ID: {message.id}")
         embed.timestamp = datetime.datetime.utcnow()
