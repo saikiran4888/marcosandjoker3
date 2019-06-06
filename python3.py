@@ -47,7 +47,7 @@ async def on_message_delete(message):
     
     else:
         channel = client.get_channel(557273459244269582)
-        matter = f"**Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}**"
+        matter = f*Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}"
         embed = discord.Embed(title=f"{message.author.name}", description=matter, color=0XFF69BF)
         embed.set_footer(text=f"Author {message.author.id}  | Message ID: {message.id}")
         embed.timestamp = datetime.datetime.utcnow()
@@ -107,5 +107,46 @@ async def on_message_edit(before,after):
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text=f"ID: {before.id}")
         await channel.send(embed=embed)
+        
+@client.event
+async def on_guild_channel_create(channel):
+    channel2 = client.get_channel(557273459244269582)
+    embed = discord.Embed(title="New Channel Created", description=f"**Channel Created: {channel.mention}**", color=0XFF69BF)
+    embed.set_author(name=channel.guild.name, icon_url=channel.guild.icon_url)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text=f"ID: {channel.id}")
+
+    await channel2.send(embed=embed)
+
+@client.event
+async def on_guild_channel_delete(channel):
+    channel2 = client.get_channel(557273459244269582)
+    embed = discord.Embed(title="Channel Deleted", description=f"**Channel Deleted: {channel.name}**", color=0XFF69BF)
+    embed.set_author(name=channel.guild.name, icon_url=channel.guild.icon_url)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text=f"ID: {channel.id}")
+
+    await channel2.send(embed=embed)
+
+@client.event
+async def on_guild_channel_update(before, after):
+    channel2 = client.get_channel(557273459244269582)
+    if before.name != after.name:
+        embed = discord.Embed(title="Channel Name Edited", description=" ", color=0XFF69BF)
+        embed.set_author(name=after.guild.name, icon_url=after.guild.name)
+        embed.add_field(name="Before", value=before.name, inline=False)
+        embed.add_field(name="After", value=after.name, inline=False)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"ID: {after.id}")
+        await channel2.send(embed=embed)
+
+    elif before.topic != after.topic:
+        embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFF69BF)
+        embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
+        embed2.add_field(name="Before", value=before.topic, inline=False)
+        embed2.add_field(name="After", value=after.topic, inline=False)
+        embed2.timestamp = datetime.datetime.utcnow()
+        embed2.set_footer(text=f"ID: {after.id}")
+        await channel2.send(embed=embed2)
         
 client.run(os.getenv('TOKEN'))
