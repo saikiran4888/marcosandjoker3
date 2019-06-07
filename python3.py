@@ -93,7 +93,7 @@ async def on_member_join(member):
     await member.send(embed=embed3)
     msg2 = await client.wait_for('message', check=lambda message: message.author == member)
     if msg2.content == choices2:
-        embed4 = discord.Embed(title=f"Yayy!!! You've made it you've got {role.name} role enjoy your stay in {member.guild.name} server... Thanks for supporting us**", description=" ", color=0XFF69BF)
+        embed4 = discord.Embed(title=f"Yayy!!! You've made it you've got {role.name} role enjoy your stay in {member.guild.name} server... Thanks for supporting us", description=" ", color=0XFF69BF)
         embed4.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
         embed4.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
         await member.send(embed=embed4)
