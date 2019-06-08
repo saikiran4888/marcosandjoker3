@@ -202,5 +202,53 @@ async def on_guild_channel_update(before, after):
         embed2.timestamp = datetime.datetime.utcnow()
         embed2.set_footer(text=f"ID: {after.id}")
         await channel2.send(embed=embed2)
-        
+
+
+@client.command(pass_context = True)
+@commands.has_permissions(administrator=True)
+async def rules(ctx):
+    channel2 = client.get_channel(565770888449097748)
+    rule_1 = f"Follow the discord ToS. Any violations of the terms of service will result in an immediate ban! (Ban) The ToS can be found here: [Discord ToS](https://discordapp.com/terms)"
+    rule_2= "What happens in Reformed stays in Reformed. Don't talk about how this server is better and vice versa, don't talk about the mods and how they are bad, dont ask me for unbans, dont talk shit about the members there, etc etc. (Warn/mute, ban)"
+    rule_3 = "Swearing is allowed, but please keep it to a limit! Usage of banned words is not allowed! List is found here: [Click here](https://cdn.discordapp.com/attachments/414216301771358208/454122060751437826/Screen_Shot_2018-05-23_at_6.03.31_PM-1.png) (Warn, mute, ban)"
+    rule_4 = "Image posting is not allowed anywhere except in {}. Posting the same message/emote as other users repeatedly is not allowed. (Warn, mute, kick/ban) Excessive spamming of random characters/images is categorized as a raid and will lead to a (Ban)".format(channel2.mention)
+    rule_5 = "Rudeness towards other members or trolling is not allowed! (Warn, mute, kick/ban)"
+    rule_6 = "Harrassment is not allowed here! (Mute, kick/ban)"
+    rule_7 = "Disrespect towards members is not allowed! (Warn/mute, kick/ban)"
+    rule_8 = "Impersonation of other members is not allowed! (Warn, kick/ban)"
+    rule_9 = "Discriminatory behavior like racism and sexism is not allowed here. (Warn/mute, ban)"
+    rule_10 = "NSFW (even if the image is cropped or blurred) or inappropriate images in this server are not allowed anywhere. (Warn, kick/ban: Ban for illegal content)"
+    rule_11 = "DDoSing or revealing personal info about a member without their consent is not allowed. (Kick/ban)"
+    rule_12 = "Vulgar or inappropriate names/nicknames are not allowed (warn/kick/ban)"
+    rule_13 = "Advertising in this server without staff permission is not allowed! (Warn, kick/ban)"
+    rule_14 = "Joking about sensitive subjects such as rape, suicide/self-harm, death, serious illnesses, etc is not allowed!  (Warn, mute, ban)"
+    rule_15 = "DM Advertising is not allowed at all! (Warn, ban)"
+    rule_16 = "Bullying members in any way or form is not allowed (Warn, ban)"
+    rule_17 = "Leaving the server to evade mutes, warns, etc will result in double the punishment! (Warn/Mute x2, Ban)"
+    rule_18 = "Alternative Accounts are not allowed! Only Owners and Admins are allowed to have alts for testing purposes mainly. Those caught with an Alternative Account may result in both accounts being Banned"
+    punishments = "**:beginner:  1 WARNING= NOTHING \n :beginner:  2 WARNINGS = MUTE FOR 12HR \n :beginner:  4 WARNINGS = MUTE FOR 1 WEEK \n :beginner:  10 WARNINGS = INSTANT KICK \n NOTE: SOFT SPAMS..U MAY GET MUTE BUT FOR HARMFUL SPAMS WILL GET U INSTANT BAN**"
+    embed = discord.Embed(title="**CONSTITUTION OF THIS SERVER... JK RULES OF THIS SERVER...**", description=None, color=0XFF69B4)
+    embed.add_field(name="**:beginner:   Discord ToS apply... Coz he's the only boss here**", value=rule_1, inline=False)
+    embed.add_field(name="**:beginner:   Keep it down**", value=rule_2, inline=False)
+    embed.add_field(name="**:beginner:   No bad words please...**", value=rule_3, inline=False)
+    embed.add_field(name="**:beginner:   We have a seperate channel for posting images and links...**", value=rule_4, inline=False)
+    embed.add_field(name="**:beginner:   We don't support any type of trolling**", value=rule_5, inline=False)
+    embed.add_field(name="**:beginner:   Don't harrass any wumpus around this server...**", value=rule_6, inline=False)
+    embed.add_field(name="**:beginner:   Always give respect and take respect..**", value=rule_7, inline=False)
+    embed.add_field(name="**:beginner:   Be who you are...**", value=rule_8, inline=False)
+    embed.add_field(name="**:beginner:   All are equal here...**", value=rule_9, inline=False)
+    embed.add_field(name="**:beginner:   This server is SFW not NSFW...**", value=rule_10, inline=False)
+    embed.add_field(name="**:beginner:   This is no place for HACKERS...**", value=rule_11, inline=False)
+    embed.add_field(name="**:beginner:   Everyone got their name, Don't create any new...**", value=rule_12, inline=False)
+    embed.add_field(name="**:beginner:   You've got other ways to advertise...**", value=rule_13, inline=False)
+    embed.add_field(name="**:beginner:   Joke about any good things...**", value=rule_14, inline=False)
+    embed.add_field(name="**:beginner:   We can't tolerate this type of advertising...**", value=rule_15, inline=False)
+    embed.add_field(name="**:beginner:   Bullying is a childish act btw...**", value=rule_16, inline=False)
+    embed.add_field(name="**:beginner:   Don't try to avoid the punishment**", value=rule_17, inline=False)
+    embed.add_field(name="**:beginner:   We don't want twins here...**", value=rule_18, inline=False)
+    embed.add_field(name="** \n \n Well, If you broke any rules above, You'll get warning or Instant Kick/Ban based on how severe your actions are... And the punishments decided by staff are as follows...**", value=punishments, inline=False)
+    embed.add_field(name="**:beginner:   Final Words...**", value="Well, The constitution will be amended frequently, If you have any concerns about rules... You can contact any staff around here...", inline=False)
+    await ctx.send(embed=embed)
+
+       
 client.run(os.getenv('TOKEN'))
