@@ -234,7 +234,7 @@ async def movie(ctx, *, name:str=None):
 async def help(ctx):
     embed=discord.Embed(title="__Command Prefix__: %", description='', color=0XFF69B4)
     embed.add_field(name="__**Summary**__", value="**This is the official BOT of REFORMED server. You can't find this BOT anywhere than here. This BOT is made in memory of JOKER \n And this BOT can't be distributed to anyone \n \n \n**", inline=True)
-    embed.add_field(name="__**Commands**__", value="__**Fun Commands**__ \n `quote` - Quote of Joker \n `fams` - Random DragonBall Z GIF \n `marvel` - Random Marvel GIF \n `dc` - Random DC GIF \n `joker` - Random Joker GIF (Tribute to Heath Ledger) \n`meme` - Random funny meme \n `movie <movie name>` - Gives info of the particular movie you have searched \n \n __**Bot and server releated commands**__ \n `botinfo` - Information about this BOT \n `serverinvite` - Server invitation link \n \n __**Misc Commands**__ \n `avatar` - Avatar of the user \n `avatar <user>` - Avatar of mentioned user \n \n __**Admin Commands**__ \n `poll` - Polling (Administrator) \n `askquestion` - Asking of funny question (Administrator) \n `announce <channel> <matter>` - To announce the entered matter (Administrator) \n \n **More Feautures coming soon...** \n \n __**BOT will be offline someties... That means we are updating BOT**__ \n **Thank you for using this BOT**")
+    embed.add_field(name="__**Commands**__", value="__**Fun Commands**__ \n `quote` - Quote of Joker \n `fams` - Random DragonBall Z GIF \n `marvel` - Random Marvel GIF \n `dc` - Random DC GIF \n `joker` - Random Joker GIF (Tribute to Heath Ledger) \n`meme` - Random funny meme \n `movie <movie name>` - Gives info of the particular movie you have searched \n `animeshow <show name>` - Gives the information about the show that you've searched for \n \n __**Bot and server releated commands**__ \n `botinfo` - Information about this BOT \n `serverinvite` - Server invitation link \n \n __**Misc Commands**__ \n `avatar` - Avatar of the user \n `avatar <user>` - Avatar of mentioned user \n \n __**Admin Commands**__ \n `poll` - Polling (Administrator) \n `askquestion` - Asking of funny question (Administrator) \n `announce <channel> <matter>` - To announce the entered matter (Administrator) \n \n **More Feautures coming soon...** \n \n __**BOT will be offline someties... That means we are updating BOT**__ \n **Thank you for using this BOT**")
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png')
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     embed.timestamp = datetime.datetime.utcnow()
@@ -668,6 +668,45 @@ async def rules(ctx):
     embed.add_field(name="**:beginner:   We don't want twins here...**", value=rule_18, inline=False)
     embed.add_field(name="** \n \n Well, If you broke any rules above, You'll get warning or Instant Kick/Ban based on how severe your actions are... And the punishments decided by staff are as follows...**", value=punishments, inline=False)
     embed.add_field(name="**:beginner:   Final Words...**", value="Well, The constitution will be amended frequently, If you have any concerns about rules... You can contact any staff around here...", inline=False)
+    await ctx.send(embed=embed)
+    
+@client.command(pass_context=True)
+async def animeshow(ctx, *, name:str = None):
+    api_address = f"https://kitsu.io/api/edge/anime?filter[text]={name}"
+    data = requests.get(api_address).json()
+    url = data['data'][0]['links']['self']
+    data2 = requests.get(url).json()
+    end_date = data2['data']['attributes']['endDate']
+    synopsis = data2['data']['attributes']['synopsis']
+    if len(synopsis) > 1024:
+        synopsis = "Oh no! The length of synopsis is very large, I can't print it here"
+    else:
+        synopsis = synopsis
+    if end_date == None:
+        end_date = "Not finished yet"
+    else:
+        end_date = end_date
+    ytlink = data2['data']['attributes']['youtubeVideoId']
+
+    embed = discord.Embed(title="Here's the anime show that you've searched for...", color=0XFF69BF)
+    embed.add_field(name="Name", value=f"{data2['data']['attributes']['titles']['en'] } ({data2['data']['attributes']['titles']['ja_jp']})")
+    embed.add_field(name="Synopsis", value=synopsis)
+    embed.add_field(name="Average Rating", value=data2['data']['attributes']['averageRating'])
+    embed.add_field(name="Start Date", value=data2['data']['attributes']['startDate'])
+    embed.add_field(name="End Date", value=end_date)
+    embed.add_field(name="Age Rating", value=data2['data']['attributes']['ageRating'])
+    embed.add_field(name="Age Rating Guide", value=data2['data']['attributes']['ageRatingGuide'])
+    embed.add_field(name="Type of Media", value=data2['data']['attributes']['subtype'])
+    embed.add_field(name="Status", value=data2['data']['attributes']['status'])
+    embed.set_thumbnail(url=data2['data']['attributes']['posterImage']['original'])
+    embed.add_field(name="Episode Count", value=data2['data']['attributes']['episodeCount'])
+    embed.add_field(name="Episode Length", value=data2['data']['attributes']['episodeLength'])
+    embed.add_field(name="Youtube link", value=f"[Click here for trailer](https://www.youtube.com/watch?v={ytlink})")
+    embed.add_field(name="NSFW", value=data2['data']['attributes']['nsfw'])
+    embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text=f"Requested By | {ctx.author.name}")
+    await ctx.trigger_typing()
     await ctx.send(embed=embed)
 
 client.run(os.getenv('TOKEN'))
