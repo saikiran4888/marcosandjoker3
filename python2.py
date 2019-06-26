@@ -230,10 +230,10 @@ async def movie(ctx, *, name:str=None):
         embed=discord.Embed(description = "Please specify a movie, *eg. ``%movie Bohemian Rhapsody``*", color = 0XFF69B4)
         await ctx.send(embed=embed)
     key = "4210fd67"
-    url = "http://www.omdbapi.com/?t={}&apikey={}".format(name, key)
+    url = "http://www.omdbapi.com/?t={}&apikey={}&plot=full".format(name, key)
     response = requests.get(url)
     x = json.loads(response.text)
-    embed=discord.Embed(title = "**{}**".format(name).upper(), description = "Here is your movie {}".format(ctx.message.author.name), color = 0XFF69B4)
+    embed=discord.Embed(title =x['Title'], description = "Here is your movie {}".format(ctx.message.author.name), color = 0XFF69B4)
     if x["Poster"] != "N/A":
      embed.set_thumbnail(url = x["Poster"])
     embed.add_field(name = "__Title__", value = x["Title"])
