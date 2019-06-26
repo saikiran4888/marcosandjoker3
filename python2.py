@@ -81,6 +81,7 @@ async def fams(ctx):
     title = data['data']['title']
     embed = discord.Embed(title="Hey ya fams... Here's random gif from DBZ universe...", description=title, color=0xff69bf)
     embed.set_image(url=gif_url)
+    embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     await ctx.send(embed=embed)
 
@@ -138,18 +139,21 @@ async def marvel(ctx):
     title = data['data']['title']
     embed = discord.Embed(title="Excelsior!!! Here's the marvel gif that you've searched for...", description=title, color=0xff69bf)
     embed.set_image(url=gif_url)
+    embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     await ctx.send(embed=embed)
 
 @client.command(pass_context = True)
 async def dc(ctx):
-    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=dragon ball z&rating=G&lang=en"
+    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=dc&rating=G&lang=en"
     data = requests.get(api_address).json()
     gif_url = data['data']['image_original_url']
     matter = f"[Click me if the gif didn't loaded](gif_url)"
     title = data['data']['title']
     embed = discord.Embed(title="Hey ya fams... Here's random gif from DBZ universe...", description=title, color=0xff69bf)
     embed.set_image(url=gif_url)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     await ctx.send(embed=embed)
 
 
