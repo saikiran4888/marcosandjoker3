@@ -131,7 +131,7 @@ async def poll(ctx, question, *options:str):
 
 @client.command(pass_context = True)
 async def marvel(ctx):
-    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key'}&tag=marvel&rating=G&lang=en"
+    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=marvel&rating=G&lang=en"
     data = requests.get(api_address).json()
     gif_url = data['data']['image_original_url']
     matter = f"[Click me if the gif didn't loaded](gif_url)"
