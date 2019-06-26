@@ -75,12 +75,13 @@ async def userid(ctx):
 
 @client.command(pass_context = True)
 async def fams(ctx):
-    choices = ['https://media.giphy.com/media/zDAqUralC0HU4/giphy.gif', 'https://media.giphy.com/media/pz1s2IpdQh86k/giphy.gif', 'https://media.giphy.com/media/1LnQIODGufGec/giphy.gif', 'https://media.giphy.com/media/yROJ5dn5IhR5u/giphy.gif', 'https://media.giphy.com/media/SjWEmbTtlOwcU/giphy.gif', 'https://media.giphy.com/media/396CPbx4g1o9W/giphy.gif', 'https://media.giphy.com/media/mXz3v0UdjrNTO/giphy.gif', 'https://media.giphy.com/media/XAr3mee7JuXYc/giphy.gif', 'https://media.giphy.com/media/12I9y6on09avza/giphy.gif', 'https://media.giphy.com/media/zBdfuQVMClAis/giphy.gif']
-    embed = discord.Embed(title = "Hello {}, Here's your GIF....".format(ctx.message.author.name), description = " ", color=0XFF69B4)
-    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png')
-    embed.set_footer(text=f'Requested by {ctx.message.author}', icon_url=f'{ctx.message.author.avatar_url}')
-    embed.set_image(url=random.choice(choices))
-    embed.timestamp = datetime.datetime.utcnow()
+    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=dragon ball z&rating=G&lang=en"
+    data = requests.get(api_address).json()
+    gif_url = data['data']['image_original_url']
+    title = data['data']['title']
+    embed = discord.Embed(title="Hey ya fams... Here's random gif from DBZ universe...", description=title, color=0xff69bf)
+    embed.set_image(url=gif_url)
+    embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     await ctx.send(embed=embed)
 
 @client.command(pass_context = True)
@@ -130,22 +131,25 @@ async def poll(ctx, question, *options:str):
 
 @client.command(pass_context = True)
 async def marvel(ctx):
-    choices = ['https://media.giphy.com/media/F9hQLAVhWnL56/giphy.gif', 'https://media.giphy.com/media/l4FGrYKtP0pBGpBAY/giphy.gif', 'https://media.giphy.com/media/JzujPK0id34qI/giphy.gif', 'https://media.giphy.com/media/M9TuBZs3LIQz6/giphy.gif', 'https://media.giphy.com/media/3GnKKEw2v7bXi/giphy.gif', 'https://media.giphy.com/media/GR1WWKadM9m0g/giphy.gif', 'https://media.giphy.com/media/iBpq5SbrYiSTTSHO7z/giphy.gif', 'https://media.giphy.com/media/dJirXKRo0j1l0j9V9Q/giphy.gif', 'https://media.giphy.com/media/ZvkFmclQO1ImmRNm0K/giphy.gif', 'https://media.giphy.com/media/82Mksc7tnX3qp4FVNN/giphy.gif', 'https://media.giphy.com/media/mTQhl6cWXDJBu/giphy.gif']
-    embed=discord.Embed(title="Hello {}... Here's your GIF...".format(ctx.message.author.name), description="This BOT is made by I'm Joker", color=0XFF69B4)
-    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png')
-    embed.set_footer(text=f'Requested by {ctx.message.author.name} ', icon_url=f'{ctx.message.author.avatar_url}')
-    embed.set_image(url=random.choice(choices))
-    embed.timestamp = datetime.datetime.utcnow()
+    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key'}&tag=marvel&rating=G&lang=en"
+    data = requests.get(api_address).json()
+    gif_url = data['data']['image_original_url']
+    matter = f"[Click me if the gif didn't loaded](gif_url)"
+    title = data['data']['title']
+    embed = discord.Embed(title="Excelsior!!! Here's the marvel gif that you've searched for...", description=title, color=0xff69bf)
+    embed.set_image(url=gif_url)
+    embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     await ctx.send(embed=embed)
 
 @client.command(pass_context = True)
 async def dc(ctx):
-    choices = ['https://media.giphy.com/media/uDPSXySAEDv56/giphy.gif', 'https://media.giphy.com/media/26vIg1DlkNdJr65q0/giphy.gif', 'https://media.giphy.com/media/jcIRoyJKQG3za/giphy.gif', 'https://media.giphy.com/media/26xBLVi4RuhYmV6zm/giphy.gif', 'https://media.giphy.com/media/xUOwGfcrlRjKjs2sSI/giphy.gif', 'https://media.giphy.com/media/l41Yq5KYEmbxFaeVq/giphy.gif', 'https://media.giphy.com/media/3o7abJW5ZuiByDelji/giphy.gif', 'https://media.giphy.com/media/xU67CtAMi8f5K/giphy.gif', 'https://media.giphy.com/media/VXQuKHDhTIBWM/giphy.gif']
-    embed=discord.Embed(title="Hello kryptonian... Here's your GIF...", color=0XFF69B4)
-    embed.set_image(url=random.choice(choices))
-    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png')
-    embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
-    embed.timestamp = datetime.datetime.utcnow()
+    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=dragon ball z&rating=G&lang=en"
+    data = requests.get(api_address).json()
+    gif_url = data['data']['image_original_url']
+    matter = f"[Click me if the gif didn't loaded](gif_url)"
+    title = data['data']['title']
+    embed = discord.Embed(title="Hey ya fams... Here's random gif from DBZ universe...", description=title, color=0xff69bf)
+    embed.set_image(url=gif_url)
     await ctx.send(embed=embed)
 
 
@@ -181,18 +185,16 @@ async def serverinvite(ctx):
 @client.command(pass_context = True)
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, number):
- 
-    if ctx.message.author.guild_permissions.manage_messages:
-         mgs = [] #Empty list to put all the messages in the log
-         number = int(number) #Converting the amount of messages to delete to an integer
-    async for x in ctx.history(limit = number+1):
-        mgs.append(x)            
-       
     try:
-        await ctx.message.channel.delete_messages(mgs)          
+        channel = client.get_channel(557273459244269582)
+        await ctx.message.channel.purge(limit=number+1)          
         x = await ctx.send('`Joker has deleted '+str(number)+' messages for you...`')
         await asyncio.sleep(5)
         await x.delete()
+        embed = discord.Embed(title=" ", description=f"**Bulk Delete in {ctx.channel.mention} {number+1} messages deleted**", color=0XFF69BF)
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
+        embed.timestamp = datetime.datetime.utcnow()
+        await channel.send(embed=embed)
      
     except discord.Forbidden:
         await ctx.send(embed=Forbidden)
