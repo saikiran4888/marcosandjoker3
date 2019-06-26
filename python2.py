@@ -137,7 +137,7 @@ async def marvel(ctx):
     gif_url = data['data']['image_original_url']
     matter = f"[Click me if the gif didn't loaded](gif_url)"
     title = data['data']['title']
-    embed = discord.Embed(title="Excelsior!!! Here's the marvel gif that you've searched for...", description=title, color=0xff69bf)
+    embed = discord.Embed(title="Excelsior!!! Here's the random GIF from Marvel Universe", description=title, color=0xff69bf)
     embed.set_image(url=gif_url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
@@ -150,7 +150,7 @@ async def dc(ctx):
     gif_url = data['data']['image_original_url']
     matter = f"[Click me if the gif didn't loaded](gif_url)"
     title = data['data']['title']
-    embed = discord.Embed(title="Hey ya fams... Here's random gif from DBZ universe...", description=title, color=0xff69bf)
+    embed = discord.Embed(title="Hey Kryptonian... Here's random gif from DC universe...", description=title, color=0xff69bf)
     embed.set_image(url=gif_url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
