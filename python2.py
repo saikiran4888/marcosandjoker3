@@ -719,7 +719,7 @@ async def animeshow(ctx, *, name:str = None):
     else:
         end_date = end_date
     ytlink = data2['data']['attributes']['youtubeVideoId']
-
+    await ctx.trigger_typing()
     embed = discord.Embed(title="Here's the anime show that you've searched for...", color=0XFF69BF)
     embed.add_field(name="Name", value=f"{data2['data']['attributes']['titles']['en'] } ({data2['data']['attributes']['titles']['ja_jp']})")
     embed.add_field(name="Synopsis", value=synopsis)
@@ -738,7 +738,6 @@ async def animeshow(ctx, *, name:str = None):
     embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f"Requested By | {ctx.author.name}")
-    await ctx.trigger_typing()
     await ctx.send(embed=embed)
 
 client.run(os.getenv('TOKEN'))
