@@ -167,6 +167,19 @@ async def joker(ctx):
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
+    
+@client.command(pass_context = True)
+async def naruto(ctx):
+    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=naruto&rating=G&lang=en"
+    data = requests.get(api_address).json()
+    gif_url = data['data']['image_original_url']
+    matter = f"[Click me if the gif didn't loaded](gif_url)"
+    title = data['data']['title']
+    embed = discord.Embed(title=f"Hey ya {ctx.author.name}, Here's the random GIF from Naruto Universe", description=title, color=0xff69bf)
+    embed.set_image(url=gif_url)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
+    await ctx.send(embed=embed)
 
 
 @client.command(pass_context = True)
@@ -214,7 +227,7 @@ async def clear(ctx, number):
 async def movie(ctx, *, name:str=None):
     await ctx.trigger_typing()
     if name is None:
-        embed=discord.Embed(description = "Please specify a movie, *eg. %movie Bohemian Rhapsody*", color = 0XFF69B4)
+        embed=discord.Embed(description = "Please specify a movie, *eg. ``%movie Bohemian Rhapsody``*", color = 0XFF69B4)
         await ctx.send(embed=embed)
     key = "4210fd67"
     url = "http://www.omdbapi.com/?t={}&apikey={}".format(name, key)
@@ -225,17 +238,27 @@ async def movie(ctx, *, name:str=None):
      embed.set_thumbnail(url = x["Poster"])
     embed.add_field(name = "__Title__", value = x["Title"])
     embed.add_field(name = "__Released__", value = x["Released"])
+    embed.add_field(name = "__Rated__", value = x["Rated"])
     embed.add_field(name = "__Runtime__", value = x["Runtime"])
     embed.add_field(name = "__Genre__", value = x["Genre"])
     embed.add_field(name = "__Director__", value = x["Director"])
     embed.add_field(name = "__Writer__", value = x["Writer"])
     embed.add_field(name = "__Actors__", value = x["Actors"])
     embed.add_field(name = "__Plot__", value = x["Plot"])
+    embed.add_field(name = "__Released Countries__", value = x["Country"])
     embed.add_field(name = "__Language__", value = x["Language"])
-    embed.add_field(name = "__Imdb Rating__", value = x["imdbRating"]+"/10")
+    embed.add_field(name = "__IMDB Votes__", value = x["imdbVotes"])
+    embed.add_field(name = x["Ratings"][1]["Source"], value = x["Ratings"][1]["Value"])
+    embed.add_field(name = x["Ratings"][2]["Source"], value = x["Ratings"][2]["Value"])
+    embed.add_field(name = "__Awards__", value = x['Awards'])
+    embed.add_field(name = "__Box Office__", value = x['BoxOffice'])
+    embed.add_field(name = "__DVD Release__", value = x["DVD"])
+    embed.add_field(name = "__Production__", value = x["Production"])
+    embed.add_field(name = "__Website__", value = x["Website"])
     embed.add_field(name = "__Type__", value = x["Type"])
     embed.set_footer(text = "Information from the OMDB API")
     await ctx.send(embed=embed)
+ 
 @client.command(pass_context = True)
 async def help(ctx):
     embed=discord.Embed(title="__Command Prefix__: %", description='', color=0XFF69B4)
@@ -435,7 +458,8 @@ async def spotify(ctx, user: discord.Member=None):
                 embed.set_author(name=user.name, icon_url=user.avatar_url)
                 embed.timestamp = datetime.datetime.utcnow()
                 await ctx.send(embed=embed)
-            
+            else:
+                await ctx.send("**Wait, You aren't listening any in spotify. How can I give info!!!**")
     else:
         for activity in user.activities:
             if isinstance(activity, Spotify):
@@ -449,7 +473,9 @@ async def spotify(ctx, user: discord.Member=None):
                 embed.set_author(name=user.name, icon_url=user.avatar_url)
                 embed.timestamp = datetime.datetime.utcnow()
                 await ctx.send(embed=embed)
-            
+            else:
+                await ctx.send("**Oh no!!!, The user you've mentioned isn't listening on Spotify...**")
+                
 @client.command(pass_context=True)
 @commands.has_permissions(manage_roles = True)
 async def roleinfo(ctx, role: discord.Role=None):
