@@ -458,8 +458,8 @@ async def spotify(ctx, user: discord.Member=None):
                 embed.set_author(name=user.name, icon_url=user.avatar_url)
                 embed.timestamp = datetime.datetime.utcnow()
                 await ctx.send(embed=embed)
-             else:
-                 await ctx.send("**Wait, You aren't listening any in spotify. How can I give info!!!**")
+            else:
+                await ctx.send("**Wait, You aren't listening any in spotify. How can I give info!!!**")
     else:
         for activity in user.activities:
             if isinstance(activity, Spotify):
@@ -473,8 +473,8 @@ async def spotify(ctx, user: discord.Member=None):
                 embed.set_author(name=user.name, icon_url=user.avatar_url)
                 embed.timestamp = datetime.datetime.utcnow()
                 await ctx.send(embed=embed)
-             else:
-                 await ctx.send("**Oh no!!!, The user you've mentioned isn't listening on Spotify...**")
+            else:
+                await ctx.send("**Oh no!!!, The user you've mentioned isn't listening on Spotify...**")
                 
 @client.command(pass_context=True)
 @commands.has_permissions(manage_roles = True)
