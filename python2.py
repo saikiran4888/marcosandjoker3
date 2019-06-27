@@ -639,7 +639,7 @@ async def on_guild_channel_update(before, after):
     channel2 = client.get_channel(557273459244269582)
     if before.name != after.name:
         embed = discord.Embed(title="Channel Name Edited", description=" ", color=0XFF69BF)
-        embed.set_author(name=after.guild.name, icon_url=after.guild.name)
+        embed.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
         embed.add_field(name="Before", value=before.name, inline=False)
         embed.add_field(name="After", value=after.name, inline=False)
         embed.timestamp = datetime.datetime.utcnow()
