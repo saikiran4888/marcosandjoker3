@@ -757,6 +757,19 @@ async def roll8ball(ctx, *, question: str = None):
         await asyncio.sleep(1)
         await msg.edit(content=":8ball: | Joker is shaking the ball...")
         await asyncio.sleep(1)
-        await msg.edit(content=f":8ball: | {answer}.")            
+        await msg.edit(content=f":8ball: | {answer}.")
+                    
+@client.command(pass_context=True)
+async def urban(ctx, *, word: str = None):
+    await ctx.trigger_typing()
+    address = f"http://api.urbandictionary.com/v0/define?term={word}"
+    data = requests.get(address).json()
+    embed = discord.Embed(title=data['list'][0]['word'], description=f"{data['list'][0]['definition']} \n [Click me for more info]({data['list'][0]['permalink']})", color=0xff69bf)
+    embed.add_field(name="Example", value=data['list'][0]['example'], inline=False)
+    embed.add_field(name="Upvotes", value=data['list'][0]['thumbs_up'], inline = True)
+    embed.add_field(name="Downvotes", value=data['list'][0]['thumbs_down'], inline = True)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text=f"Written by {data['list'][0]['author']} on Urban dictionary")
+    await ctx.send(embed=embed)                    
 
 client.run(os.getenv('TOKEN'))
