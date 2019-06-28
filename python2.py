@@ -604,15 +604,18 @@ async def on_member_join(member):
     
 @client.event
 async def on_message_edit(before,after):
-    if before.content != after.content:
-        channel = client.get_channel(557273459244269582)
-        matter = f"**Message edited in {before.channel.mention} **[Jump to message](https://discordapp.com/channels/{before.guild.id}/{after.channel.id}/{after.id})"
-        embed = discord.Embed(title=f"{before.author.name}", description=matter, color=0XFF69B4)
-        embed.add_field(name="Before", value=before.content, inline=False)
-        embed.add_field(name="After", value=after.content, inline=False)
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_footer(text=f"ID: {before.id}")
-        await channel.send(embed=embed)
+    if after.author.bot:
+        return
+    else:
+        if before.content != after.content:
+            channel = client.get_channel(557273459244269582)
+            matter = f"**Message edited in {before.channel.mention} **[Jump to message](https://discordapp.com/channels/{before.guild.id}/{after.channel.id}/{after.id})"
+            embed = discord.Embed(title=f"{before.author.name}", description=matter, color=0XFF69B4)
+            embed.add_field(name="Before", value=before.content, inline=False)
+            embed.add_field(name="After", value=after.content, inline=False)
+            embed.timestamp = datetime.datetime.utcnow()
+            embed.set_footer(text=f"ID: {before.id}")
+            await channel.send(embed=embed)
         
 @client.event
 async def on_guild_channel_create(channel):
@@ -739,5 +742,21 @@ async def animeshow(ctx, *, name:str = None):
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f"Requested By | {ctx.author.name}")
     await ctx.send(embed=embed)
+                 
+@client.command(pass_context=True)
+async def roll8ball(ctx, *, question: str = None):
+    if question is None:
+        await ctx.send("This ain't rocket science kiddo!!. Ask a question...")
+    else:
+        address = f"https://8ball.delegator.com/magic/JSON/{question}"
+        data = requests.get(address).json()
+        answer = data['magic']['answer']
+        msg = await ctx.send(content=":8ball: | Joker is shaking the ball.")
+        await asyncio.sleep(1)
+        await msg.edit(content=":8ball: | Joker is shaking the ball..")
+        await asyncio.sleep(1)
+        await msg.edit(content=":8ball: | Joker is shaking the ball...")
+        await asyncio.sleep(1)
+        await msg.edit(content=f":8ball: | {answer}.")            
 
 client.run(os.getenv('TOKEN'))
