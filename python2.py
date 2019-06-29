@@ -771,7 +771,7 @@ async def urban(ctx, *, word: str = None):
     address = f"http://api.urbandictionary.com/v0/define?term={word}"
     data = requests.get(address).json()
     embed = discord.Embed(title=data['list'][0]['word'], description=f"{data['list'][0]['definition']} \n [Click me for more info]({data['list'][0]['permalink']})", color=0xff69bf)
-    embed.add_field(name="Example", value=data['list'][0]['example'].replace('[', '').replace(']', ''), inline=False)
+    embed.add_field(name="Example", value=data['list'][0]['example'].replace('[', ' ').replace(']', ' '), inline=False)
     embed.add_field(name="Upvotes", value=data['list'][0]['thumbs_up'], inline = True)
     embed.add_field(name="Downvotes", value=data['list'][0]['thumbs_down'], inline = True)
     embed.timestamp = datetime.datetime.utcnow()
