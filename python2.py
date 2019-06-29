@@ -577,8 +577,14 @@ async def on_member_join(member):
                 await member.send(embed=embed4)
                 await member.add_roles(role)
             else:
+                channel3 = client.get_channel(557273459244269582)
                 await member.send("**You've entered a wrong word agian.... Your attempts are over... You've been kicked out of this server**")
+                await asyncio.sleep(10)
                 await member.guild.kick(member, reason="**Unsuccessful Verification**")
+                embed = discord.Embed(title="Failed Verification", description=f"Failed verification by {member.mention}...", color=0xff69bf)
+                embed.set_author(name=member.guild.name, icon_url=member.guild.icon_url)
+                embed.timestamp = datetime.datetime.utcnow()
+                await channel3.send(embed=embed)
                 return
     gettime = discord.utils.snowflake_time(member.id)
     channel = client.get_channel(565766644140474368)
