@@ -783,6 +783,20 @@ async def urban(ctx, *, word: str = None):
     embed.add_field(name="Downvotes", value=data['list'][0]['thumbs_down'], inline = True)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f"Written by {data['list'][0]['author']} on Urban dictionary")
-    await ctx.send(embed=embed)                    
+    await ctx.send(embed=embed)  
+                     
+@client.command(pass_context=True,)
+async def joke(ctx):
+    x = await ctx.send("Joker is thinking of a joke.")
+    await asyncio.sleep(1)
+    await x.edit(content="Joker is thinking of a joke..")
+    await asyncio.sleep(1)
+    await x.edit(content="Joker is thinking of a joke...")
+    await asyncio.sleep(1)
+    res = requests.get('https://icanhazdadjoke.com/', headers={"Accept":"application/json"})
+    if res.status_code == requests.codes.ok:
+        await x.edit(content=str(res.json()['joke']))
+    else:
+        await x.edit(context="Joker can't think of any joke now... Try again.")                     
 
 client.run(os.getenv('TOKEN'))
