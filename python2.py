@@ -755,7 +755,7 @@ async def animeshow(ctx, *, name:str = None):
     embed.set_footer(text=f"Requested By | {ctx.author.name}")
     await ctx.send(embed=embed)
                  
-@client.command(pass_context=True)
+@client.command(pass_context=True, aliases=["8ball"])
 async def roll8ball(ctx, *, question: str = None):
     if question is None:
         await ctx.send("This ain't rocket science kiddo!!. Ask a question...")
