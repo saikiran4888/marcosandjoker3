@@ -526,6 +526,7 @@ async def on_member_remove(member):
 
 @client.event
 async def on_member_join(member):
+    channel3 = client.get_channel(557273459244269582)
     choices = ["DcssawdeS", "Sasdawdd", "AWSdasdwaA", "AdwASwAas", "AsdWDAasas", "ASDwdAsad", "MKiojmkomM"]
     choices2 = random.choice(choices)
     role = discord.utils.get(member.guild.roles, id=516303012671520769)
@@ -538,6 +539,9 @@ async def on_member_join(member):
     embed3 = discord.Embed(title=f"This is your first attempt (Two remaining)... Type the word shown below correctly... **\n \n {choices2} \n \n**", description=" ", color=0XFF69BF)
     embed3.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
     embed3.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
+    embed10 = discord.Embed(title="Successful Verification", description=f"{member.mention} got verified successfully, Welcome him/her.", color=0xff69bf)
+    embed10.set_author(name=member.guild.name, icon_url=member.guild.icon_url)
+    embed.timestamp = datetime.datetime.utcnow()
     await member.send(embed=embed)
     await asyncio.sleep(15)
     await member.send(embed=embed2)
@@ -550,6 +554,7 @@ async def on_member_join(member):
         embed4.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
         await member.send(embed=embed4)
         await member.add_roles(role)
+        await channel3.send(embed=embed10)
     else:
         choices3 = random.choice(choices)
         embed5 = discord.Embed(title=f"You've typed the wrong word... This is your second attempt (One remaining)... Type the word shown below correctly...** \n \n {choices3} \n \n**", description=" ", color=0XFF69BF)
@@ -563,6 +568,7 @@ async def on_member_join(member):
             embed4.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
             await member.send(embed=embed4)
             await member.add_roles(role)
+            await channel3.send(embed=embed10)
         else:
             choices4 = random.choice(choices)
             embed6 = discord.Embed(title=f"You've typed the wrong word... This is your last attempt... Type the word shown below correctly.. If yout typed wrong you'll get kicked from server...** \n \n {choices4} \n \n**", description=" ", color=0XFF69BF)
@@ -576,8 +582,8 @@ async def on_member_join(member):
                 embed4.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
                 await member.send(embed=embed4)
                 await member.add_roles(role)
+                await channel3.send(embed=embed10)
             else:
-                channel3 = client.get_channel(557273459244269582)
                 await member.send("**You've entered a wrong word agian.... Your attempts are over... You've been kicked out of this server**")
                 await asyncio.sleep(10)
                 await member.guild.kick(member, reason="**Unsuccessful Verification**")
