@@ -201,10 +201,10 @@ async def serverinvite(ctx):
     
 @client.command(pass_context = True)
 @commands.has_permissions(manage_messages=True)
-async def clear(ctx, number: int):
+async def clear(ctx, number):
     try:
         channel = client.get_channel(557273459244269582)
-        await ctx.message.channel.purge(limit=number+1)          
+        await ctx.message.channel.purge(int(limit=number+1))          
         x = await ctx.send('`Joker has deleted '+str(number)+' messages for you...`')
         await asyncio.sleep(5)
         await x.delete()
