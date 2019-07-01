@@ -807,6 +807,16 @@ async def joke(ctx):
     if res.status_code == requests.codes.ok:
         await x.edit(content=str(res.json()['joke']))
     else:
-        await x.edit(context="Joker can't think of any joke now... Try again.")                     
+        await x.edit(context="Joker can't think of any joke now... Try again.")    
+                     
+@client.command(pass_context = True)
+async def fact(ctx):
+    address = "http://randomuselessfact.appspot.com/random.json?language=en"
+    data = requests.get(address).json()
+    fact = data['text']
+    source = data['source']
+    await ctx.trigger_typing()
+    await asyncio.sleep(3)
+    await ctx.send(f"{fact} \n \nSource: {source}")                     
 
 client.run(os.getenv('TOKEN'))
