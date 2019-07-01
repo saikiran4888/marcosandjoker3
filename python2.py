@@ -201,7 +201,7 @@ async def serverinvite(ctx):
     
 @client.command(pass_context = True)
 @commands.has_permissions(manage_messages=True)
-async def clear(ctx, int:number):
+async def clear(ctx, number: int):
     try:
         channel = client.get_channel(557273459244269582)
         await ctx.message.channel.purge(limit=number+1)          
