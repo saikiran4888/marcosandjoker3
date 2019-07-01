@@ -495,6 +495,7 @@ async def roleinfo(ctx, role: discord.Role=None):
 @client.event
 async def on_message_delete(message):
     if message.author.bot:
+        channel = client.get_channel(557273459244269582)
         async for entry in message.guild.audit_logs(action=discord.AuditLogAction.message_delete):
             await channel.send(f"{entry.target}")
         return
