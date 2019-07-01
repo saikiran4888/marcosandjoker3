@@ -495,10 +495,14 @@ async def roleinfo(ctx, role: discord.Role=None):
 @client.event
 async def on_message_delete(message):
     if message.author.bot:
+        async for entry in message.guild.audit_logs(action=discord.AuditLogAction.message_delete):
+            await channel.send(f"{entry.target}")
         return
     
     else:
         channel = client.get_channel(557273459244269582)
+        async for entry in message.guild.audit_logs(action=discord.AuditLogAction.message_delete):
+            await channel.send(f"{entry.target}")
         matter = f"Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}"
         embed = discord.Embed(title=f"{message.author.name}", description=matter, color=0XFF69BF)
         embed.set_footer(text=f"Author {message.author.id}  | Message ID: {message.id}")
