@@ -793,6 +793,7 @@ async def joke(ctx):
     await asyncio.sleep(1)
     await x.edit(content="Joker is thinking of a joke...")
     await asyncio.sleep(1)
+    await ctx.trigger_typing()
     res = requests.get('https://icanhazdadjoke.com/', headers={"Accept":"application/json"})
     if res.status_code == requests.codes.ok:
         await x.edit(content=str(res.json()['joke']))
