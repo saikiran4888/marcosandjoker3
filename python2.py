@@ -504,16 +504,19 @@ async def on_message_delete(message):
         return
     
     else:
-        channel = client.get_channel(557273459244269582)
-        matter = f"Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}"
-        embed = discord.Embed(title=f"{message.author.name}", description=matter, color=0XFF69BF)
-        embed.set_footer(text=f"Author {message.author.id}  | Message ID: {message.id}")
-        embed.timestamp = datetime.datetime.utcnow()
-        await channel.send(embed=embed)
-        async for entry in message.guild.audit_logs(limit=1, action=discord.AuditLogAction.message_delete):
-            embed = discord.Embed(title="Message deleted", description=f"Message sent by {entry.target.mention}, deleted by {entry.user.mention}, in {message.channel.mention}", color=0xff69bf)
+        async for entry in message.guild.audit_logs(limit=1, action=discord.AuditLogAction.message_delete): 
+            channel = client.get_channel(557273459244269582)
+            matter = f"Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}"
+            embed = discord.Embed(title=f"{message.author.name}", description=matter, color=0XFF69BF)
+            embed.set_footer(text=f"Author {message.author.id}  | Message ID: {message.id}")
             embed.timestamp = datetime.datetime.utcnow()
             await channel.send(embed=embed)
+            if entry.target != message.author:
+                embed = discord.Embed(title="Message deleted", description=f"Message sent by {entry.target.mention}, deleted by {entry.user.mention}, in {message.channel.mention}", color=0xff69bf)
+                embed.timestamp = datetime.datetime.utcnow()
+                await channel.send(embed=embed)
+            else:
+                return
         
 @client.event
 async def on_member_remove(member):
