@@ -29,7 +29,7 @@ client.remove_command('help')
 
 async def task():
     while True:
-        channel = client.get_channel(515990320631250965)
+        channel = client.get_channel(565770475574394902)
         address = "https://www.rrrather.com/botapi"
         data = requests.get(address).json()
         nsfw_check = data['nsfw']
@@ -39,9 +39,9 @@ async def task():
             embed.set_footer(text=channel.guild.name)
             embed.timestamp = datetime.datetime.utcnow()
             await channel.send(embed=embed)
-            await asyncio.sleep(10)
+            await asyncio.sleep(1500)
         elif nsfw_check == True:
-            await asyncio.sleep(10)
+            await asyncio.sleep(1500)
             
             
 @client.event
