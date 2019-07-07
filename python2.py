@@ -41,7 +41,7 @@ async def task():
             await channel.send(embed=embed)
             await asyncio.sleep(1500)
         elif nsfw_check == True:
-            await asyncio.sleep(1500)
+            await asyncio.sleep(1)
             
             
 @client.event
