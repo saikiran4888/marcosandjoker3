@@ -27,14 +27,30 @@ client = commands.Bot(description="The Laughing Clown BOT", command_prefix=comma
 client.remove_command('help')
 
 
-
+async def task():
+    while True:
+        channel = client.get_channel(515990320631250965)
+        address = "https://www.rrrather.com/botapi"
+        data = requests.get(address).json()
+        nsfw_check = data['nsfw']
+        if nsfw_check == False:
+            embed = discord.Embed(title=data['title'], description=f"**1){data['choicea']} \n \n2){data['choiceb']}** \n \n[Wanna know what others said about this question in www.rrrather.com? Click me...]({data['link']})", color=0xff69bf)
+            embed.set_author(name="It's question time folks...", icon_url=channel.guild.icon_url)
+            embed.set_footer(text=channel.guild.name)
+            embed.timestamp = datetime.datetime.utcnow()
+            await channel.send(embed=embed)
+            await asyncio.sleep(10)
+        elif nsfw_check == True:
+            await asyncio.sleep(10)
+            
+            
 @client.event
 async def on_ready():
     print('-----')
     print('-----')
     print("Created by I'm Joker")
     client.loop.create_task(status_task())
-
+    client.loop.create_task(task())
 
 @client.command(pass_context = True)
 async def hlo(ctx):
