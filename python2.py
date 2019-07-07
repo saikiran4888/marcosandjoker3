@@ -39,7 +39,7 @@ async def task():
             embed.set_footer(text=channel.guild.name)
             embed.timestamp = datetime.datetime.utcnow()
             await channel.send(embed=embed)
-            await asyncio.sleep(1500)
+            await asyncio.sleep(3600)
         elif nsfw_check == True:
             await asyncio.sleep(1)
             
