@@ -841,7 +841,7 @@ async def fact(ctx):
 @client.command(pass_context=True)
 @commands.has_permissions(administrator=True)               
 async def rather(ctx):
-    channel = client.get_channel(515990320631250965)
+    channel = client.get_channel(565770475574394902)
     address = "https://www.rrrather.com/botapi"
     data = requests.get(address).json()
     nsfw_check = data['nsfw']
@@ -850,7 +850,7 @@ async def rather(ctx):
         embed.set_author(name="It's question time folks...", icon_url=channel.guild.icon_url)
         embed.set_footer(text=channel.guild.name)
         embed.timestamp = datetime.datetime.utcnow()
-        await ctx.send(embed=embed)
+        await channel.send(embed=embed)
     elif nsfw_check == True:
         return                     
 
