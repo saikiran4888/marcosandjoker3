@@ -854,4 +854,15 @@ async def rather(ctx):
     elif nsfw_check == True:
         return                     
 
+@client.command(pass_context=True)
+@commands.has_permissions(administrator=True)
+async def mention(ctx):
+    role = discord.utils.get(ctx.guild.roles, id=586517857572225054)
+    if role.mentionable == True:
+        await role.edit(mentionable=False)
+        await ctx.send(f"{role.name} is unmentionable now...")
+    else:
+        await role.edit(mentionable=True)
+        await ctx.send(f"{role.name} is mentionable now...")
+
 client.run(os.getenv('TOKEN'))
