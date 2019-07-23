@@ -79,7 +79,7 @@ async def botinfo(ctx):
     embed.set_author(name=f"This is Official BOT of {ctx.guild.name} server")
     embed.add_field(name="__**Creator**__", value=User.mention, inline = True)
     embed.add_field(name="__**Special Thanks To**__", value=f"{User2.mention} \n {User3.mention} \n {User4.mention}")
-    embed.add_field(name="**Currently connected servers**", value=str(len(client.guilds)), inline = True)
+    embed.add_field(name="**Currently connected servers**", value="1", inline = True)
     embed.add_field(name="**Currently connected users**", value=str(len(set(client.get_all_members()))), inline = True)
     embed.add_field(name="If you have any queries about this BOT, DM me...", value=User.mention)
     embed.timestamp = datetime.datetime.utcnow()
@@ -239,6 +239,25 @@ async def clear(ctx, number: int = None):
    
  
     await ctx.delete_messages(mgs)
+    
+@client.command(pass_context = True)
+async def p(ctx, *, word:str=None):
+    if ctx.guild.name == "Test":
+
+        if ctx.channel.is_nsfw():
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"https://api.reddit.com/r/{word}/random") as r:
+                    data = await r.json()
+                    embed = discord.Embed(title=' ',color=0XFF69B4)
+                    embed.set_image(url=data[0]["data"]["children"][0]["data"]["url"])
+                    embed.set_footer(text=f'Requested by: {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
+                    embed.timestamp = datetime.datetime.utcnow()
+                    await ctx.send(embed=embed)
+        
+        else:
+            await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")
+    else:
+        return    
 
 @client.command(pass_context=True)
 async def movie(ctx, *, name:str=None):
