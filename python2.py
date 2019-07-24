@@ -252,7 +252,7 @@ async def p(ctx, *, word:str=None):
                     embed.set_image(url=data[0]["data"]["children"][0]["data"]["url"])
                     embed.set_footer(text=f'Requested by: {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
                     embed.timestamp = datetime.datetime.utcnow()
-                    await ctx.send(embed=embed)
+                    await ctx.send(data[0]["data"]["children"][0]["data"]["url"])
         
         else:
             await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")
