@@ -298,7 +298,7 @@ async def movie(ctx, *, name:str=None):
 @client.command(pass_context=True)
 async def help(ctx, name: str=None):
     if name == None:
-        embed = discord.Embed(title="Main help centre of The Laughing Clown Bot...", description="Do ``%testhelp <category>`` for detailed help of that category... Categories are given below select one of them", color=0xff69b4)
+        embed = discord.Embed(title="Main help centre of The Laughing Clown Bot...", description="Do ``%help <category>`` for detailed help of that category... Categories are given below select one of them", color=0xff69b4)
         embed.add_field(name="fun", value="Shows fun commands", inline=False)
         embed.add_field(name="admin", value="Shows admin commands", inline=False)
         embed.add_field(name="bot", value="Shows bot related commands", inline=False)
@@ -1010,7 +1010,7 @@ async def talk(ctx, message: str = None):
         data = requests.get(address).json()
         reply = data['response']
         await ctx.trigger_typing()
-        await asyncio.sleep(5)
+        await asyncio.sleep(2)
         await ctx.send(reply)                       
 
 client.run(os.getenv('TOKEN'))
