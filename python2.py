@@ -295,16 +295,76 @@ async def movie(ctx, *, name:str=None):
     embed.set_footer(text = "Information from the OMDB API")
     await ctx.send(embed=embed)
  
-@client.command(pass_context = True)
-async def help(ctx):
-    embed=discord.Embed(title="__Command Prefix__: %", description='', color=0XFF69B4)
-    embed.add_field(name="__**Summary**__", value=f"**This is the official BOT of {ctx.guild.name} server. You can't find this BOT anywhere than here. This BOT is made in memory of JOKER \n And this BOT can't be distributed to anyone \n \n \n**", inline=True)
-    embed.add_field(name="__**Commands**__", value="__**Fun Commands**__ \n `quote` - Quote of Joker \n `fams` - Random DragonBall Z GIF \n `marvel` - Random Marvel GIF \n `dc` - Random DC GIF \n `joker` - Random Joker GIF (Tribute to Heath Ledger) \n`meme` - Random funny meme \n `movie <movie name>` - Gives info of the particular movie you have searched \n `animeshow <show name>` - Gives the information about the show that you've searched for \n \n __**Bot and server releated commands**__ \n `botinfo` - Information about this BOT \n `serverinvite` - Server invitation link \n \n __**Misc Commands**__ \n `avatar` - Avatar of the user \n `avatar <user>` - Avatar of mentioned user \n \n __**Admin Commands**__ \n `poll` - Polling (Administrator) \n `askquestion` - Asking of funny question (Administrator) \n `announce <channel> <matter>` - To announce the entered matter (Administrator) \n \n **More Feautures coming soon...** \n \n __**BOT will be offline someties... That means we are updating BOT**__ \n **Thank you for using this BOT**")
-    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png')
-    embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
-    embed.timestamp = datetime.datetime.utcnow()
-    await ctx.send(embed=embed)
-
+@client.command(pass_context=True)
+async def help(ctx, name: str=None):
+    if name == None:
+        embed = discord.Embed(title="Main help centre of The Laughing Clown Bot...", description="Do ``%testhelp <category>`` for detailed help of that category... Categories are given below select one of them", color=0xff69b4)
+        embed.add_field(name="fun", value="Shows fun commands", inline=False)
+        embed.add_field(name="admin", value="Shows admin commands", inline=False)
+        embed.add_field(name="bot", value="Shows bot related commands", inline=False)
+        embed.add_field(name="misc", value="Shows miscallenous commands", inline=False)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
+        await ctx.trigger_typing()
+        await asyncio.sleep(5)
+        await ctx.send(embed=embed)
+    elif name == "fun":
+        embed = discord.Embed(title="Welcome to fun category...", description="Skip <> and (). you don't have to use these while using a command...", color=0xff69bf)
+        embed.add_field(name="quote", value="Gives random quote of Joker from Dark Knight movie \nUsage: ``%quote``", inline=False)
+        embed.add_field(name="userid", value="Gives the user id of the user \nUsage: ``%userid <user. If user is none it returns the id of the author>``", inline=False)
+        embed.add_field(name="fams", value="Random Dragon Ball Z gif \nUsage: ``%fams``", inline=False)
+        embed.add_field(name="marvel", value="Gives random Marvel Universe \nUsage: ``%marvel``", inline=False)
+        embed.add_field(name="dc", value="Random DC Universe gif \nUsage: ``%dc``", inline=False)
+        embed.add_field(name="naruto", value="Gives random gif of Naruto Universe \nUsage: ``%naruto``", inline=False)
+        embed.add_field(name="meme", value="Gives random funny meme\nUsage: ``%meme``", inline=False)
+        embed.add_field(name="8ball", value="Answers your 8ball question \nUsage: ``%8ball <question>``", inline=False)
+        embed.add_field(name="joke", value="Says a funny joke \nUsage: ``%joke``", inline=False)
+        embed.add_field(name='fact', value="Gives a random fact \nUsgae: ``%fact``", inline=False)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
+        await ctx.trigger_typing()
+        await asyncio.sleep(3)
+        await ctx.send(embed=embed)
+    elif name == "admin":
+        embed = discord.Embed(title="Welcome to admin/staff category...", description="Skip <> and (). you don't have to use these while using a command...", color=0XFF69BF)
+        embed.add_field(name="clear", value="Clears the number of messages in that channel \nUsage: ``%clear <number>``", inline=False)
+        embed.add_field(name="announce", value="Announces the entered matter in the desired channel \nUsage: ``%announce <channel> <matter>``", inline=False)
+        embed.add_field(name="lock", value="Locks the specified channel for the specified role \nUsage: ``%lock <role> <channel>``", inline=False)
+        embed.add_field(name="unlock", value="Unlocks the specified channel for the specified role \nUsage: ``%unlock <role> <channel>``", inline=False)
+        embed.add_field(name="tempmute (not stable)", value="Mutes the member for certain amount of time \nUsage: ``%tempmute <user> <duration> <m/hr/d> <reason>``", inline=False)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
+        await ctx.trigger_typing()
+        await asyncio.sleep(3)
+        await ctx.send(embed=embed)
+    elif name == "bot":
+        embed2 = discord.Embed(title="Welcom to bot category...", description="Skip <> and (). you don't have to use these while using a command...", color=0XFF69BF)
+        embed2.add_field(name="botinfo", value="Gives the information about the bot \nUsage: ``%botinfo``", inline=False)
+        embed2.add_field(name="serverinfo", value=f"Gives the info about {ctx.guild.name} server \nUsage: ``%serverinfo``", inline=False)
+        embed2.timestamp = datetime.datetime.utcnow()
+        embed2.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
+        await ctx.trigger_typing()
+        await asyncio.sleep(3)
+        await ctx.send(embed=embed2)
+    elif name == "misc":
+        embed = discord.Embed(title="Welcome to misc section...", description="Skip <> and (). you don't have to use these while using a command...", color=0XFF69BF)
+        embed.add_field(name="movie", value="Gives the information of the particular movie \nUsage: ``%movie <moviename>``", inline=False)
+        embed.add_field(name="roleinfo", value="Gives info of that particular role (To use this command, You've to got 'Manage Roles' permission. \nUsage: ``%roleinfo <rolename>``")
+        embed.add_field(name="animeshow", value="Gives info about the anime show that you've searched. \nUsage: ``%animeshow <show name>``")
+        embed.add_field(name="urban", value="Searches the given word in 'Urban Dictionary' website. \nUsage: ``%urban <word>``")
+        embed.add_field(name="lyrics", value="Sends the searched lyrics to your DM \nUsage: ``%lyrics <song name>``")
+        embed.add_field(name="syn", value="Gives the synonyms of the word that you've entered \nUsage: ``%syn <word>``")
+        embed.add_field(name="define", value="Gives the definitions of the word that you've entered \nUsage: ``%define <word>``")
+        embed.add_field(name="talk", value="It's simple, It activates the chatbot and replies to your messages \nUsage: ``%talk <message>``")
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
+        await ctx.trigger_typing()
+        await asyncio.sleep(3)
+        await ctx.send(embed=embed)
+    else:
+        await ctx.trigger_typing()
+        await asyncio.sleep(3)
+        await ctx.send("I can't find the category, make sure you typed it right...")
 
 @client.command(pass_context = True)
 @commands.has_permissions(administrator=True) 
@@ -912,6 +972,45 @@ async def lyrics(ctx, *, track:str = None):
         else:
             await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
             for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                await ctx.author.send(chunk)                     
+                await ctx.author.send(chunk)   
+                           
+@client.command(pass_context=True)
+async def define(ctx, *, word:str = None):
+    if word == None:
+        await ctx.send("Type any word to define...")
+    else:
+        address = f"https://some-random-api.ml/dictionary?word={word}"
+        data = requests.get(address).json()
+        definition = data['definition']
+        await ctx.send(f"The definition of {data['word']} is sent to your DM")
+        for chunk in [definition[i:i+2000] for i in range(0, len(definition), 2000)]:
+            await ctx.author.send(chunk)
+                       
+@client.command(pass_context=True)
+async def syn(ctx, *, word:str =None):
+    if word == None:
+        await ctx.trigger_typing()
+        await asyncio.sleep(3)
+        await ctx.send("Type any word to find synonyms for it...")
+    else:
+        address = f"https://words.bighugelabs.com/api/2/27faccbe1b03a1577c7f167a9b88bebf/{word}/json"
+        data = requests.get(address).json()
+        noun = data['noun']['syn']
+        noun2 = ", ".join(noun)
+        embed = discord.Embed(title=f"Here's the synonym(s) for {word} that I could find...", description=noun2, color=0XFF69BF)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=embed)                       
+@client.command(pass_context=True)
+async def talk(ctx, message: str = None):
+    if message == None:
+        await ctx.send("**Joker can't talk to you unless you say anything to me ``%talk <message>``**")
+    else:
+        address = f"https://some-random-api.ml/chatbot?message={message}"
+        data = requests.get(address).json()
+        reply = data['response']
+        await ctx.trigger_typing()
+        await asyncio.sleep(5)
+        await ctx.send(reply)                       
 
 client.run(os.getenv('TOKEN'))
