@@ -355,7 +355,7 @@ async def help(ctx, name: str=None):
         embed.add_field(name="lyrics", value="Sends the searched lyrics to your DM \nUsage: ``%lyrics <song name>``")
         embed.add_field(name="syn", value="Gives the synonyms of the word that you've entered \nUsage: ``%syn <word>``")
         embed.add_field(name="define", value="Gives the definitions of the word that you've entered \nUsage: ``%define <word>``")
-        embed.add_field(name="talk", value="It's simple, It activates the chatbot and replies to your messages \nUsage: ``%talk <message>``")
+        embed.add_field(name="talk", value="It's simple, It activates the chatbot and replies to your messages \nUsage: ``%t <message>``")
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
         await ctx.trigger_typing()
@@ -1002,7 +1002,7 @@ async def syn(ctx, *, word:str =None):
         embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)                       
 @client.command(pass_context=True)
-async def talk(ctx, message: str = None):
+async def t(ctx, message: str = None):
     if message == None:
         await ctx.send("**Joker can't talk to you unless you say anything to me ``%talk <message>``**")
     else:
