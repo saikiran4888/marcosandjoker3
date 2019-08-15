@@ -542,36 +542,25 @@ async def tempmute(ctx, user: discord.Member, num: int, time: str, reason:str):
 async def spotify(ctx, user: discord.Member=None):
     if user is None:
         user = ctx.author
-        for activity in user.activities:
-            if isinstance(activity, Spotify):
-                embed = discord.Embed(title=f" ", description=f"{user.mention} is listening to...", color=activity.color)
-                embed.add_field(name="**Title**", value=activity.title, inline=False)
-                embed.add_field(name="**Artist**", value=activity.artist, inline=False)
-                embed.add_field(name="**Album**", value=activity.album, inline=False)
-                embed.add_field(name="**Duration**", value=activity.duration, inline=False)
-                embed.add_field(name="**Track ID**", value=activity.track_id, inline=False)
-                embed.set_thumbnail(url=activity.album_cover_url)
-                embed.set_author(name=user.name, icon_url=user.avatar_url)
-                embed.timestamp = datetime.datetime.utcnow()
-                await ctx.send(embed=embed)
-            else:
-                await ctx.send("**Wait, You aren't listening any in spotify. How can I give info!!!**")
+    activity = ctx.author.activity
+    if activity is None:
+        await ctx.send("{} is not playing anything on spotify!".format(user.display_name))
+        return
+    if activity.type == discord.ActivityType.listening and activity.name == "Spotify":
+        embed = discord.Embed(description="\u200b")
+        embed.add_field(name="Artist(s)", value=", ".join(activity.artists))
+        embed.add_field(name="Album", value=activity.album)
+        embed.add_field(name="Track ID", value=activity.track_id)
+        embed.add_field(name="Duration", value=str(activity.duration)[3:].split(".", 1)[0])
+        embed.title = "**{}**".format(activity.title)
+        embed.set_thumbnail(url=activity.album_cover_url)
+        embed.url = "https://open.spotify.com/track/{}".format(activity.track_id)
+        embed.color = activity.color
+        embed.set_footer(text="{} - is currently playing this song".format(ctx.author.display_name))
+        await ctx.send(embed=embed)
     else:
-        for activity in user.activities:
-            if isinstance(activity, Spotify):
-                embed = discord.Embed(title=f" ", description=f"{user.mention} is listening to...", color=activity.color)
-                embed.add_field(name="**Title**", value=activity.title, inline=False)
-                embed.add_field(name="**Artist**", value=activity.artist, inline=False)
-                embed.add_field(name="**Album**", value=activity.album, inline=False)
-                embed.add_field(name="**Duration**", value=activity.duration, inline=False)
-                embed.add_field(name="**Track ID**", value=activity.track_id, inline=False)
-                embed.set_thumbnail(url=activity.album_cover_url)
-                embed.set_author(name=user.name, icon_url=user.avatar_url)
-                embed.timestamp = datetime.datetime.utcnow()
-                await ctx.send(embed=embed)
-            else:
-                await ctx.send("**Oh no!!!, The user you've mentioned isn't listening on Spotify...**")
-                
+        await ctx.send("**Wait, You aren't listening any on spotify...**")
+        return                
 @client.command(pass_context=True)
 @commands.has_permissions(manage_roles = True)
 async def roleinfo(ctx, role: discord.Role=None):
