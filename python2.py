@@ -610,7 +610,7 @@ async def on_message_delete(message):
         
 @client.event
 async def on_member_remove(member):
-    if guild.name = "Test":
+    if member.guild.name = "Test":
         return;
     else:
         channel = client.get_channel(565768324252958720)
