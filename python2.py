@@ -248,16 +248,18 @@ async def p(ctx, *, word:str=None):
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"https://api.reddit.com/r/{word}/random") as r:
                     data = await r.json()
-                    embed = discord.Embed(title=' ',color=0XFF69B4)
+                    r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
+                    embed = discord.Embed(title=data[0]['data']['children'][0]['data']['title'],color = discord.Color((r << 16) + (g << 8) + b))
                     embed.set_image(url=data[0]["data"]["children"][0]["data"]["url"])
+                    embed.url = data[0]["data"]["children"][0]["data"]["url"]
                     embed.set_footer(text=f'Requested by: {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
                     embed.timestamp = datetime.datetime.utcnow()
-                    await ctx.send(data[0]["data"]["children"][0]["data"]["url"])
+                    await ctx.send(embed=embed)
         
         else:
             await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")
     else:
-        return    
+        return       
 
 @client.command(pass_context=True)
 async def movie(ctx, *, name:str=None):
@@ -608,22 +610,25 @@ async def on_message_delete(message):
         
 @client.event
 async def on_member_remove(member):
-    channel = client.get_channel(565768324252958720)
-    channel2 = client.get_channel(557273459244269582)
-    userchannel = client.get_channel(571302888110817281)
-    person_count = len([member for member in member.guild.members if not member.bot])
-    embed=discord.Embed(title=f"Good bye {member.name}... Hope you'll come back again to {member.guild.name}", description="Thank you for being with us all these times...", color=0XFF69B4)
-    embed.set_thumbnail(url='https://media.giphy.com/media/LTFbyWuELIlqlXGLeZ/giphy.gif')
-    embed.add_field(name="__**Members Remaining**__", value='{}'.format(str(member.guild.member_count)), inline=True)
-    embed.timestamp = datetime.datetime.utcnow()
-    embed2=discord.Embed(title="Member Left", description= member.mention, color=0XFF69B4)
-    embed2.set_thumbnail(url=member.avatar_url)
-    embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
-    embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
-    embed2.timestamp = datetime.datetime.utcnow()
-    await channel.send(embed=embed)
-    await channel2.send(embed=embed2)
-    await userchannel.edit(name= f"Weebs: {person_count}")
+    if guild.name = "Test":
+        return;
+    else:
+        channel = client.get_channel(565768324252958720)
+        channel2 = client.get_channel(557273459244269582)
+        userchannel = client.get_channel(571302888110817281)
+        person_count = len([member for member in member.guild.members if not member.bot])
+        embed=discord.Embed(title=f"Good bye {member.name}... Hope you'll come back again to {member.guild.name}", description="Thank you for being with us all these times...", color=0XFF69B4)
+        embed.set_thumbnail(url='https://media.giphy.com/media/LTFbyWuELIlqlXGLeZ/giphy.gif')
+        embed.add_field(name="__**Members Remaining**__", value='{}'.format(str(member.guild.member_count)), inline=True)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed2=discord.Embed(title="Member Left", description= member.mention, color=0XFF69B4)
+        embed2.set_thumbnail(url=member.avatar_url)
+        embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
+        embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
+        embed2.timestamp = datetime.datetime.utcnow()
+        await channel.send(embed=embed)
+        await channel2.send(embed=embed2)
+        await userchannel.edit(name= f"Weebs: {person_count}")
 
 @client.event
 async def on_member_join(member):
