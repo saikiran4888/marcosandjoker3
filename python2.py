@@ -263,7 +263,7 @@ async def p(ctx, *, word:str=None):
 
     
 @client.command(pass_context = True)
-async def p(ctx, *, word:str=None):
+async def P(ctx, *, word:str=None):
     if ctx.guild.name == "Test":
 
         if ctx.channel.is_nsfw():
