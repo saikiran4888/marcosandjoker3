@@ -265,14 +265,13 @@ async def p(ctx, *, word:str=None):
 @client.command(pass_context = True)
 async def P(ctx, *, word:str=None):
     if ctx.guild.name == "Test":
-
         if ctx.channel.is_nsfw():
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"https://api.reddit.com/r/{word}/random") as r:
                     data = await r.json()
                     await ctx.send(data[0]['data']['children'][0]['data']['url'])
-         else:
-            await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")
+        else:
+             await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")
     else:
         return       
 
