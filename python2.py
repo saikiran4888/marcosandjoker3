@@ -34,9 +34,10 @@ async def task():
         data = requests.get(address).json()
         nsfw_check = data['nsfw']
         if nsfw_check == False:
-            embed = discord.Embed(title=data['title'], description=f"**1){data['choicea']} \n \n2){data['choiceb']}** \n \n[Wanna know what others said about this question in www.rrrather.com? Click me...]({data['link']})", color=0xff69bf)
+            embed = discord.Embed(title=data['title'], description=f"**1){data['choicea']} \n \n2){data['choiceb']}** \n \n Click on the question to know what others said about this one", color=0xff69bf)
             embed.set_author(name="It's question time folks...", icon_url=channel.guild.icon_url)
             embed.set_footer(text=channel.guild.name)
+            embed.url = data['link']
             embed.timestamp = datetime.datetime.utcnow()
             await channel.send(embed=embed)
             await asyncio.sleep(3600)
@@ -942,9 +943,10 @@ async def rather(ctx):
     data = requests.get(address).json()
     nsfw_check = data['nsfw']
     if nsfw_check == False:
-        embed = discord.Embed(title=data['title'], description=f"**1){data['choicea']} \n \n2){data['choiceb']}** \n \n[Wanna know what others said about this question in www.rrrather.com? Click me...]({data['link']})", color=0xff69bf)
+        embed = discord.Embed(title=data['title'], description=f"**1){data['choicea']} \n \n2){data['choiceb']}** \n \n Click on the question to know what others said about this one", color=0xff69bf)
         embed.set_author(name="It's question time folks...", icon_url=channel.guild.icon_url)
         embed.set_footer(text=channel.guild.name)
+        embed.url = data['link']
         embed.timestamp = datetime.datetime.utcnow()
         await channel.send(embed=embed)
     elif nsfw_check == True:
