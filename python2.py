@@ -625,7 +625,7 @@ async def on_message_delete(message):
         
 @client.event
 async def on_member_remove(member):
-    if member.guild.name == "Test":
+    if member.guild.id != "515979430288425001":
         return;
     else:
         channel = client.get_channel(565768324252958720)
