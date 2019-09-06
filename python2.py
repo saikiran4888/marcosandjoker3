@@ -720,6 +720,7 @@ async def on_member_join(member):
     channel2 = client.get_channel(557273459244269582)
     text_channel = client.get_channel(565767003533737985)
     userchannel = client.get_channel(571302888110817281)
+    general = client.get_channel(565770475574394902)                                   
     person_count = len([member for member in member.guild.members if not member.bot])
     embed=discord.Embed(title=f"Welcome {member.name} to {member.guild.name}", description=f"**Hope you'll be active here... Read rules at {text_channel.mention} channel and don't break any of them...**", color=0XFF69B4)
     embed.set_thumbnail(url='https://media.giphy.com/media/OF0yOAufcWLfi/giphy.gif')
@@ -733,8 +734,10 @@ async def on_member_join(member):
     embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
     embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
     embed2.timestamp = datetime.datetime.utcnow()
+    message = f"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n⛈***Welcome {member.mention}!! U made it over the waves and storm and arrived at __Virtual Reformed__*** ⛈ \n🌫**To begin your adventure with us \nGrab some roles in <#565767003533737985>  and introduce yourself in <#565900253673553924>  and don't forget to read the rules <#565767003533737985> ** \n***Now go on and explore and don't forget to have fun....tysm for joining***🌫 \n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"                                   
     await channel.send(embed=embed)
     await channel2.send(embed=embed2)
+    await general.send(message)                                   
     await userchannel.edit(name= f"Weebs: {person_count}")
     
 @client.event
@@ -1023,6 +1026,11 @@ async def t(ctx, message: str = None):
         reply = data['response']
         await ctx.trigger_typing()
         await asyncio.sleep(2)
-        await ctx.send(reply)                       
+        await ctx.send(reply)
+                       
+@client.command(pass_context=True)
+async def welcometest(ctx):
+    message = f"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n⛈***Welcome {ctx.author.mention}!! U made it over the waves and storm and arrived at __Virtual Reformed__*** ⛈ \n🌫**To begin your adventure with us \nGrab some roles in <#565767003533737985>  and introduce yourself in <#565900253673553924>  and don't forget to read the rules <#565767003533737985> ** \n***Now go on and explore and don't forget to have fun....tysm for joining***🌫 \n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
+    await ctx.send(message)                   
 
 client.run(os.getenv('TOKEN'))
