@@ -557,8 +557,8 @@ async def tempmute(ctx, user: discord.Member, num: int, time: str, reason:str):
         await ctx.send(f"Congractulations {user.mention}, you are unmuted after {num} day(s). Don't try to get mute again..")
 
 
-@client.command(pass_context = True)
-async def spotify(ctx, user: discord.Member=None):
+@client.command(pass_context=True)
+async def spotify(ctx, *, user:discord.Member=None):
     if user is None:
         user = ctx.author
     activity = ctx.author.activity
@@ -566,7 +566,7 @@ async def spotify(ctx, user: discord.Member=None):
         await ctx.send("{} is not playing anything on spotify!".format(user.display_name))
         return
     if activity.type == discord.ActivityType.listening and activity.name == "Spotify":
-        embed = discord.Embed(description="\u200b")
+        embed = discord.Embed(description="**Reply with ``lyrics`` in 20 seconds to get the song's lyrics into your DMs**")
         embed.add_field(name="Artist(s)", value=", ".join(activity.artists))
         embed.add_field(name="Album", value=activity.album)
         embed.add_field(name="Track ID", value=activity.track_id)
@@ -575,11 +575,35 @@ async def spotify(ctx, user: discord.Member=None):
         embed.set_thumbnail(url=activity.album_cover_url)
         embed.url = "https://open.spotify.com/track/{}".format(activity.track_id)
         embed.color = activity.color
-        embed.set_footer(text="{} - is currently playing this song".format(ctx.author.display_name))
+        embed.set_footer(text="{} - is currently playing this song".format(ctx.author))
         await ctx.send(embed=embed)
+        msg = await client.wait_for('message', check=lambda message: message.author == ctx.author, timeout=20)
+        if msg.content == "lyrics":
+            con = f"{activity.title} {activity.artist}"
+            address = f"https://some-random-api.ml/lyrics?title={con}"
+            data = requests.get(address).json()
+            if 'error' in data:
+                await ctx.send(f"**{data['error']}**")
+            else:
+                lyrics = data['lyrics']
+                if len(lyrics) < 2048:
+                    for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
+                        embed = discord.Embed(title=data['author'], description=f"{chunk} \n [Source website]({data['links']['genius']})", color=0XFF69BF)
+                        embed.set_author(name=data['title'], url=data['thumbnail']['genius'])
+                        embed.set_thumbnail(url=data['thumbnail']['genius'])
+                        embed.timestamp = datetime.datetime.utcnow()
+                        await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
+                        await ctx.author.send(embed=embed)
+                
+                else:
+                    await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
+                    for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
+                        await ctx.author.send(chunk)
+            
     else:
         await ctx.send("**Wait, You aren't listening any on spotify...**")
-        return                
+        return
+                                   
 @client.command(pass_context=True)
 @commands.has_permissions(manage_roles = True)
 async def roleinfo(ctx, role: discord.Role=None):
@@ -1029,8 +1053,10 @@ async def t(ctx, message: str = None):
         await ctx.send(reply)
                        
 @client.command(pass_context=True)
-async def welcometest(ctx):
-    message = f"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n⛈***Welcome {ctx.author.mention}!! U made it over the waves and storm and arrived at __Virtual Reformed__*** ⛈ \n🌫**To begin your adventure with us \nGrab some roles in <#565767249793777696>  and introduce yourself in <#565900253673553924>  and don't forget to read the rules <#565767003533737985> ** \n***Now go on and explore and don't forget to have fun....tysm for joining***🌫 \n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
-    await ctx.send(message)                   
+async def suggest(ctx, *, msg: str):
+    channel = client.get_channel(572851335603421194)
+    message = await ctx.send(f"** {ctx.author.mention} Suggested an event: {msg} **")
+    await message.add_reaction(emoji='✅')
+    await message.add_reaction(emoji='❎')                       
 
 client.run(os.getenv('TOKEN'))
