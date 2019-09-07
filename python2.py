@@ -1055,7 +1055,7 @@ async def t(ctx, message: str = None):
 @client.command(pass_context=True)
 async def suggest(ctx, *, msg: str):
     channel = client.get_channel(572851335603421194)
-    message = await ctx.send(f"** {ctx.author.mention} Suggested an event: {msg} **")
+    message = await channel.send(f"** {ctx.author.mention} Suggested an event: {msg} **")
     await message.add_reaction(emoji='✅')
     await message.add_reaction(emoji='❎')                       
 
