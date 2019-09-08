@@ -1045,7 +1045,7 @@ async def t(ctx, message: str = None):
     if message == None:
         await ctx.send("**Joker can't talk to you unless you say anything to me ``%talk <message>``**")
     else:
-        address = f"https://some-random-api.ml/chatbot?message={message}"
+        address = f"https://some-random-api.ml/chatbot/beta?message={message}"
         data = requests.get(address).json()
         reply = data['response']
         await ctx.trigger_typing()
@@ -1057,6 +1057,29 @@ async def suggest(ctx, *, msg: str):
     channel = client.get_channel(572851335603421194)
     message = await channel.send(f"** {ctx.author.mention} Suggested an event: {msg} **")
     await message.add_reaction(emoji='✅')
-    await message.add_reaction(emoji='❎')                       
+    await message.add_reaction(emoji='❎')
+                       
+@client.command(pass_context=True)
+async def quiz(ctx):
+    categories = ["31", "15", "11", "14"]
+    api_address = f"https://opentdb.com/api.php?amount=10&category={random.choice(categories)}&token={quiz_token}"
+    json_data = requests.get(api_address).json()
+    ques = json_data['results'][0]['question']
+    option1 = json_data['results'][0]['correct_answer']
+    option2 = json_data['results'][0]['incorrect_answers'][0]
+    option3 = json_data['results'][0]['incorrect_answers'][1]
+    option4 = json_data['results'][0]['incorrect_answers'][2]
+    options = option1 +", "+ option2 +", "+ option3 +", "+ option4
+    options2 = option4 +", "+ option3 +", "+ option2 +", "+ option1
+    options3 = option4 +", "+ option1 +", "+ option3 +", "+ option2
+    options4 = option4 +", "+ option3 +", "+ option2 +", "+ option1
+    choices = [options, options2, options3, options4]
+    await ctx.trigger_typing()
+    await asyncio.sleep(3)
+    await ctx.send(f"Category: {json_data['results'][0]['category']} \nDifficulty: {json_data['results'][0]['difficulty']}")
+    await ctx.send(ques.replace("&#039;", "'").replace('&quot;', '"').replace("&amp;", "&"))
+    await ctx.send(random.choice(choices).replace("&#039;", "'").replace('&quot;', '"').replace("&amp;", "&"))
+    await asyncio.sleep(15)
+    await ctx.send(f"Correct answer is {json_data['results'][0]['correct_answer']}")                       
 
 client.run(os.getenv('TOKEN'))
