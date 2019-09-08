@@ -1062,7 +1062,7 @@ async def suggest(ctx, *, msg: str):
 @client.command(pass_context=True)
 async def quiz(ctx):
     categories = ["31", "15", "11", "14"]
-    api_address = f"https://opentdb.com/api.php?amount=10&category={random.choice(categories)}&token={quiz_token}"
+    api_address = f"https://opentdb.com/api.php?amount=10&category={random.choice(categories)}&token={os.getenv('quiz_token')}"
     json_data = requests.get(api_address).json()
     ques = json_data['results'][0]['question']
     option1 = json_data['results'][0]['correct_answer']
