@@ -651,25 +651,22 @@ async def on_message_delete(message):
         
 @client.event
 async def on_member_remove(member):
-    if member.guild.id == "515979430288425001":
-        channel = client.get_channel(565768324252958720)
-        channel2 = client.get_channel(557273459244269582)
-        userchannel = client.get_channel(571302888110817281)
-        person_count = len([member for member in member.guild.members if not member.bot])
-        embed=discord.Embed(title=f"Good bye {member.name}... Hope you'll come back again to {member.guild.name}", description="Thank you for being with us all these times...", color=0XFF69B4)
-        embed.set_thumbnail(url='https://media.giphy.com/media/LTFbyWuELIlqlXGLeZ/giphy.gif')
-        embed.add_field(name="__**Members Remaining**__", value='{}'.format(str(member.guild.member_count)), inline=True)
-        embed.timestamp = datetime.datetime.utcnow()
-        embed2=discord.Embed(title="Member Left", description= member.mention, color=0XFF69B4)
-        embed2.set_thumbnail(url=member.avatar_url)
-        embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
-        embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
-        embed2.timestamp = datetime.datetime.utcnow()
-        await channel.send(embed=embed)
-        await channel2.send(embed=embed2)
-        await userchannel.edit(name= f"Weebs: {person_count}")
-    else:
-        return;                           
+    channel = client.get_channel(565768324252958720)
+    channel2 = client.get_channel(557273459244269582)
+    userchannel = client.get_channel(571302888110817281)
+    person_count = len([member for member in member.guild.members if not member.bot])
+    embed=discord.Embed(title=f"Good bye {member.name}... Hope you'll come back again to {member.guild.name}", description="Thank you for being with us all these times...", color=0XFF69B4)
+    embed.set_thumbnail(url='https://media.giphy.com/media/LTFbyWuELIlqlXGLeZ/giphy.gif')
+    embed.add_field(name="__**Members Remaining**__", value='{}'.format(str(member.guild.member_count)), inline=True)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed2=discord.Embed(title="Member Left", description= member.mention, color=0XFF69B4)
+    embed2.set_thumbnail(url=member.avatar_url)
+    embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
+    embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
+    embed2.timestamp = datetime.datetime.utcnow()
+    await channel.send(embed=embed)
+    await channel2.send(embed=embed2)
+    await userchannel.edit(name= f"Weebs: {person_count}")
 
 @client.event
 async def on_member_join(member):
@@ -677,10 +674,10 @@ async def on_member_join(member):
     choices = ["DcssawdeS", "Sasdawdd", "AWSdasdwaA", "AdwASwAas", "AsdWDAasas", "ASDwdAsad", "MKiojmkomM"]
     choices2 = random.choice(choices)
     role = discord.utils.get(member.guild.roles, id=516303012671520769)
-    embed = discord.Embed(title=" ", description=f"Welcome to {member.guild.name}, In order to send any message in the server, You must verify as per the server's policy. Sorry for bothering you but it's my duty though.... And please follow the instructions below. I'm sure that the instructions will be easy for you... Wait 15 seconds for next message.", color=0XFF69BF)
+    embed = discord.Embed(title=" ", description=f"Welcome to {member.guild.name}, In order to send any message in the server, You must verify as per the server's policy. Sorry for bothering you but it's my duty though.... And please follow the instructions below. I'm sure that the instructions will be easy for you... Wait 10 seconds for next message.", color=0XFF69BF)
     embed.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
     embed.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
-    embed2 = discord.Embed(title=" ", description="You've to type the word shown in the next message correctly. And you'vve got only three chances. If you failed to enter correct word, Then you'll get kicked from server and you've to join again... Wait 15 seconds for next message", color=0XFF69BF)
+    embed2 = discord.Embed(title=" ", description="You've to type the word shown in the next message correctly. And you'vve got only three chances. If you failed to enter correct word, Then you'll get kicked from server and you've to join again... Wait 10 seconds for next message", color=0XFF69BF)
     embed2.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
     embed2.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
     embed3 = discord.Embed(title=f"This is your first attempt (Two remaining)... Type the word shown below correctly... **\n \n {choices2} \n \n**", description=" ", color=0XFF69BF)
@@ -690,9 +687,9 @@ async def on_member_join(member):
     embed10.set_author(name=member.guild.name, icon_url=member.guild.icon_url)
     embed.timestamp = datetime.datetime.utcnow()
     await member.send(embed=embed)
-    await asyncio.sleep(15)
+    await asyncio.sleep(10)
     await member.send(embed=embed2)
-    await asyncio.sleep(15)
+    await asyncio.sleep(10)
     await member.send(embed=embed3)
     msg2 = await client.wait_for('message', check=lambda message: message.author == member)
     if msg2.content == choices2:
