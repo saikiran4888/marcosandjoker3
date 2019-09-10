@@ -766,8 +766,8 @@ async def on_member_join(member):
     
 @client.event
 async def on_message_edit(before,after):
-    if before.guild.name == "Test":
-        return
+    if before.guild.id != "515979430288425001":
+        return;
     else:
         
         if after.author.bot:
