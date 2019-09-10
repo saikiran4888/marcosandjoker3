@@ -813,7 +813,7 @@ async def on_guild_channel_update(before, after):
         await channel2.send(embed=embed)
 
     elif before.topic != after.topic:
-        if after.channel.is.VoiceChannel:
+        if after.channel.is_VoiceChannel():
             return;
         else:
             embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFF69BF)
