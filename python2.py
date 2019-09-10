@@ -766,7 +766,7 @@ async def on_member_join(member):
     
 @client.event
 async def on_message_edit(before,after):
-    if after.guild.id != "515979430288425001":
+    if message.guild.id != "515979430288425001":
         return;
     else:
         
@@ -816,13 +816,16 @@ async def on_guild_channel_update(before, after):
         await channel2.send(embed=embed)
 
     elif before.topic != after.topic:
-        embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFF69BF)
-        embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
-        embed2.add_field(name="Before", value=before.topic, inline=False)
-        embed2.add_field(name="After", value=after.topic, inline=False)
-        embed2.timestamp = datetime.datetime.utcnow()
-        embed2.set_footer(text=f"ID: {after.id}")
-        await channel2.send(embed=embed2)
+        if after.channel.is.VoiceChannel:
+            return;
+        else:
+            embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFF69BF)
+            embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
+            embed2.add_field(name="Before", value=before.topic, inline=False)
+            embed2.add_field(name="After", value=after.topic, inline=False)
+            embed2.timestamp = datetime.datetime.utcnow()
+            embed2.set_footer(text=f"ID: {after.id}")
+            await channel2.send(embed=embed2)
 
 
 @client.command(pass_context = True)
