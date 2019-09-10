@@ -651,9 +651,7 @@ async def on_message_delete(message):
         
 @client.event
 async def on_member_remove(member):
-    if member.guild.id != "515979430288425001":
-        return;
-    else:
+    if member.guild.id == "515979430288425001":
         channel = client.get_channel(565768324252958720)
         channel2 = client.get_channel(557273459244269582)
         userchannel = client.get_channel(571302888110817281)
@@ -670,6 +668,8 @@ async def on_member_remove(member):
         await channel.send(embed=embed)
         await channel2.send(embed=embed2)
         await userchannel.edit(name= f"Weebs: {person_count}")
+    else:
+        return;                           
 
 @client.event
 async def on_member_join(member):
