@@ -35,7 +35,7 @@ async def task():
         data = requests.get(address).json()
         nsfw_check = data['nsfw']
         if nsfw_check == False:
-            await ctx.send(data['link])
+            await ctx.send(data['link'])
             await asyncio.sleep(3600)
         elif nsfw_check == True:
             await asyncio.sleep(1)
