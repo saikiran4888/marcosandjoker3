@@ -27,19 +27,6 @@ Forbidden= discord.Embed(title="Permission Denied", description="1) Please check
 client = commands.Bot(description="The Laughing Clown BOT", command_prefix=commands.when_mentioned_or("%"), pm_help = True)
 client.remove_command('help')
 
-
-async def task():
-    while True:
-        channel = client.get_channel(565770475574394902)
-        address = "https://www.rrrather.com/botapi"
-        data = requests.get(address).json()
-        nsfw_check = data['nsfw']
-        if nsfw_check == False:
-            await channel.send(data['link'])
-            await asyncio.sleep(3600)
-        elif nsfw_check == True:
-            await asyncio.sleep(1)
-            
             
 @client.event
 async def on_ready():
@@ -47,7 +34,6 @@ async def on_ready():
     print('-----')
     print("Created by I'm Joker")
     client.loop.create_task(status_task())
-    client.loop.create_task(task())
 
 @client.command(pass_context = True)
 async def hlo(ctx):
