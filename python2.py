@@ -252,7 +252,7 @@ async def P(ctx, *, word:str=None):
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"https://api.reddit.com/r/{word}/random") as r:
                     data = await r.json()
-                    await ctx.send(f"{data[0]['data']['children'][0]['data']['url']} \n {data[0]['data']['children'][0]['data']['title']}")
+                    await ctx.send(f"{data[0]['data']['children'][0]['data']['url']} \n **{data[0]['data']['children'][0]['data']['title']}**")
         else:
              await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")
     else:
@@ -569,9 +569,10 @@ async def spotify(ctx, *, user:discord.Member=None):
                 lyrics = data['lyrics']
                 if len(lyrics) < 2048:
                     for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                        embed = discord.Embed(title=data['author'], description=f"{chunk} \n [Source website]({data['links']['genius']})", color=0XFCDFFF)
+                        embed = discord.Embed(title=data['author'], description=f"{chunk})", color=0XFCDFFF)
                         embed.set_author(name=data['title'], url=data['thumbnail']['genius'])
                         embed.set_thumbnail(url=data['thumbnail']['genius'])
+                        embed.url = data['links']['genius']
                         embed.timestamp = datetime.datetime.utcnow()
                         await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
                         await ctx.author.send(embed=embed)
@@ -977,8 +978,9 @@ async def lyrics(ctx, *, track:str = None):
         lyrics = data['lyrics']
         if len(lyrics) < 2048:
             for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                embed = discord.Embed(title=data['author'], description=f"{chunk} \n [Source website]({data['links']['genius']})", color=0XFCDFFF)
+                embed = discord.Embed(title=data['author'], description=f"{chunk}, color=0XFCDFFF)
                 embed.set_author(name=data['title'], url=data['thumbnail']['genius'])
+                embed.url = data['links']['genius']
                 embed.set_thumbnail(url=data['thumbnail']['genius'])
                 embed.timestamp = datetime.datetime.utcnow()
                 await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
