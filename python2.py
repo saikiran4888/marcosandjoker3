@@ -569,8 +569,8 @@ async def spotify(ctx, *, user:discord.Member=None):
                 lyrics = data['lyrics']
                 if len(lyrics) < 2048:
                     for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                        embed = discord.Embed(title=data['author'], description=f"{chunk})", color=0XFCDFFF)
-                        embed.set_author(name=data['title'], url=data['thumbnail']['genius'])
+                        embed = discord.Embed(title=data['title'], description=f"{chunk})", color=0XFCDFFF)
+                        embed.set_author(name=data['author'], url=data['thumbnail']['genius'])
                         embed.set_thumbnail(url=data['thumbnail']['genius'])
                         embed.url = data['links']['genius']
                         embed.timestamp = datetime.datetime.utcnow()
@@ -978,8 +978,8 @@ async def lyrics(ctx, *, track:str = None):
         lyrics = data['lyrics']
         if len(lyrics) < 2048:
             for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                embed = discord.Embed(title=data['author'], description=f"{chunk}", color=0XFCDFFF)
-                embed.set_author(name=data['title'], url=data['thumbnail']['genius'])
+                embed = discord.Embed(title=data['title'], description=f"{chunk}", color=0XFCDFFF)
+                embed.set_author(name=data['author'], url=data['thumbnail']['genius'])
                 embed.url = data['links']['genius']
                 embed.set_thumbnail(url=data['thumbnail']['genius'])
                 embed.timestamp = datetime.datetime.utcnow()
