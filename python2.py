@@ -547,7 +547,7 @@ async def spotify(ctx, *, user:discord.Member=None):
         await ctx.send("{} is not playing anything on spotify!".format(user.display_name))
         return
     if activity.type == discord.ActivityType.listening and activity.name == "Spotify":
-        embed = discord.Embed(description="**Reply with ``lyrics`` in 20 seconds to get the song's lyrics into your DMs**")
+        embed = discord.Embed(description="**React to :thumbsup: in 20 seconds to get the song's lyrics into your DMs**")
         embed.add_field(name="Artist(s)", value=", ".join(activity.artists))
         embed.add_field(name="Album", value=activity.album)
         embed.add_field(name="Track ID", value=activity.track_id)
@@ -557,9 +557,11 @@ async def spotify(ctx, *, user:discord.Member=None):
         embed.url = "https://open.spotify.com/track/{}".format(activity.track_id)
         embed.color = activity.color
         embed.set_footer(text="{} - is currently playing this song".format(ctx.author))
-        await ctx.send(embed=embed)
-        msg = await client.wait_for('message', check=lambda message: message.author == ctx.author, timeout=20)
-        if msg.content == "lyrics":
+        messaage = await ctx.send(embed=embed)
+        await messaage.add_reaction(emoji="👍")
+        await asyncio.sleep(2)
+        reaction, user = await client.wait_for('reaction_add', check=lambda reaction, user: reaction.emoji == '👍', timeout=20)
+        try:
             con = f"{activity.title} {activity.artist}"
             address = f"https://some-random-api.ml/lyrics?title={con}"
             data = requests.get(address).json()
@@ -569,10 +571,9 @@ async def spotify(ctx, *, user:discord.Member=None):
                 lyrics = data['lyrics']
                 if len(lyrics) < 2048:
                     for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                        embed = discord.Embed(title=data['title'], description=f"{chunk})", color=0XFCDFFF)
-                        embed.set_author(name=data['author'], url=data['thumbnail']['genius'])
+                        embed = discord.Embed(title=data['author'], description=f"{chunk} \n [Source website]({data['links']['genius']})", color=0XFF69BF)
+                        embed.set_author(name=data['title'], url=data['thumbnail']['genius'])
                         embed.set_thumbnail(url=data['thumbnail']['genius'])
-                        embed.url = data['links']['genius']
                         embed.timestamp = datetime.datetime.utcnow()
                         await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
                         await ctx.author.send(embed=embed)
@@ -581,7 +582,9 @@ async def spotify(ctx, *, user:discord.Member=None):
                     await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
                     for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
                         await ctx.author.send(chunk)
-            
+
+        except:
+            return    
     else:
         await ctx.send("**Wait, You aren't listening any on spotify...**")
         return
