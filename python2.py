@@ -544,7 +544,7 @@ async def spotify(ctx, *, user:discord.Member=None):
         user = ctx.author
     activity = ctx.author.activity
     if activity is None:
-        await ctx.send("{} is not playing anything on spotify!".format(user.display_name))
+        await ctx.send("{} is not playing anything on spotify!".format(user.name))
         return
     if activity.type == discord.ActivityType.listening and activity.name == "Spotify":
         embed = discord.Embed(description="**React to :thumbsup: in 20 seconds to get the song's lyrics into your DMs**")
@@ -1030,7 +1030,6 @@ async def t(ctx, message: str = None):
         data = requests.get(address).json()
         reply = data['response']
         await ctx.trigger_typing()
-        await asyncio.sleep(2)
         await ctx.send(reply)
                        
 @client.command(pass_context=True)
