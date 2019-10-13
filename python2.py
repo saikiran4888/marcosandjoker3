@@ -209,7 +209,7 @@ async def clear(ctx, number: int = None):
         await asyncio.sleep(5)
         await x.delete()
         embed = discord.Embed(title=" ", description=f"**Bulk Delete in {ctx.channel.mention} {number+1} messages deleted**", color=0XFCDFFF)
-        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
+        embed.set_author(name=ctx.guild.name, icon_url=ctxguild.icon_url)
         embed.timestamp = datetime.datetime.utcnow()
         await channel.send(embed=embed)
      
@@ -751,7 +751,7 @@ async def on_member_join(member):
     
 @client.event
 async def on_message_edit(before,after):
-    if message.guild.id != "515979430288425001":
+    if after.guild.id != "515979430288425001":
         return;
     else:
         
