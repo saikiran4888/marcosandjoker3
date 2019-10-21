@@ -1041,11 +1041,11 @@ async def suggest(ctx, *, msg: str):
     message = await channel.send(f"** {ctx.author.mention} Suggested an event: {msg} **")
     await message.add_reaction(emoji='✅')
     await message.add_reaction(emoji='❎')
-                       
+                                          
 @client.command(pass_context=True)
 async def quiz(ctx):
     categories = ["31", "15", "11", "14"]
-    api_address = f"https://opentdb.com/api.php?amount=10&category={random.choice(categories)}&token={os.getenv('quiz_token')}"
+    api_address = f"https://opentdb.com/api.php?amount=10&category={random.choice(categories)}"
     json_data = requests.get(api_address).json()
     ques = json_data['results'][0]['question']
     option1 = json_data['results'][0]['correct_answer']
@@ -1062,7 +1062,79 @@ async def quiz(ctx):
     await ctx.send(f"Category: {json_data['results'][0]['category']} \nDifficulty: {json_data['results'][0]['difficulty']}")
     await ctx.send(ques.replace("&#039;", "'").replace('&quot;', '"').replace("&amp;", "&"))
     await ctx.send(random.choice(choices).replace("&#039;", "'").replace('&quot;', '"').replace("&amp;", "&"))
-    await asyncio.sleep(15)
-    await ctx.send(f"Correct answer is {json_data['results'][0]['correct_answer']}")                       
+    try:
+        msg = await client.wait_for('message', check= lambda message: message.author == ctx.author, timeout=20)
+        if msg.content == json_data['results'][0]['correct_answer']:
+            await ctx.send("**Yayy, You've got it right...**")
+        else:
+            await ctx.send(f"**Oh No, It's not the right answer... Correct answer is {json_data['results'][0]['correct_answer']}, Better luck next time.**")
+    except asyncio.TimeoutError:
+        await ctx.send(f"**Time's up. Correct answer is {json_data['results'][0]['correct_answer']}.**")
+
+@client.command(pass_context=True)
+async def fortune(ctx):
+    address = "https://helloacm.com/api/fortune/"
+    data = requests.get(address).json()
+    msg = await ctx.send("Joker is busy writing your fortune.")
+    await asyncio.sleep(1)
+    await msg.edit(content="Joker is busy writing your fortune..")
+    await asyncio.sleep(1)
+    await msg.edit(content="Joker is busy writing your fortune...")
+    await asyncio.sleep(1)
+    await msg.edit(content=f"{data}")
+
+@client.command(pass_context=True)
+async def translate(ctx, *, text:str=None):
+    await ctx.send("**Enter the initials of the language that you want to translate to...(Small letters)**")
+    msg = await client.wait_for('message', check=lambda message: message.author == ctx.author)
+    address = f"https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190924T172418Z.91b5d532be1a360c.fe80f58d74501b56a4750b18c0fb2ca74585fec3&text={text}&lang={msg.content}"
+    data1 = requests.get(address).json()
+    embed = discord.Embed(title=data1['lang'], description=" ",color=0XFCDFFF)
+    embed.add_field(name="Original", value=text, inline=False)
+    embed.add_field(name="Translated", value=data1['text'][0], inline=False)
+    await ctx.send(data1['text'][0])
+                       
+@client.command(pass_context=True)
+async def gender(ctx, *, name:str = None):
+    address = f"https://api.genderize.io/?name={name}"
+    data = requests.get(address)
+    data2 = data.json()
+    if data.headers['X-Rate-Limit-Limit'] == 0:
+        await ctx.send(f"**Try this command in {data.headers['X-Rate-Reset']/60} minutes**")
+    else:
+        if data2['gender'] == None:
+            await ctx.trigger_typing()
+            await asyncio.sleep(4)
+            await ctx.send("** I can't say the gender of this name... Try using only name without initials or surnames \n Ex: Amanda, Kiran etc.,**")
+        else:
+            await ctx.trigger_typing()
+            await asyncio.sleep(4)
+            await ctx.send(f"** I'm {data2['probability']*100}% sure that {name} is a {data2['gender']} name**")
+
+@client.command(pass_context=True)
+async def weather(ctx, *, city:str=None):
+    if city == None:
+        await ctx.send("**Please enter any city name...**")
+    else:
+        address = f"http://api.openweathermap.org/data/2.5/weather?appid=f2e8d829021f0bb51351afb8a104b709&q={city}&units=metric"
+        data = requests.get(address).json()
+        if data['cod'] == "404":
+            await ctx.send(f"**{data['message']}**")
+        else:
+            embed = discord.Embed(title="Weather Forecast...", description="Here's your weather forecast that you've requested", color=discord.Colour.blue())
+            embed.set_thumbnail(url=f"http://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png")
+            embed.add_field(name="City", value=data['name'])
+            embed.add_field(name="Country", value=data['sys']['country'])
+            embed.add_field(name="Temperature", value=f"{data['main']['temp']}°C")
+            embed.add_field(name="Min. Temp", value=f"{data['main']['temp_min']}°C")
+            embed.add_field(name="Max. Temp", value=f"{data['main']['temp_max']}°C")
+            embed.add_field(name="Description", value=f"{data['weather'][0]['description']}")
+            embed.add_field(name="Wind Speed", value=f"{data['wind']['speed']}meter/sec")
+            embed.add_field(name="Humidity", value=f"{data['main']['humidity']}%")
+            embed.add_field(name="Cloudliness", value=f"{data['clouds']['all']}%")
+            embed.timestamp = datetime.datetime.utcnow()
+            embed.set_footer(text=f"Powered by OpenWeather API, Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
+            await ctx.send(embed=embed)
+                   
 
 client.run(os.getenv('TOKEN'))
