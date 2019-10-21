@@ -1093,15 +1093,15 @@ async def fortune(ctx):
     await msg.edit(content=f"{data}")
 
 @client.command(pass_context=True)
-async def translate(ctx, *, text:str=None):
-    await ctx.send("**Enter the initials of the language that you want to translate to...(Small letters)**")
-    msg = await client.wait_for('message', check=lambda message: message.author == ctx.author)
-    address = f"https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190924T172418Z.91b5d532be1a360c.fe80f58d74501b56a4750b18c0fb2ca74585fec3&text={text}&lang={msg.content}"
+async def translate(ctx, lang1:str, *, text:str = None):
+    address = f"https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190924T172418Z.91b5d532be1a360c.fe80f58d74501b56a4750b18c0fb2ca74585fec3&text={text}&lang={lang1}"
     data1 = requests.get(address).json()
-    embed = discord.Embed(title=data1['lang'], description=" ",color=ctx.author.color)
-    embed.add_field(name="Original", value=text, inline=False)
-    embed.add_field(name="Translated", value=data1['text'][0], inline=False)
-    await ctx.send(data1['text'][0])
+    embed = discord.Embed(title="\n", description=data1['text'][0])
+    embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+    embed.set_footer(text=data1['lang'] , icon_url="https://cdn.discordapp.com/attachments/602215920257073303/635883351324098560/wRUezUX.png")
+    await ctx.trigger_typing()
+    await asyncio.sleep(3)
+    await ctx.send(embed=embed)
                        
 @client.command(pass_context=True)
 async def gender(ctx, *, name:str = None):
