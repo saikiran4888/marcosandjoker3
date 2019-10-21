@@ -1116,7 +1116,7 @@ async def weather(ctx, *, city:str=None):
     if city == None:
         await ctx.send("**Please enter any city name...**")
     else:
-        address = f"http://api.openweathermap.org/data/2.5/weather?appid=f2e8d829021f0bb51351afb8a104b709&q={city}&units=metric"
+        address = f"http://api.openweathermap.org/data/2.5/weather?appid={os.getenv('open_weather')}&q={city}&units=metric"
         data = requests.get(address).json()
         if data['cod'] == "404":
             await ctx.send(f"**{data['message']}**")
