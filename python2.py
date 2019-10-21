@@ -42,7 +42,7 @@ async def hlo(ctx):
 @client.command(pass_context = True)
 async def quote(ctx):
     choices = ["**Smile, because it confuses people. Smile, because it's easier than explaining what is killing you inside. - THE JOKER**", "**As you know, madness is like gravity...all it takes is a little push. - THE JOKER**", "**If you’re good at something, never do it for free. - THE JOKER**", "**Nobody panics when things go “according to plan”. Even if the plan is horrifying! - THE JOKER**", "**Introduce a little anarchy. Upset the established order, and everything becomes chaos. I'm an agent of chaos... - THE JOKER**", "**Do I really look like a guy with a plan? You know what I am? I'm a dog chasing cars. I wouldn't know what to do with one if I caught it! You know, I just... *do* things. - THE JOKER**", "**What doesn't kill you, simply makes you stranger! - THE JOKER**", "**Why so serious? >:) - THE JOKER**", "**They Laugh At me Because I'm Different. I laugh At Them Because The're all the same - THE JOKER**", "**Their morals, their code; it's a bad joke. Dropped at the first sign of trouble. They're only as good as the world allows them to be. You'll see- I'll show you. When the chips are down these, uh, civilized people? They'll eat each other. See I'm not a monster, I'm just ahead of the curve. - THE JOKER**", "**The only sensible way to live in this world is without rules. - THE JOKER**"]
-    embed = discord.Embed(title = " ", description = "**RIP Heath Ledger.... You've gave us a memorable gift like JOKER... We can't forget you...**", color=0XFF69B4)
+    embed = discord.Embed(title = " ", description = "**RIP Heath Ledger.... You've gave us a memorable gift like JOKER... We can't forget you...**", color=ctx.author.color)
     embed.add_field(name="Here's a quote of JOKER for you....", value = random.choice(choices))
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/531162741281521665/Heath_Ledger.png')
     embed.set_footer(text=f'Requested by {ctx.message.author}', icon_url=f'{ctx.message.author.avatar_url}')
@@ -55,7 +55,7 @@ async def botinfo(ctx):
     User2 = await client.fetch_user('498378677512437762')
     User3 = await client.fetch_user('500219510079356928')
     User4 = await client.fetch_user("400255149014122496")
-    embed=discord.Embed(title="Details of this BOT...", description="Here are the details of this BOT below", color=0XFF69B4)
+    embed=discord.Embed(title="Details of this BOT...", description="Here are the details of this BOT below", color=ctx.author.color)
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png')
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     embed.timestamp = datetime.datetime.utcnow()
@@ -78,7 +78,7 @@ async def fams(ctx):
     data = requests.get(api_address).json()
     gif_url = data['data']['image_original_url']
     title = data['data']['title']
-    embed = discord.Embed(title="Hey ya fams... Here's random gif from DBZ universe...", description=title, color=0XFCDFFF)
+    embed = discord.Embed(title="Hey ya fams... Here's random gif from DBZ universe...", description=title, color=ctx.author.color)
     embed.set_image(url=gif_url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
@@ -87,7 +87,7 @@ async def fams(ctx):
 @client.command(pass_context = True)
 async def avatar(ctx, user: discord.Member=None):
     if user is None:
-        embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=0XFF69B4)
+        embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
         embed.add_field(name='User: {}'.format(ctx.message.author.name), value='Avatar:', inline=True)
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png') 
         embed.set_image(url = ctx.message.author.avatar_url)
@@ -95,7 +95,7 @@ async def avatar(ctx, user: discord.Member=None):
         embed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=embed)
     else:
-        embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=0XFF69B4)
+        embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
         embed.add_field(name='User: {}'.format(user.name), value='Avatar:', inline=True)
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png') 
         embed.set_footer(text=f"Requested by {ctx.message.author.name}", icon_url=f"{ctx.message.author.avatar_url}")
@@ -122,7 +122,7 @@ async def poll(ctx, question, *options:str):
         description = []
         for x, option in enumerate(options):
             description += '\n {} {}'.format(reactions[x], option)
-            embed = discord.Embed(title=question, description=''.join(description), color=0XFF69B4)
+            embed = discord.Embed(title=question, description=''.join(description), color=ctx.author.color)
             react_message = await ctx.send(embed=embed)
         for reaction in reactions[:len(options)]:
             await react_message.add_reaction(reaction)
@@ -136,7 +136,7 @@ async def marvel(ctx):
     gif_url = data['data']['image_original_url']
     matter = f"[Click me if the gif didn't loaded](gif_url)"
     title = data['data']['title']
-    embed = discord.Embed(title="Excelsior!!! Here's the random GIF from Marvel Universe", description=title, color=0XFCDFFF)
+    embed = discord.Embed(title="Excelsior!!! Here's the random GIF from Marvel Universe", description=title, color=ctx.author.color)
     embed.set_image(url=gif_url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
@@ -149,7 +149,7 @@ async def dc(ctx):
     gif_url = data['data']['image_original_url']
     matter = f"[Click me if the gif didn't loaded](gif_url)"
     title = data['data']['title']
-    embed = discord.Embed(title="Hey Kryptonian... Here's random gif from DC universe...", description=title, color=0XFCDFFF)
+    embed = discord.Embed(title="Hey Kryptonian... Here's random gif from DC universe...", description=title, color=ctx.author.color)
     embed.set_image(url=gif_url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
@@ -160,7 +160,7 @@ async def dc(ctx):
 @client.command(pass_context = True)
 async def joker(ctx):
     choices = ['https://media.giphy.com/media/KZd26L2o8QXtK/giphy.gif', 'https://media.giphy.com/media/aazZrFTMrDKLK/giphy.gif', 'https://media.giphy.com/media/F0A48Q2wFjE7S/giphy.gif', 'https://media.giphy.com/media/7waKDy5RbDYVG/giphy.gif', 'https://media.giphy.com/media/13m24iFmhomZi0/giphy.gif', 'https://media.giphy.com/media/zCP1GdPjxtCTe/giphy.gif', 'https://media.giphy.com/media/tN2OR1R1BLKV2/giphy.gif', 'https://media.giphy.com/media/X9Z0O2bpi8GMU/giphy.gif', 'https://media.giphy.com/media/YPIrsRqqO7oB2/giphy.gif', 'https://media.giphy.com/media/FSp1Wqx2TPYSA/giphy.gif', 'https://media.giphy.com/media/8UwEdwAF5XWQE/giphy.gif']
-    embed=discord.Embed(title="Hello Joker fan... Here's a GIF for you...", description="Tribute to the legendary **Heath Ledger**", color=0XFF69B4)
+    embed=discord.Embed(title="Hello Joker fan... Here's a GIF for you...", description="Tribute to the legendary **Heath Ledger**", color=ctx.author.color)
     embed.set_image(url=random.choice(choices))
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/531162741281521665/Heath_Ledger.png')
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
@@ -174,7 +174,7 @@ async def naruto(ctx):
     gif_url = data['data']['image_original_url']
     matter = f"[Click me if the gif didn't loaded](gif_url)"
     title = data['data']['title']
-    embed = discord.Embed(title=f"Hey ya {ctx.author.name}, Here's the random GIF from Naruto Universe", description=title, color=0XFCDFFF)
+    embed = discord.Embed(title=f"Hey ya {ctx.author.name}, Here's the random GIF from Naruto Universe", description=title, color=ctx.author.color)
     embed.set_image(url=gif_url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
@@ -186,7 +186,7 @@ async def meme(ctx):
     async with aiohttp.ClientSession() as session:
         async with session.get("https://api.reddit.com/r/me_irl/random") as r:
             data = await r.json()
-            embed = discord.Embed(title='Meme',color=0XFF69B4)
+            embed = discord.Embed(title='Meme',color=ctx.author.color)
             embed.set_image(url=data[0]["data"]["children"][0]["data"]["url"])
             embed.set_footer(text=f'Requested by: {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
             embed.timestamp = datetime.datetime.utcnow()
@@ -208,7 +208,7 @@ async def clear(ctx, number: int = None):
         x = await ctx.send('`Joker has deleted '+str(number)+' messages for you...`')
         await asyncio.sleep(5)
         await x.delete()
-        embed = discord.Embed(title=" ", description=f"**Bulk Delete in {ctx.channel.mention} {number+1} messages deleted**", color=0XFCDFFF)
+        embed = discord.Embed(title=" ", description=f"**Bulk Delete in {ctx.channel.mention} {number+1} messages deleted**", color=ctx.author.color)
         embed.set_author(name=ctx.guild.name, icon_url=ctxguild.icon_url)
         embed.timestamp = datetime.datetime.utcnow()
         await channel.send(embed=embed)
@@ -263,13 +263,13 @@ async def P(ctx, *, word:str=None):
 async def movie(ctx, *, name:str=None):
     await ctx.trigger_typing()
     if name is None:
-        embed=discord.Embed(description = "Please specify a movie, *eg. ``%movie Bohemian Rhapsody``*", color = 0XFF69B4)
+        embed=discord.Embed(description = "Please specify a movie, *eg. ``%movie Bohemian Rhapsody``*", color = ctx.author.color)
         await ctx.send(embed=embed)
     key = "4210fd67"
     url = "http://www.omdbapi.com/?t={}&apikey={}&plot=full".format(name, key)
     response = requests.get(url)
     x = json.loads(response.text)
-    embed=discord.Embed(title =x['Title'], description = "Here is your movie {}".format(ctx.message.author.name), color = 0XFF69B4)
+    embed=discord.Embed(title =x['Title'], description = "Here is your movie {}".format(ctx.message.author.name), color = ctx.author.color)
     if x["Poster"] != "N/A":
      embed.set_thumbnail(url = x["Poster"])
     embed.add_field(name = "__Title__", value = x["Title"])
@@ -298,7 +298,7 @@ async def movie(ctx, *, name:str=None):
 @client.command(pass_context=True)
 async def help(ctx, name: str=None):
     if name == None:
-        embed = discord.Embed(title="Main help centre of The Laughing Clown Bot...", description="Do ``%help <category>`` for detailed help of that category... Categories are given below select one of them", color=0xff69b4)
+        embed = discord.Embed(title="Main help centre of The Laughing Clown Bot...", description="Do ``%help <category>`` for detailed help of that category... Categories are given below select one of them", color=ctx.author.color)
         embed.add_field(name="fun", value="Shows fun commands", inline=False)
         embed.add_field(name="admin", value="Shows admin commands", inline=False)
         embed.add_field(name="bot", value="Shows bot related commands", inline=False)
@@ -309,7 +309,7 @@ async def help(ctx, name: str=None):
         await asyncio.sleep(5)
         await ctx.send(embed=embed)
     elif name == "fun":
-        embed = discord.Embed(title="Welcome to fun category...", description="Skip <> and (). you don't have to use these while using a command...", color=0XFCDFFF)
+        embed = discord.Embed(title="Welcome to fun category...", description="Skip <> and (). you don't have to use these while using a command...", color=ctx.author.color)
         embed.add_field(name="quote", value="Gives random quote of Joker from Dark Knight movie \nUsage: ``%quote``", inline=False)
         embed.add_field(name="userid", value="Gives the user id of the user \nUsage: ``%userid <user. If user is none it returns the id of the author>``", inline=False)
         embed.add_field(name="fams", value="Random Dragon Ball Z gif \nUsage: ``%fams``", inline=False)
@@ -326,7 +326,7 @@ async def help(ctx, name: str=None):
         await asyncio.sleep(3)
         await ctx.send(embed=embed)
     elif name == "admin":
-        embed = discord.Embed(title="Welcome to admin/staff category...", description="Skip <> and (). you don't have to use these while using a command...", color=0XFCDFFF)
+        embed = discord.Embed(title="Welcome to admin/staff category...", description="Skip <> and (). you don't have to use these while using a command...", color=ctx.author.color)
         embed.add_field(name="clear", value="Clears the number of messages in that channel \nUsage: ``%clear <number>``", inline=False)
         embed.add_field(name="announce", value="Announces the entered matter in the desired channel \nUsage: ``%announce <channel> <matter>``", inline=False)
         embed.add_field(name="lock", value="Locks the specified channel for the specified role \nUsage: ``%lock <role> <channel>``", inline=False)
@@ -338,7 +338,7 @@ async def help(ctx, name: str=None):
         await asyncio.sleep(3)
         await ctx.send(embed=embed)
     elif name == "bot":
-        embed2 = discord.Embed(title="Welcom to bot category...", description="Skip <> and (). you don't have to use these while using a command...", color=0XFCDFFF)
+        embed2 = discord.Embed(title="Welcom to bot category...", description="Skip <> and (). you don't have to use these while using a command...", color=ctx.author.color)
         embed2.add_field(name="botinfo", value="Gives the information about the bot \nUsage: ``%botinfo``", inline=False)
         embed2.add_field(name="serverinfo", value=f"Gives the info about {ctx.guild.name} server \nUsage: ``%serverinfo``", inline=False)
         embed2.timestamp = datetime.datetime.utcnow()
@@ -347,7 +347,7 @@ async def help(ctx, name: str=None):
         await asyncio.sleep(3)
         await ctx.send(embed=embed2)
     elif name == "misc":
-        embed = discord.Embed(title="Welcome to misc section...", description="Skip <> and (). you don't have to use these while using a command...", color=0XFCDFFF)
+        embed = discord.Embed(title="Welcome to misc section...", description="Skip <> and (). you don't have to use these while using a command...", color=ctx.author.color)
         embed.add_field(name="movie", value="Gives the information of the particular movie \nUsage: ``%movie <moviename>``", inline=False)
         embed.add_field(name="roleinfo", value="Gives info of that particular role (To use this command, You've to got 'Manage Roles' permission. \nUsage: ``%roleinfo <rolename>``")
         embed.add_field(name="animeshow", value="Gives info about the anime show that you've searched. \nUsage: ``%animeshow <show name>``")
@@ -614,7 +614,7 @@ async def on_message_delete(message):
         if message.author.bot:
             channel = client.get_channel(557273459244269582)
             async for entry in message.guild.audit_logs(limit=1, action=discord.AuditLogAction.message_delete):
-                embed = discord.Embed(title="Message deleted", description=f"Message sent by {entry.target.mention}, deleted by {entry.user.mention}, in {message.channel.mention}", color=0XFCDFFF)
+                embed = discord.Embed(title="Message deleted", description=f"Message sent by {entry.target.mention}, deleted by {entry.user.mention}, in {message.channel.mention}", color=0XFF69BF)
                 embed.timestamp = datetime.datetime.utcnow()
                 await channel.send(embed=embed)
                 return
@@ -623,12 +623,12 @@ async def on_message_delete(message):
             async for entry in message.guild.audit_logs(limit=1, action=discord.AuditLogAction.message_delete): 
                 channel = client.get_channel(557273459244269582)
                 matter = f"Message sent by: {message.author.mention} deleted in {message.channel.mention} \n \n  {message.content}"
-                embed = discord.Embed(title=f"{message.author.name}", description=matter, color=0XFCDFFF)
+                embed = discord.Embed(title=f"{message.author.name}", description=matter, color=0XFF69BF)
                 embed.set_footer(text=f"Author {message.author.id}  | Message ID: {message.id}")
                 embed.timestamp = datetime.datetime.utcnow()
                 await channel.send(embed=embed)
                 if entry.user != message.author:
-                    embed = discord.Embed(title="Message deleted", description=f"Message sent by {entry.target.mention}, deleted by {entry.user.mention}, in {message.channel.mention}", color=0XFCDFFF)
+                    embed = discord.Embed(title="Message deleted", description=f"Message sent by {entry.target.mention}, deleted by {entry.user.mention}, in {message.channel.mention}", color=0XFF69BF)
                     embed.timestamp = datetime.datetime.utcnow()
                     await channel.send(embed=embed)
                 else:
@@ -641,11 +641,11 @@ async def on_member_remove(member):
         channel2 = client.get_channel(557273459244269582)
         userchannel = client.get_channel(571302888110817281)
         person_count = len([member for member in member.guild.members if not member.bot])
-        embed=discord.Embed(title=f"Good bye {member.name}... Hope you'll come back again to {member.guild.name}", description="Thank you for being with us all these times...", color=0XFF69B4)
+        embed=discord.Embed(title=f"Good bye {member.name}... Hope you'll come back again to {member.guild.name}", description="Thank you for being with us all these times...", color=0XFFFFFF)
         embed.set_thumbnail(url='https://media.giphy.com/media/LTFbyWuELIlqlXGLeZ/giphy.gif')
         embed.add_field(name="__**Members Remaining**__", value='{}'.format(str(member.guild.member_count)), inline=True)
         embed.timestamp = datetime.datetime.utcnow()
-        embed2=discord.Embed(title="Member Left", description= member.mention, color=0XFF69B4)
+        embed2=discord.Embed(title="Member Left", description= member.mention, color=0XFFFFFF)
         embed2.set_thumbnail(url=member.avatar_url)
         embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
         embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
@@ -662,16 +662,16 @@ async def on_member_join(member):
     choices = ["DcssawdeS", "Sasdawdd", "AWSdasdwaA", "AdwASwAas", "AsdWDAasas", "ASDwdAsad", "MKiojmkomM"]
     choices2 = random.choice(choices)
     role = discord.utils.get(member.guild.roles, id=516303012671520769)
-    embed = discord.Embed(title=" ", description=f"Welcome to {member.guild.name}, In order to send any message in the server, You must verify as per the server's policy. Sorry for bothering you but it's my duty though.... And please follow the instructions below. I'm sure that the instructions will be easy for you... Wait 10 seconds for next message.", color=0XFCDFFF)
+    embed = discord.Embed(title=" ", description=f"Welcome to {member.guild.name}, In order to send any message in the server, You must verify as per the server's policy. Sorry for bothering you but it's my duty though.... And please follow the instructions below. I'm sure that the instructions will be easy for you... Wait 10 seconds for next message.", color=0XFFFFFF)
     embed.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
     embed.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
-    embed2 = discord.Embed(title=" ", description="You've to type the word shown in the next message correctly. And you'vve got only three chances. If you failed to enter correct word, Then you'll get kicked from server and you've to join again... Wait 10 seconds for next message", color=0XFCDFFF)
+    embed2 = discord.Embed(title=" ", description="You've to type the word shown in the next message correctly. And you'vve got only three chances. If you failed to enter correct word, Then you'll get kicked from server and you've to join again... Wait 10 seconds for next message", color=0XFFFFFF)
     embed2.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
     embed2.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
-    embed3 = discord.Embed(title=f"This is your first attempt (Two remaining)... Type the word shown below correctly... **\n \n {choices2} \n \n**", description=" ", color=0XFCDFFF)
+    embed3 = discord.Embed(title=f"This is your first attempt (Two remaining)... Type the word shown below correctly... **\n \n {choices2} \n \n**", description=" ", color=0XFFFFFF)
     embed3.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
     embed3.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
-    embed10 = discord.Embed(title="Successful Verification", description=f"{member.mention} got verified successfully, Welcome him/her.", color=0XFCDFFF)
+    embed10 = discord.Embed(title="Successful Verification", description=f"{member.mention} got verified successfully, Welcome him/her.", color=0XFFFFFF)
     embed10.set_author(name=member.guild.name, icon_url=member.guild.icon_url)
     embed.timestamp = datetime.datetime.utcnow()
     await member.send(embed=embed)
@@ -681,7 +681,7 @@ async def on_member_join(member):
     await member.send(embed=embed3)
     msg2 = await client.wait_for('message', check=lambda message: message.author == member)
     if msg2.content == choices2:
-        embed4 = discord.Embed(title=f"Yayy!!! You've made it you've got {role.name} role enjoy your stay in {member.guild.name} server... Thanks for supporting us", description=" ", color=0XFCDFFF)
+        embed4 = discord.Embed(title=f"Yayy!!! You've made it you've got {role.name} role enjoy your stay in {member.guild.name} server... Thanks for supporting us", description=" ", color=0XFFFFFF)
         embed4.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
         embed4.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
         await member.send(embed=embed4)
@@ -689,13 +689,13 @@ async def on_member_join(member):
         await channel3.send(embed=embed10)
     else:
         choices3 = random.choice(choices)
-        embed5 = discord.Embed(title=f"You've typed the wrong word... This is your second attempt (One remaining)... Type the word shown below correctly...** \n \n {choices3} \n \n**", description=" ", color=0XFCDFFF)
+        embed5 = discord.Embed(title=f"You've typed the wrong word... This is your second attempt (One remaining)... Type the word shown below correctly...** \n \n {choices3} \n \n**", description=" ", color=0XFFFFFF)
         embed5.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
         embed5.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
         await member.send(embed=embed5)
         msg3 = await client.wait_for('message', check=lambda message: message.author == member)
         if msg3.content == choices3:
-            embed4 = discord.Embed(title=f"Yayy!!! You've made it you've got {role.name} role enjoy your stay in {member.guild.name} server... Thanks for supporting us", description=" ", color=0XFCDFFF)
+            embed4 = discord.Embed(title=f"Yayy!!! You've made it you've got {role.name} role enjoy your stay in {member.guild.name} server... Thanks for supporting us", description=" ", color=0XFFFFFF)
             embed4.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
             embed4.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
             await member.send(embed=embed4)
@@ -703,13 +703,13 @@ async def on_member_join(member):
             await channel3.send(embed=embed10)
         else:
             choices4 = random.choice(choices)
-            embed6 = discord.Embed(title=f"You've typed the wrong word... This is your last attempt... Type the word shown below correctly.. If yout typed wrong you'll get kicked from server...** \n \n {choices4} \n \n**", description=" ", color=0XFCDFFF)
+            embed6 = discord.Embed(title=f"You've typed the wrong word... This is your last attempt... Type the word shown below correctly.. If yout typed wrong you'll get kicked from server...** \n \n {choices4} \n \n**", description=" ", color=0XFFFFFF)
             embed6.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
             embed6.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
             await member.send(embed=embed6)
             msg4 = await client.wait_for('message', check=lambda message: message.author == member)
             if msg4.content == choices4:
-                embed4 = discord.Embed(title=f"Yayy!!! You've made it you've got {role.name} role enjoy your stay in {member.guild.name} server... Thanks for supporting us", description=" ", color=0XFCDFFF)
+                embed4 = discord.Embed(title=f"Yayy!!! You've made it you've got {role.name} role enjoy your stay in {member.guild.name} server... Thanks for supporting us", description=" ", color=0XFFFFFF)
                 embed4.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
                 embed4.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
                 await member.send(embed=embed4)
@@ -719,7 +719,7 @@ async def on_member_join(member):
                 await member.send("**You've entered a wrong word agian.... Your attempts are over... You've been kicked out of this server**")
                 await asyncio.sleep(10)
                 await member.guild.kick(member, reason="**Unsuccessful Verification**")
-                embed = discord.Embed(title="Failed Verification", description=f"Failed verification by {member.mention}...", color=0XFCDFFF)
+                embed = discord.Embed(title="Failed Verification", description=f"Failed verification by {member.mention}...", color=0XFFFFFF)
                 embed.set_author(name=member.guild.name, icon_url=member.guild.icon_url)
                 embed.timestamp = datetime.datetime.utcnow()
                 await channel3.send(embed=embed)
@@ -731,7 +731,7 @@ async def on_member_join(member):
     userchannel = client.get_channel(571302888110817281)
     general = client.get_channel(565770475574394902)                                   
     person_count = len([member for member in member.guild.members if not member.bot])
-    embed=discord.Embed(title=f"Welcome {member.name} to {member.guild.name}", description=f"**Hope you'll be active here... Read rules at {text_channel.mention} channel and don't break any of them...**", color=0XFF69B4)
+    embed=discord.Embed(title=f"Welcome {member.name} to {member.guild.name}", description=f"**Hope you'll be active here... Read rules at {text_channel.mention} channel and don't break any of them...**", color=0XFFFFFF)
     embed.set_thumbnail(url='https://media.giphy.com/media/OF0yOAufcWLfi/giphy.gif')
     embed.add_field(name="__**Thanks for joining our server**__", value="We hope you a good stay here....")
     embed.add_field(name="__**Time of joining**__", value=member.joined_at.date(), inline=True)
@@ -739,7 +739,7 @@ async def on_member_join(member):
     embed.add_field(name="__**User account created at**__", value=gettime.date(), inline=True)
     embed.set_footer(text=member.name, icon_url=member.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
-    embed2=discord.Embed(title="Member Joined", description=member.mention, color=0XFF69B4)
+    embed2=discord.Embed(title="Member Joined", description=member.mention, color=0XFFFFFF)
     embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
     embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
     embed2.timestamp = datetime.datetime.utcnow()
@@ -761,7 +761,7 @@ async def on_message_edit(before,after):
             if before.content != after.content:
                 channel = client.get_channel(557273459244269582)
                 matter = f"**Message edited in {before.channel.mention} **[Jump to message](https://discordapp.com/channels/{before.guild.id}/{after.channel.id}/{after.id})"
-                embed = discord.Embed(title=f"{before.author.name}", description=matter, color=0XFF69B4)
+                embed = discord.Embed(title=f"{before.author.name}", description=matter, color=0XFFFFFF)
                 embed.add_field(name="Before", value=before.content, inline=False)
                 embed.add_field(name="After", value=after.content, inline=False)
                 embed.timestamp = datetime.datetime.utcnow()
@@ -770,47 +770,56 @@ async def on_message_edit(before,after):
         
 @client.event
 async def on_guild_channel_create(channel):
-    channel2 = client.get_channel(557273459244269582)
-    embed = discord.Embed(title="New Channel Created", description=f"**Channel Created: {channel.mention}**", color=0XFCDFFF)
-    embed.set_author(name=channel.guild.name, icon_url=channel.guild.icon_url)
-    embed.timestamp = datetime.datetime.utcnow()
-    embed.set_footer(text=f"ID: {channel.id}")
+    if channel.guild.id != "515979430288425001":
+        return;
+    else:
+        channel2 = client.get_channel(557273459244269582)
+        embed = discord.Embed(title="New Channel Created", description=f"**Channel Created: {channel.mention}**", color=ctx.author.color)
+        embed.set_author(name=channel.guild.name, icon_url=channel.guild.icon_url)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"ID: {channel.id}")
 
-    await channel2.send(embed=embed)
+        await channel2.send(embed=embed)
 
 @client.event
 async def on_guild_channel_delete(channel):
-    channel2 = client.get_channel(557273459244269582)
-    embed = discord.Embed(title="Channel Deleted", description=f"**Channel Deleted: {channel.name}**", color=0XFCDFFF)
-    embed.set_author(name=channel.guild.name, icon_url=channel.guild.icon_url)
-    embed.timestamp = datetime.datetime.utcnow()
-    embed.set_footer(text=f"ID: {channel.id}")
+    if channel.guild.id != "515979430288425001":
+        return;
+    else:
+        channel2 = client.get_channel(557273459244269582)
+        embed = discord.Embed(title="Channel Deleted", description=f"**Channel Deleted: {channel.name}**", color=ctx.author.color)
+        embed.set_author(name=channel.guild.name, icon_url=channel.guild.icon_url)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text=f"ID: {channel.id}")
 
-    await channel2.send(embed=embed)
+        await channel2.send(embed=embed)
 
 @client.event
 async def on_guild_channel_update(before, after):
-    channel2 = client.get_channel(557273459244269582)
-    if before.name != after.name:
-        embed = discord.Embed(title="Channel Name Edited", description=" ", color=0XFCDFFF)
-        embed.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
-        embed.add_field(name="Before", value=before.name, inline=False)
-        embed.add_field(name="After", value=after.name, inline=False)
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_footer(text=f"ID: {after.id}")
-        await channel2.send(embed=embed)
+    if after.guild.id != "515979430288425001":
+        return;
+    else:
+        channel2 = client.get_channel(557273459244269582)
+        if before.name != after.name:
+            embed = discord.Embed(title="Channel Name Edited", description=" ", color=ctx.author.color)
+            embed.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
+            embed.add_field(name="Before", value=before.name, inline=False)
+            embed.add_field(name="After", value=after.name, inline=False)
+            embed.timestamp = datetime.datetime.utcnow()
+            embed.set_footer(text=f"ID: {after.id}")
+            await channel2.send(embed=embed)
 
-    elif before.topic != after.topic:
-        if after.channel.is_VoiceChannel():
-            return;
-        else:
-            embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFCDFFF)
-            embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
-            embed2.add_field(name="Before", value=before.topic, inline=False)
-            embed2.add_field(name="After", value=after.topic, inline=False)
-            embed2.timestamp = datetime.datetime.utcnow()
-            embed2.set_footer(text=f"ID: {after.id}")
-            await channel2.send(embed=embed2)
+        elif before.topic != after.topic:
+            if after.channel.is_VoiceChannel():
+                return;
+            else:
+                embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=ctx.author.color)
+                embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
+                embed2.add_field(name="Before", value=before.topic, inline=False)
+                embed2.add_field(name="After", value=after.topic, inline=False)
+                embed2.timestamp = datetime.datetime.utcnow()
+                embed2.set_footer(text=f"ID: {after.id}")
+                await channel2.send(embed=embed2)
 
 
 @client.command(pass_context = True)
@@ -836,7 +845,7 @@ async def rules(ctx):
     rule_17 = "Leaving the server to evade mutes, warns, etc will result in double the punishment! (Warn/Mute x2, Ban)"
     rule_18 = "Alternative Accounts are not allowed! Only Owners and Admins are allowed to have alts for testing purposes mainly. Those caught with an Alternative Account may result in both accounts being Banned"
     punishments = "**:beginner:  1 WARNING= NOTHING \n :beginner:  2 WARNINGS = MUTE FOR 12HR \n :beginner:  4 WARNINGS = MUTE FOR 1 WEEK \n :beginner:  10 WARNINGS = INSTANT KICK \n NOTE: SOFT SPAMS..U MAY GET MUTE BUT FOR HARMFUL SPAMS WILL GET U INSTANT BAN**"
-    embed = discord.Embed(title="**CONSTITUTION OF THIS SERVER... JK RULES OF THIS SERVER...**", description=None, color=0XFF69B4)
+    embed = discord.Embed(title="**CONSTITUTION OF THIS SERVER... JK RULES OF THIS SERVER...**", description=None, color=ctx.author.color)
     embed.add_field(name="**:beginner:   Discord ToS apply... Coz he's the only boss here**", value=rule_1, inline=False)
     embed.add_field(name="**:beginner:   Keep it down**", value=rule_2, inline=False)
     embed.add_field(name="**:beginner:   No bad words please...**", value=rule_3, inline=False)
@@ -877,7 +886,7 @@ async def animeshow(ctx, *, name:str = None):
         end_date = end_date
     ytlink = data2['data']['attributes']['youtubeVideoId']
     await ctx.trigger_typing()
-    embed = discord.Embed(title="Here's the anime show that you've searched for...", color=0XFCDFFF)
+    embed = discord.Embed(title="Here's the anime show that you've searched for...", color=ctx.author.color)
     embed.add_field(name="Name", value=f"{data2['data']['attributes']['titles']['en'] } ({data2['data']['attributes']['titles']['ja_jp']})")
     embed.add_field(name="Synopsis", value=synopsis)
     embed.add_field(name="Average Rating", value=data2['data']['attributes']['averageRating'])
@@ -919,7 +928,7 @@ async def urban(ctx, *, word: str = None):
     address = f"http://api.urbandictionary.com/v0/define?term={word}"
     data = requests.get(address).json()
     matter = data['list'][0]['definition'].replace("[", "").replace("]", "")
-    embed = discord.Embed(title=data['list'][0]['word'], description=f"{matter} \n[Click me for alternate definitions]({data['list'][0]['permalink']})", color=0XFCDFFF)
+    embed = discord.Embed(title=data['list'][0]['word'], description=f"{matter} \n[Click me for alternate definitions]({data['list'][0]['permalink']})", color=ctx.author.color)
     embed.add_field(name="Example", value=data['list'][0]['example'].replace("[", "").replace("]", ""), inline=False)
     embed.add_field(name="Upvotes", value=data['list'][0]['thumbs_up'], inline = True)
     embed.add_field(name="Downvotes", value=data['list'][0]['thumbs_down'], inline = True)
@@ -984,7 +993,7 @@ async def lyrics(ctx, *, track:str = None):
         lyrics = data['lyrics']
         if len(lyrics) < 2048:
             for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                embed = discord.Embed(title=data['title'], description=f"{chunk}", color=0XFCDFFF)
+                embed = discord.Embed(title=data['title'], description=f"{chunk}", color=ctx.author.color)
                 embed.set_author(name=data['author'], url=data['thumbnail']['genius'])
                 embed.url = data['links']['genius']
                 embed.set_thumbnail(url=data['thumbnail']['genius'])
@@ -1020,7 +1029,7 @@ async def syn(ctx, *, word:str =None):
         data = requests.get(address).json()
         noun = data['noun']['syn']
         noun2 = ", ".join(noun)
-        embed = discord.Embed(title=f"Here's the synonym(s) for {word} that I could find...", description=noun2, color=0XFCDFFF)
+        embed = discord.Embed(title=f"Here's the synonym(s) for {word} that I could find...", description=noun2, color=ctx.author.color)
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)                       
@@ -1089,7 +1098,7 @@ async def translate(ctx, *, text:str=None):
     msg = await client.wait_for('message', check=lambda message: message.author == ctx.author)
     address = f"https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190924T172418Z.91b5d532be1a360c.fe80f58d74501b56a4750b18c0fb2ca74585fec3&text={text}&lang={msg.content}"
     data1 = requests.get(address).json()
-    embed = discord.Embed(title=data1['lang'], description=" ",color=0XFCDFFF)
+    embed = discord.Embed(title=data1['lang'], description=" ",color=ctx.author.color)
     embed.add_field(name="Original", value=text, inline=False)
     embed.add_field(name="Translated", value=data1['text'][0], inline=False)
     await ctx.send(data1['text'][0])
