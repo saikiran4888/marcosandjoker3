@@ -540,11 +540,11 @@ async def tempmute(ctx, user: discord.Member, num: int, time: str, reason:str):
 
 @client.command(pass_context=True)
 async def spotify(ctx, *, user:discord.Member=None):
-    if user is None:
+if user is None:
         user = ctx.author
     activity = ctx.author.activity
     if activity is None:
-        await ctx.send("{} is not playing anything on spotify!".format(user.name))
+        await ctx.send("{} is not playing anything on spotify!".format(user.display_name))
         return
     if activity.type == discord.ActivityType.listening and activity.name == "Spotify":
         embed = discord.Embed(description="**React to :thumbsup: in 20 seconds to get the song's lyrics into your DMs**")
@@ -567,7 +567,7 @@ async def spotify(ctx, *, user:discord.Member=None):
             data = requests.get(address).json()
             if 'error' in data:
                 await ctx.send(f"**{data['error']}**")
-            else:
+            elif data['author'] in activity.artist:
                 lyrics = data['lyrics']
                 if len(lyrics) < 2048:
                     for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
@@ -582,7 +582,8 @@ async def spotify(ctx, *, user:discord.Member=None):
                     await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
                     for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
                         await ctx.author.send(chunk)
-
+            else:
+                await ctx.send("**Sorry, I could'nt find the lyrics of this song...**")
         except:
             return    
     else:
