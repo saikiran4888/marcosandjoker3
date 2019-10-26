@@ -539,7 +539,7 @@ async def tempmute(ctx, user: discord.Member, num: int, time: str, reason:str):
 
 
 @client.command(pass_context=True)
-async def test(ctx, *, user:discord.Member=None):
+async def spotify(ctx, *, user:discord.Member=None):
     if user is None:
         user = ctx.author
     activity = ctx.author.activity
