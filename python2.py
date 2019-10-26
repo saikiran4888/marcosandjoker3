@@ -539,8 +539,8 @@ async def tempmute(ctx, user: discord.Member, num: int, time: str, reason:str):
 
 
 @client.command(pass_context=True)
-async def spotify(ctx, *, user:discord.Member=None):
-if user is None:
+async def test(ctx, *, user:discord.Member=None):
+    if user is None:
         user = ctx.author
     activity = ctx.author.activity
     if activity is None:
@@ -588,8 +588,7 @@ if user is None:
             return    
     else:
         await ctx.send("**Wait, You aren't listening any on spotify...**")
-        return
-                                   
+        return                                   
 @client.command(pass_context=True)
 @commands.has_permissions(manage_roles = True)
 async def roleinfo(ctx, role: discord.Role=None):
