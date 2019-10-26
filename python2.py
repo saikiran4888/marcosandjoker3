@@ -1144,6 +1144,21 @@ async def weather(ctx, *, city:str=None):
             embed.timestamp = datetime.datetime.utcnow()
             embed.set_footer(text=f"Powered by OpenWeather API, Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
             await ctx.send(embed=embed)
+                            
+@client.command(pass_context=True)
+async def dark(ctx):
+    address = "https://sv443.net/jokeapi/category/dark?blacklistFlags=nsfw,political"
+    data = requests.get(address).json()
+    x = await ctx.send("Joke is being ready. This can be dark and may triggers you, **Viewers discretion is advised and No Offense**.")
+    await asyncio.sleep(1)
+    await x.edit(content="Joke is being ready. This can be dark and may triggers you, **Viewers discretion is advised and No Offense**..")
+    await asyncio.sleep(1)
+    await x.edit(content="Joke is being ready. This can be dark and may triggers you, **Viewers discretion is advised and No Offense**...")
+    await asyncio.sleep(1)
+    if data['type'] == "single":
+        await x.edit(content=data['joke'])
+    else:
+        await x.edit(content=f"{data['setup']} \n{data['delivery']}")
                    
 
 client.run(os.getenv('TOKEN'))
