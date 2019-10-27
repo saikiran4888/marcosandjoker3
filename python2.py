@@ -144,7 +144,7 @@ async def marvel(ctx):
 
 @client.command(pass_context = True)
 async def dc(ctx):
-    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=dc&rating=G&lang=en"
+    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=dceu&rating=G&lang=en"
     data = requests.get(api_address).json()
     gif_url = data['data']['image_original_url']
     matter = f"[Click me if the gif didn't loaded](gif_url)"
@@ -1159,6 +1159,17 @@ async def dark(ctx):
         await x.edit(content=data['joke'])
     else:
         await x.edit(content=f"{data['setup']} \n{data['delivery']}")
+@client.command(pass_context=True)
+async def mala(ctx):
+    address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=happy birthday&rating=G&lang=en"
+    data = requests.get(address).json()
+    choices = ['The joy is in the air because your special day is here!', 'I hope your special day will bring you lots of happiness, love, and fun. You deserve them a lot. Enjoy!', 'All things are sweet and bright. May you have a lovely birthday Night.', 'Don’t ever change! Stay as amazing as you are, my friend', 'Let’s light the candles and celebrate this special day of your life. Happy birthday.', 'Here’s to the sweetest and loveliest person I know. Happy birthday!', 'May this special day bring you endless joy and tons of precious memories!', 'You are very special and that’s why you need to float with lots of smiles on your lovely face. Happy birthday.', 'The joy is in the air because your special day is here!']
+    r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
+    embed = discord.Embed(title=f":birthday: Happy Birthday Mala... {random.choice(choices)}... From your Joker", color=discord.Color((r << 16) + (g << 8) + b))
+    embed.set_image(url=data['data']['image_original_url'])
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text="Once again Happy Birthday Mala... From your Joker")
+    await ctx.send(embed=embed)
                    
 
 client.run(os.getenv('TOKEN'))
