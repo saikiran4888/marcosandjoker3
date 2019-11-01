@@ -770,7 +770,7 @@ async def on_message_edit(before,after):
         
 @client.event
 async def on_guild_channel_create(channel):
-    if channel.guild.id != "515979430288425001":
+    if channel.guild.name != "Test":
         return;
     else:
         channel2 = client.get_channel(557273459244269582)
@@ -783,7 +783,7 @@ async def on_guild_channel_create(channel):
 
 @client.event
 async def on_guild_channel_delete(channel):
-    if channel.guild.id != "515979430288425001":
+    if channel.guild.name = "Test":
         return;
     else:
         channel2 = client.get_channel(557273459244269582)
@@ -796,7 +796,7 @@ async def on_guild_channel_delete(channel):
 
 @client.event
 async def on_guild_channel_update(before, after):
-    if before.guild.id != 515979430288425001:
+    if before.guild.name = "Test":
         return;
     else:
         channel2 = client.get_channel(557273459244269582)
