@@ -774,7 +774,7 @@ async def on_guild_channel_create(channel):
         return;
     else:
         channel2 = client.get_channel(557273459244269582)
-        embed = discord.Embed(title="New Channel Created", description=f"**Channel Created: {channel.mention}**", color=ctx.author.color)
+        embed = discord.Embed(title="New Channel Created", description=f"**Channel Created: {channel.mention}**", color=0XFFFFFF)
         embed.set_author(name=channel.guild.name, icon_url=channel.guild.icon_url)
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text=f"ID: {channel.id}")
@@ -787,7 +787,7 @@ async def on_guild_channel_delete(channel):
         return;
     else:
         channel2 = client.get_channel(557273459244269582)
-        embed = discord.Embed(title="Channel Deleted", description=f"**Channel Deleted: {channel.name}**", color=ctx.author.color)
+        embed = discord.Embed(title="Channel Deleted", description=f"**Channel Deleted: {channel.name}**", color=0XFFFFFF)
         embed.set_author(name=channel.guild.name, icon_url=channel.guild.icon_url)
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text=f"ID: {channel.id}")
@@ -801,7 +801,7 @@ async def on_guild_channel_update(before, after):
     else:
         channel2 = client.get_channel(557273459244269582)
         if before.name != after.name:
-            embed = discord.Embed(title="Channel Name Edited", description=" ", color=ctx.author.color)
+            embed = discord.Embed(title="Channel Name Edited", description=" ", color=0XFFFFFF)
             embed.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
             embed.add_field(name="Before", value=before.name, inline=False)
             embed.add_field(name="After", value=after.name, inline=False)
@@ -813,7 +813,7 @@ async def on_guild_channel_update(before, after):
             if after.channel.is_VoiceChannel():
                 return;
             else:
-                embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=ctx.author.color)
+                embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFFFFFF)
                 embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
                 embed2.add_field(name="Before", value=before.topic, inline=False)
                 embed2.add_field(name="After", value=after.topic, inline=False)
@@ -845,7 +845,7 @@ async def rules(ctx):
     rule_17 = "Leaving the server to evade mutes, warns, etc will result in double the punishment! (Warn/Mute x2, Ban)"
     rule_18 = "Alternative Accounts are not allowed! Only Owners and Admins are allowed to have alts for testing purposes mainly. Those caught with an Alternative Account may result in both accounts being Banned"
     punishments = "**:beginner:  1 WARNING= NOTHING \n :beginner:  2 WARNINGS = MUTE FOR 12HR \n :beginner:  4 WARNINGS = MUTE FOR 1 WEEK \n :beginner:  10 WARNINGS = INSTANT KICK \n NOTE: SOFT SPAMS..U MAY GET MUTE BUT FOR HARMFUL SPAMS WILL GET U INSTANT BAN**"
-    embed = discord.Embed(title="**CONSTITUTION OF THIS SERVER... JK RULES OF THIS SERVER...**", description=None, color=ctx.author.color)
+    embed = discord.Embed(title="**CONSTITUTION OF THIS SERVER... JK RULES OF THIS SERVER...**", description=None, color=0XFFFFFF)
     embed.add_field(name="**:beginner:   Discord ToS apply... Coz he's the only boss here**", value=rule_1, inline=False)
     embed.add_field(name="**:beginner:   Keep it down**", value=rule_2, inline=False)
     embed.add_field(name="**:beginner:   No bad words please...**", value=rule_3, inline=False)
