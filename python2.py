@@ -796,7 +796,7 @@ async def on_guild_channel_delete(channel):
 
 @client.event
 async def on_guild_channel_update(before, after):
-    if after.guild.id != "515979430288425001":
+    if before.guild.id != 515979430288425001:
         return;
     else:
         channel2 = client.get_channel(557273459244269582)
