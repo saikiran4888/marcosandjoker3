@@ -542,7 +542,7 @@ async def tempmute(ctx, user: discord.Member, num: int, time: str, reason:str):
 async def spotify(ctx, *, user:discord.Member=None):
     if user is None:
         user = ctx.author
-    activity = ctx.author.activity
+    activity = user.activity
     if activity is None:
         await ctx.send("{} is not playing anything on spotify!".format(user.display_name))
         return
