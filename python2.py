@@ -810,16 +810,13 @@ async def on_guild_channel_update(before, after):
             await channel2.send(embed=embed)
 
         elif before.topic != after.topic:
-            if after.ChannelType.voice():
-                return;
-            else:
-                embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFFFFFF)
-                embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
-                embed2.add_field(name="Before", value=before.topic, inline=False)
-                embed2.add_field(name="After", value=after.topic, inline=False)
-                embed2.timestamp = datetime.datetime.utcnow()
-                embed2.set_footer(text=f"ID: {after.id}")
-                await channel2.send(embed=embed2)
+            embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFFFFFF)
+            embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
+            embed2.add_field(name="Before", value=before.topic, inline=False)
+            embed2.add_field(name="After", value=after.topic, inline=False)
+            embed2.timestamp = datetime.datetime.utcnow()
+            embed2.set_footer(text=f"ID: {after.id}")
+            await channel2.send(embed=embed2)
 
 
 @client.command(pass_context = True)
