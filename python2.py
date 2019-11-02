@@ -810,7 +810,6 @@ async def on_guild_channel_update(before, after):
             await channel2.send(embed=embed)
 
         elif before.topic != after.topic:
-                        
             embed2 = discord.Embed(title="Channel Topic Edited", description=f"Channel edited: {after.mention} ", color=0XFFFFFF)
             embed2.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
             embed2.add_field(name="Before", value=before.topic, inline=False)
@@ -818,7 +817,6 @@ async def on_guild_channel_update(before, after):
             embed2.timestamp = datetime.datetime.utcnow()
             embed2.set_footer(text=f"ID: {after.id}")
             await channel2.send(embed=embed2)
-
 
 @client.command(pass_context = True)
 @commands.has_permissions(administrator=True)
