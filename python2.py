@@ -106,6 +106,8 @@ async def avatar(ctx, user: discord.Member=None):
 @client.command(pass_context = True)
 @commands.has_permissions(administrator=True)
 async def poll(ctx, question, *options:str):
+    r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
+    color = discord.Color((r << 16) + (g << 8) + b)
     if len(options) <=1:
         await ctx.send('Joker needs more than one option to conduct poll!!')
         return
@@ -113,21 +115,21 @@ async def poll(ctx, question, *options:str):
         await ctx.send("Joker Can't accept more than 10 options to conduct poll!")
         return
 
-    if len(options) == 2 and options[0] == 'yes' and options[1] == 'no':
-        reactions = ['👍', '👎']
+    if len(options) == 2 and options[0] == '0' and options[1] == '1':
+        reactions = ['👍\u20e3', '👎\u20e3']
 
     else:
-        reactions = ['1\u20e3', '2\u20e3', '3\u20e3', '4\u20e3', '5\u20e3', '6\u20e3', '7\u20e3', '8\u20e3', '9\u20e3', '\U0001f51f']
+        reactions = ['1\u20e3', '2\u20e3', '3\u20e3', '4\u20e3', '5\u20e3', '6\u20e3', '7\u20e3', '8\u20e3', '9\u20e3', '10\U0001f51f']
 
         description = []
         for x, option in enumerate(options):
-            description += '\n {} {}'.format(reactions[x], option)
-            embed = discord.Embed(title=question, description=''.join(description), color=ctx.author.color)
-            react_message = await ctx.send(embed=embed)
+            description += '\n{} {}'.format(reactions[x], option)
+        embed = discord.Embed(title=question, description=''.join(description), color= color)
+        react_message = await ctx.send(embed=embed)
         for reaction in reactions[:len(options)]:
             await react_message.add_reaction(reaction)
-            embed.set_footer(text='poll ID: {}'.format(react_message.id))
-            await react_message.edit(embed=embed)
+        embed.set_footer(text='poll ID: {}'.format(react_message.id))
+        await react_message.edit(embed=embed)
 
 @client.command(pass_context = True)
 async def marvel(ctx):
