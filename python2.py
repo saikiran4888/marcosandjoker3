@@ -758,7 +758,7 @@ async def on_member_join(member):
     
 @client.event
 async def on_message_edit(before,after):
-    if before.guild.id != "515979430288425001":
+    if before.guild.name == "Test":
         return;
     else:
         
@@ -773,8 +773,7 @@ async def on_message_edit(before,after):
                 embed.add_field(name="After", value=after.content, inline=False)
                 embed.timestamp = datetime.datetime.utcnow()
                 embed.set_footer(text=f"ID: {before.id}")
-                await channel.send(embed=embed)
-        
+                await channel.send(embed=embed)        
 @client.event
 async def on_guild_channel_create(channel):
     if channel.guild.name == "Test":
