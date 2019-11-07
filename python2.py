@@ -751,7 +751,6 @@ async def on_member_join(member):
     embed3.set_author(name=member.guild.name, icon_url=member.guild.icon_url)
     embed3.set_footer(text=f"{member.guild.name} Welcomes you, {member.name}.", icon_url=member.avatar_url)
     embed3.set_image(url="https://cdn.discordapp.com/attachments/571554850052112390/642023238725140480/fbee75a62a2f109048bde9874dd85499.jpg")
-    await ctx.send(embed=embed)
     await channel.send(embed=embed)
     await channel2.send(embed=embed2)
     await general.send(embed=embed3)                                   
