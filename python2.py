@@ -745,11 +745,11 @@ async def on_member_join(member):
     embed2.add_field(name="**Members Remaining**", value=str(member.guild.member_count), inline=True)
     embed2.set_footer(text=f"ID: {member.id}", icon_url=member.avatar_url)
     embed2.timestamp = datetime.datetime.utcnow()
-    message = f"***:cherry_blossom: Welcome {ctx.author.mention}!! U made it over the waves and storm and arrived at __Virtual Reformed__ :cherry_blossom:*** \n**To begin your adventure with us \nGrab some roles in <#565767249793777696>  and introduce yourself in <#565900253673553924>  and don't forget to read the rules <#565767003533737985> ** \n***Now go on and explore and don't forget to have fun....tysm for joining :cherry_blossom:***"                                   
+    message = f"***:cherry_blossom: Welcome {member.mention}!! U made it over the waves and storm and arrived at __Virtual Reformed__ :cherry_blossom:*** \n**To begin your adventure with us \nGrab some roles in <#565767249793777696>  and introduce yourself in <#565900253673553924>  and don't forget to read the rules <#565767003533737985> ** \n***Now go on and explore and don't forget to have fun....tysm for joining :cherry_blossom:***"                                   
     r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
     embed3 = discord.Embed(title=" ",description=message, color = discord.Color((r << 16) + (g << 8) + b))
-    embed3.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
-    embed3.set_footer(text=f"{ctx.guild.name} Welcomes you, {ctx.author.name}.", icon_url=ctx.author.avatar_url)
+    embed3.set_author(name=member.guild.name, icon_url=member.guild.icon_url)
+    embed3.set_footer(text=f"{member.guild.name} Welcomes you, {memeber.name}.", icon_url=member.avatar_url)
     embed3.set_image(url="https://cdn.discordapp.com/attachments/571554850052112390/642023238725140480/fbee75a62a2f109048bde9874dd85499.jpg")
     await ctx.send(embed=embed)
     await channel.send(embed=embed)
