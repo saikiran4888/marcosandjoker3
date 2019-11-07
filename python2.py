@@ -749,7 +749,7 @@ async def on_member_join(member):
     r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
     embed3 = discord.Embed(title=" ",description=message, color = discord.Color((r << 16) + (g << 8) + b))
     embed3.set_author(name=member.guild.name, icon_url=member.guild.icon_url)
-    embed3.set_footer(text=f"{member.guild.name} Welcomes you, {memeber.name}.", icon_url=member.avatar_url)
+    embed3.set_footer(text=f"{member.guild.name} Welcomes you, {member.name}.", icon_url=member.avatar_url)
     embed3.set_image(url="https://cdn.discordapp.com/attachments/571554850052112390/642023238725140480/fbee75a62a2f109048bde9874dd85499.jpg")
     await ctx.send(embed=embed)
     await channel.send(embed=embed)
