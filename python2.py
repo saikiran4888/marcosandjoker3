@@ -513,7 +513,7 @@ async def unlock(ctx, Role:discord.Role=None, Channel:discord.TextChannel=None):
 @client.command(pass_context = True)
 @commands.has_permissions(ban_members = True)
 async def tempmute(ctx, user: discord.Member, num: int, time: str, reason:str):
-    role = discord.utils.get(ctx.guild.roles, id=520653530529398784)
+    role = discord.utils.get(ctx.guild.roles, id=643412756946485268)
 
     if time == 'm':
         duration = num*60
