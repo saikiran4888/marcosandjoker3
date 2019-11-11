@@ -1172,6 +1172,35 @@ async def mala(ctx):
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text="Once again Happy Birthday Mala... From your Joker")
     await ctx.send(embed=embed)
+                     
+@client.event
+async def on_member_update(before, after):
+    channel = client.get_channel(557273459244269582)
+    if after.guild == "Test":
+        return;
+    else:
+        if after.nick != before.nick:
+            embed = discord.Embed(title="Nickname Updated", description=f"Actual Username: {after.name} \nIf Before Nickname is ``None``, The Nickname is actual username or it isn't cached in bot. \nIf After Nickname is ``None``, The Nickname is Actual UserName of the Member.", color = 0xFFFFFF)
+            embed.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
+            embed.add_field(name="Before", value=before.nick)
+            embed.add_field(name="After", value=after.nick)
+            embed.set_footer(text=after.name, icon_url=after.avatar_url)
+            await channel.send(embed=embed)
+        elif before.roles != after.roles:
+            if len(before.roles) < len(after.roles):
+                new_role = next(role for role in after.roles if role not in before.roles)
+                embed = discord.Embed(title="Member Update", description=f"**{after.mention} has been given {new_role.mention} role**.", color=new_role.color)
+                embed.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
+                embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=after.name, icon_url=after.avatar_url)
+                await channel.send(embed=embed)
+            elif len(before.roles) > len(after.roles):
+                new_role = next(role for role in before.roles if role not in after.roles)
+                embed = discord.Embed(title="Member Update", description=f"**{after.mention} has been removed from {new_role.mention} role**.", color=new_role.color)
+                embed.set_author(name=after.guild.name, icon_url=after.guild.icon_url)
+                embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=after.name, icon_url=after.avatar_url)
+                await channel.send(embed=embed)                     
                    
 
 client.run(os.getenv('TOKEN'))
