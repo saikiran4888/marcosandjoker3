@@ -562,10 +562,10 @@ async def spotify(ctx, *, user:discord.Member=None):
         messaage = await ctx.send(embed=embed)
         await messaage.add_reaction(emoji="👍")
         await asyncio.sleep(2)
+        artist = ", ".join(activity.artists)
         reaction, user = await client.wait_for('reaction_add', check=lambda reaction, user: reaction.emoji == '👍', timeout=20)
         try:
-            con2 = activity.artists.replace(",", " ")
-            con = f"{activity.title} {con2}"
+            con = f"{activity.title} {artist}"
             address = f"https://some-random-api.ml/lyrics?title={con}"
             data = requests.get(address).json()
             if 'error' in data:
