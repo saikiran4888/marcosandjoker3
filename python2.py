@@ -955,13 +955,12 @@ async def joke(ctx):
                      
 @client.command(pass_context = True)
 async def fact(ctx):
-    address = "http://randomuselessfact.appspot.com/random.json?language=en"
+    address = "http://randomuselessfact.appspot.com/random.json?language"
     data = requests.get(address).json()
     fact = data['text']
-    source = data['source']
     await ctx.trigger_typing()
     await asyncio.sleep(3)
-    await ctx.send(f"{fact} \n \nSource: {source}")
+    await ctx.send(f"{fact}")
                      
 @client.command(pass_context=True)
 @commands.has_permissions(administrator=True)               
