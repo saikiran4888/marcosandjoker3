@@ -15,6 +15,7 @@ import requests
 import json
 import aiohttp
 import sqlite3
+from dadjokes import Dadjoke
 
 
 async def status_task():
@@ -1206,52 +1207,11 @@ async def on_member_update(before, after):
                 await channel.send(embed=embed)                     
                    
 @client.command(pass_context=True)
-async def channel(ctx, channel:discord.TextChannel):
-    db = sqlite3.connect("first.sqlite")
-    cursor = db.cursor()
-    cursor.execute(f"SELECT channel_id FROM first WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO first(guild_id, channel_id) values(?,?)")
-        values = (ctx.guild.id, channel.id)
-    else:
-        sql = ("UPDATE first SET channel_id=? WHERE guild_id=?")
-        values = (channel.id, ctx.guild.id)
-    await ctx.send(f"Channel has been set to {channel.mention}")    
-    cursor.execute(sql, values)
-    db.commit()
-    cursor.close()
-    db.close()
-
-@client.command(pass_context=True)
-async def setmessage(ctx, *, msg:str=None):
-    db = sqlite3.connect("first.sqlite")
-    cursor = db.cursor()
-    cursor.execute(f"SELECT msg FROM first WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO first(guild_id, msg) values(?,?)")
-        values = (ctx.guild.id, msg)
-    else:
-        sql = ("UPDATE first SET msg=? WHERE guild_id=?")
-        values = (msg, ctx.guild.id)
-    await ctx.send(f"Message has been set to {msg}")
-    cursor.execute(sql, values)
-    db.commit()
-    cursor.close()
-    db.close()
-
-@client.command(pass_context=True)
-async def send(ctx):
-    db = sqlite3.connect("first.sqlite")
-    cursor = db.cursor()
-    cursor.execute(f"SELECT msg FROM first WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    cursor.execute(f"SELECT channel_id FROM first WHERE guild_id = {ctx.guild.id}")
-    result2 = cursor.fetchone()
-    channel = client.get_channel(int(result2[0]))
-    await channel.send(str(result[0]))
-    cursor.close()
-    db.close()
+async def test2(ctx):
+    dadjoke = Dadjoke()
+    await ctx.trigger_typing()
+    await asyncio.sleep(3)
+    await ctx.send(dadjoke.joke)
+                     
                      
 client.run(os.getenv('TOKEN'))
