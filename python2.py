@@ -631,7 +631,7 @@ async def on_message_delete(message):
                 embed.timestamp = datetime.datetime.utcnow()
                 await channel.send(embed=embed)
                 if entry.user != message.author:
-                    embed = discord.Embed(title="Message deleted", description=f"Message sent by {entry.target.mention}, deleted by {entry.user.mention}, in {message.channel.mention}", color=0XFF69BF)
+                    embed = discord.Embed(title="Message deleted", description=f"Message sent by {entry.target.mention}, deleted by {entry.user.mention}, in {message.channel.mention} \nMessage:\n{message.content}", color=0XFF69BF)
                     embed.timestamp = datetime.datetime.utcnow()
                     await channel.send(embed=embed)
                 else:
