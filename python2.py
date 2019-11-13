@@ -1207,7 +1207,7 @@ async def on_member_update(before, after):
                 await channel.send(embed=embed)                     
                    
 @client.command(pass_context=True)
-async def test2(ctx):
+async def dadjoke(ctx):
     dadjoke = Dadjoke()
     await ctx.trigger_typing()
     await asyncio.sleep(3)
