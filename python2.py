@@ -1213,5 +1213,31 @@ async def dadjoke(ctx):
     await asyncio.sleep(3)
     await ctx.send(dadjoke.joke)
                      
+@client.command(pass_context=True)
+async def neko(ctx, *, name:str=None):
+    if ctx.guild.name == "Test":
+        if ctx.channel.is_nsfw():
+            list1 = ['femdom', 'tickle', 'classic', 'ngif', 'erofeet', 'meow', 'erok', 'poke', 'les', 'v3', 'hololewd', 'nekoapi_v3.1', 'lewdk', 'keta', 'feetg', 'nsfw_neko_gif', 'eroyuri', 'kiss', '8ball', 'kuni', 'tits', 'pussy_jpg', 'cum_jpg', 'pussy', 'lewdkemo', 'lizard', 'slap', 'lewd', 'cum', 'cuddle', 'spank', 'smallboobs', 'goose', 'Random_hentai_gif', 'avatar', 'fox_girl', 'nsfw_avatar', 'hug', 'gecg', 'boobs', 'pat', 'feet', 'smug', 'kemonomimi', 'solog', 'holo', 'wallpaper', 'bj', 'woof', 'yuri', 'trap', 'anal', 'baka', 'blowjob', 'holoero', 'feed', 'neko', 'gasm', 'hentai', 'futanari', 'ero', 'solo', 'waifu', 'pwankg', 'eron', 'erokemo']
+        #word = [word for word in list1 if name is in list1]
+            if name in list1:
+                address = f"https://nekos.life/api/v2/img/{name}"
+                data = requests.get(address).json()
+                r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
+                color = discord.Color((r << 16) + (g << 8) + b)
+                embed = discord.Embed(title=name, description=" ", color=color)
+                embed.url = data['url']
+                image = data['url']
+                embed.set_image(url=image)
+                embed.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
+                await ctx.send(embed=embed)
+            elif name == "help":
+                helplist = ", ".join(list1)
+                await ctx.send(f"Available args:\n ```{helplist}``` \n ``&neko <args>``")
+        else:
+            await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")        
+    else:
+        return
+                     
+                     
                      
 client.run(os.getenv('TOKEN'))
