@@ -6,3 +6,4 @@ praw
 status
 asyncio
 dadjokes
+PyPl==1.2.5
