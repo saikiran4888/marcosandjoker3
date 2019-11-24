@@ -1257,7 +1257,6 @@ async def h(ctx, *, name:str=None):
             elif name == "help":
                 helplist = ", ".join(list1)
                 await ctx.send(f"Available args:\n ```{helplist}``` \n ``&neko <args>``")
-        int(helplist)
         else:
             await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")        
     else:
