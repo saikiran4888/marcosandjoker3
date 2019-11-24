@@ -1237,6 +1237,31 @@ async def neko(ctx, *, name:str=None):
             await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")        
     else:
         return
+@client.command(pass_context=True)
+async def h(ctx, *, name:str=None):
+    if ctx.guild.name == "Test":
+        if ctx.channel.is_nsfw():
+            list1 = ['hass', 'hmidriff', 'pgif', '4k', 'hentai', 'holo', 'hneko', 'neko', 'hkitsune', 'kemonomimi', 'anal', 'hanal', 'gonewild', 'kanna', 'ass', 'pussy', 'thigh', 'hthigh', 'gah', 'coffee', 'food']
+        #word = [word for word in list1 if name is in list1]
+            if name in list1:
+                address = f"https://nekobot.xyz/api/image?type={name}"
+                data = requests.get(address).json()
+                r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
+                color = discord.Color((r << 16) + (g << 8) + b)
+                embed = discord.Embed(title=name, description=" ", color=color)
+                embed.url = data['message']
+                image = data['message']
+                embed.set_image(url=image)
+                embed.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
+                await ctx.send(embed=embed)
+            elif name == "help":
+                helplist = ", ".join(list1)
+                await ctx.send(f"Available args:\n ```{helplist}``` \n ``&neko <args>``")
+        int(helplist)
+        else:
+            await ctx.send("**Nah! Nah! Nah! This has to be a NSFW channel, fucker!!!**")        
+    else:
+        return
                      
                      
                      
