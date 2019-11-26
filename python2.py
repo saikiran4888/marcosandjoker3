@@ -956,7 +956,7 @@ async def joke(ctx):
                      
 @client.command(pass_context = True)
 async def fact(ctx):
-    address = "http://randomuselessfact.appspot.com/random.json?language"
+    address = "http://randomuselessfact.appspot.com/random.json?language=en"
     data = requests.get(address).json()
     fact = data['text']
     await ctx.trigger_typing()
