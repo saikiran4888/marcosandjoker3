@@ -953,16 +953,7 @@ async def joke(ctx):
         await x.edit(content=str(res.json()['joke']))
     else:
         await x.edit(context="Joker can't think of any joke now... Try again.")    
-                     
-@client.command(pass_context = True)
-async def fact(ctx):
-    address = "http://randomuselessfact.appspot.com/random.json?language=en"
-    data = requests.get(address).json()
-    fact = data['text']
-    await ctx.trigger_typing()
-    await asyncio.sleep(3)
-    await ctx.send(f"{fact}")
-                     
+                                          
 @client.command(pass_context=True)
 @commands.has_permissions(administrator=True)               
 async def rather(ctx):
@@ -1262,6 +1253,29 @@ async def h(ctx, *, name:str=None):
     else:
         return
                      
+@client.command(pass_context=True)
+async def fact(ctx):
+    address = "https://nekos.life/api/v2/fact"
+    data = requests.get(address).json()
+    await ctx.trigger_typing()
+    await asyncio.sleep(3)
+    await ctx.send(data['fact'])
+
+@client.command(pass_context=True)
+async def spoiler(ctx, *, text):
+    address = f"https://nekos.life/api/v2/spoiler?text={text}"
+    data = requests.get(address).json()
+    await ctx.trigger_typing()
+    await asyncio.sleep(3)
+    await ctx.send(data['owo'])
+
+@client.command(pass_contexxt=True)
+async def why(ctx):
+    address = "https://nekos.life/api/why"
+    data = requests.get(address).json()
+    await ctx.trigger_typing()
+    await asyncio.sleep(3)
+    await ctx.send(data['why'])
                      
                      
 client.run(os.getenv('TOKEN'))
