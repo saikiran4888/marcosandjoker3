@@ -1262,10 +1262,10 @@ async def fact(ctx):
     await ctx.send(data['fact'])
 
 @client.command(pass_context=True)
-async def spoiler(ctx, *, text):
-    await ctx.message.delete()                     
+async def spoiler(ctx, *, text):                     
     address = f"https://nekos.life/api/v2/spoiler?text={text}"
     data = requests.get(address).json()
+    await ctx.message.delete()                     
     await ctx.trigger_typing()
     await asyncio.sleep(3)
     await ctx.send(data['owo'])
