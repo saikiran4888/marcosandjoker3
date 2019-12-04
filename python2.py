@@ -1038,7 +1038,7 @@ async def t(ctx, message: str = None):
         await ctx.send(reply)
                        
 @client.command(pass_context=True)
-async def suggest(ctx, *, msg: str):
+async def event(ctx, *, msg: str):
     channel = client.get_channel(572851335603421194)
     message = await channel.send(f"** {ctx.author.mention} Suggested an event: {msg} **")
     await message.add_reaction(emoji='✅')
@@ -1277,6 +1277,14 @@ async def why(ctx):
     await ctx.trigger_typing()
     await asyncio.sleep(3)
     await ctx.send(data['why'])
+                     
+@client.command(pass_context=True)
+async def suggest(ctx, *, msg: str):
+    channel = client.get_channel(572851166694866944)
+    message = await channel.send(f"** {ctx.author.mention} Suggested : {msg} **")
+    await message.add_reaction(emoji='✅')
+    await message.add_reaction(emoji='❎')
+                     
                      
                      
 client.run(os.getenv('TOKEN'))
