@@ -827,7 +827,6 @@ async def on_guild_channel_update(before, after):
             await channel2.send(embed=embed2)
 
 @client.command(pass_context = True)
-@commands.has_permissions(administrator=True)
 async def rules(ctx):
     channel2 = client.get_channel(565770888449097748)
     rule_1 = f"Follow the discord ToS. Any violations of the terms of service will result in an immediate ban! (Ban) The ToS can be found here: [Discord ToS](https://discordapp.com/terms)"
