@@ -756,7 +756,7 @@ async def on_member_join(member):
     await channel.send(embed=embed)
     await channel2.send(embed=embed2)
     await general.send(embed=embed3)                                   
-    await userchannel.edit(name= f"Weebs: {person_count}")
+    await userchannel.edit(name= f":small_orange_diamond:┋Reformers: {person_count}")
     
 @client.event
 async def on_message_edit(before,after):
