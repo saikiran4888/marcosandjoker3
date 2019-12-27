@@ -665,7 +665,7 @@ async def on_member_join(member):
     channel3 = client.get_channel(557273459244269582)
     choices = ["DcssawdeS", "Sasdawdd", "AWSdasdwaA", "AdwASwAas", "AsdWDAasas", "ASDwdAsad", "MKiojmkomM"]
     choices2 = random.choice(choices)
-    role = discord.utils.get(member.guild.roles, id=516303012671520769)
+    role = discord.utils.get(member.guild.roles, id=659304444575612948)
     embed = discord.Embed(title=" ", description=f"Welcome to {member.guild.name}, In order to send any message in the server, You must verify as per the server's policy. Sorry for bothering you but it's my duty though.... And please follow the instructions below. I'm sure that the instructions will be easy for you... Wait 10 seconds for next message.", color=0XFFFFFF)
     embed.set_author(name=f"Verification for {member.guild.name}", icon_url=member.guild.icon_url)
     embed.set_footer(text=f"After this process you'll get {role.name} so that we sure you're verified", icon_url=member.avatar_url)
