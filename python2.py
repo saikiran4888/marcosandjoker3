@@ -92,7 +92,7 @@ async def avatar(ctx, user: discord.Member=None):
         embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
         embed.add_field(name='User: {}'.format(ctx.message.author.name), value='Avatar:', inline=True)
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png') 
-        embed.set_image(url = ctx.message.author.avatar_url)
+        embed.set_image(url = user.avatar_url)
         embed.set_footer(text=f"Requested by {ctx.message.author.name}", icon_url=f'{ctx.message.author.avatar_url}')
         embed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=embed)
