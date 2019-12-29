@@ -88,6 +88,7 @@ async def fams(ctx):
 @client.command(pass_context = True)
 async def avatar(ctx, user: discord.Member=None):
     if user is None:
+        user = await client.fetch_user('587548678747717652')
         embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
         embed.add_field(name='User: {}'.format(ctx.message.author.name), value='Avatar:', inline=True)
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png') 
