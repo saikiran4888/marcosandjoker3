@@ -86,7 +86,7 @@ async def fams(ctx):
     await ctx.send(embed=embed)
 
 @client.command(pass_context = True)
-async def avatar(ctx, user: discord.Member=None):
+async def Avatar(ctx, user: discord.Member=None):
     if user is None:
         user = await client.fetch_user('587548678747717652')
         embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
@@ -1108,7 +1108,7 @@ async def gender(ctx, *, name:str = None):
         if data2['gender'] == None:
             await ctx.trigger_typing()
             await asyncio.sleep(4)
-            await ctx.send("** I can't say the gender of this name... Try using only name without initials or surnames \n Ex: Amanda, Kiran etc.,**")
+            await ctx.send("** I can't say the gender of this name... Try using only name without initials or surnames \n Ex: Amanda, Kiran, Chris etc.,**")
         else:
             await ctx.trigger_typing()
             await asyncio.sleep(4)
