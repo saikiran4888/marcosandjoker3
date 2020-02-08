@@ -107,8 +107,8 @@ async def avatar(ctx, user: discord.Member=None):
 
 @client.command(pass_context = True)
 async def avatar2(ctx, *, id1:str=None):
-    if user is None:
-        user = await client.fetch_user(id1)
+    if id is None:
+        user = ctx.message.author
         embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
         embed.add_field(name='User: {}'.format(ctx.message.author.name), value='Avatar:', inline=True)
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png') 
@@ -117,6 +117,7 @@ async def avatar2(ctx, *, id1:str=None):
         embed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=embed)
     else:
+        user = await client.fetch_user(id1)
         embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
         embed.add_field(name='User: {}'.format(user.name), value='Avatar:', inline=True)
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png') 
