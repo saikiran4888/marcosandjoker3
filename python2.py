@@ -106,6 +106,25 @@ async def avatar(ctx, user: discord.Member=None):
         await ctx.send(embed=embed)
 
 @client.command(pass_context = True)
+async def avatar2(ctx, *, id1:str=None):
+    if user is None:
+        user = await client.fetch_user(id1)
+        embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
+        embed.add_field(name='User: {}'.format(ctx.message.author.name), value='Avatar:', inline=True)
+        embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png') 
+        embed.set_image(url = ctx.message.author.avatar_url)
+        embed.set_footer(text=f"Requested by {ctx.message.author.name}", icon_url=f'{ctx.message.author.avatar_url}')
+        embed.timestamp = datetime.datetime.utcnow()
+        await ctx.send(embed=embed)
+    else:
+        embed = discord.Embed(title=f'Avatar', description="Here's your avatar that you've requested...\n Don't misuse this cmd...", color=ctx.author.color)
+        embed.add_field(name='User: {}'.format(user.name), value='Avatar:', inline=True)
+        embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png') 
+        embed.set_footer(text=f"Requested by {ctx.message.author.name}", icon_url=f"{ctx.message.author.avatar_url}")
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_image(url = user.avatar_url)
+        await ctx.send(embed=embed)
+@client.command(pass_context = True)
 @commands.has_permissions(administrator=True)
 async def poll(ctx, question, *options:str):
     r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
