@@ -1306,6 +1306,47 @@ async def suggest(ctx, *, msg: str):
     await message.add_reaction(emoji='✅')
     await message.add_reaction(emoji='❎')
                      
-                     
+
+
+@client.command(pass_context=True)
+async def india(ctx, *, state:str = None):
+    url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india"
+    headers = {
+        'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
+        'x-rapidapi-key': "6b43bde4e3mshb7fd730f56f4c81p183a82jsn529486ba9d6e"
+        }
+    data = requests.request("GET", url, headers=headers).json()
+    data2 = requests.request("GET", url, headers=headers)
+    active = data['state_wise'][state]['active']
+    confirmed = data['state_wise'][state]['confirmed']
+    recovered = data['state_wise'][state]['recovered']
+    cases_confirmed_today = data['state_wise'][state]['deltaconfirmed']
+    cases_recovered_today = data['state_wise'][state]['deltarecovered']
+    cases_death_today = data['state_wise'][state]['deltadeaths']
+    state_code = data['state_wise'][state]['statecode']
+    deaths = data['state_wise'][state]['deaths']
+    last_time = data['state_wise'][state]['lastupdatedtime']
+    await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active}**\nRecovered : **{recovered}**\nDeaths : **{deaths}**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**")
+
+@client.command(pass_context=True)
+async def countrystats(ctx, *, name:str = None):
+    address = f"https://corona.lmao.ninja/countries/{name}"
+    data = requests.get(address).json()
+    embed = discord.Embed(title=f"COVID-19 stats of {name}", description=None, color=0XFF69BF)
+    active_cases = (data['active']/data['cases'])*100
+    recovered_cases = (data['recovered']/data['cases'])*100
+    death_percentage = (data['deaths']/data['cases'])*100
+    embed.add_field(name="Confirmed Cases So Far", value= data['cases'])
+    embed.add_field(name="Cases Registered Today", value= f"+{data['todayCases']}")
+    embed.add_field(name="Total Deaths So Far", value= f"{data['deaths']} ({round(death_percentage, 2)}%)")
+    embed.add_field(name="Deaths Registered Today", value= f"+{data['todayDeaths']}")
+    embed.add_field(name="Cases Recovered So Far", value= f"{data['recovered']} ({round(recovered_cases, 2)}%)")
+    embed.add_field(name="Active Cases So Far", value= f"{data['active']} ({round(active_cases, 2)}%)")
+    embed.add_field(name="Critical Cases So Far", value= data['critical'])
+    embed.add_field(name="Cases Per One Million", value= data['casesPerOneMillion'])
+    embed.add_field(name="Deaths Per One Million", value= data['deathsPerOneMillion'])
+    embed.set_thumbnail(url=data['countryInfo']['flag'])
+    embed.set_footer(text=f"Requested by {ctx.message.author}", icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed=embed)                     
                      
 client.run(os.getenv('TOKEN'))
