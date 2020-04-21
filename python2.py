@@ -1330,7 +1330,7 @@ async def india(ctx, *, state:str = None):
 
 @client.command(pass_context=True)
 async def countrystats(ctx, *, name:str = None):
-    address = f"https://corona.lmao.ninja/countries/{name}"
+    address = f"https://corona.lmao.ninja/v2/countries/{name}"
     data = requests.get(address).json()
     embed = discord.Embed(title=f"COVID-19 stats of {name}", description=None, color=0XFF69BF)
     active_cases = (data['active']/data['cases'])*100
