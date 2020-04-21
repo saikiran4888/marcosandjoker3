@@ -1346,6 +1346,8 @@ async def countrystats(ctx, *, name:str = None):
     embed.add_field(name="Cases Per One Million", value= data['casesPerOneMillion'])
     embed.add_field(name="Deaths Per One Million", value= data['deathsPerOneMillion'])
     embed.set_thumbnail(url=data['countryInfo']['flag'])
+    embed.add_field(name="Tests Done So Far", value= data['tests'])
+    embed.add_field(name="Tests Done Per Million", value= data['testsPerOneMillion'])
     embed.set_footer(text=f"Requested by {ctx.message.author}", icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)                     
                      
