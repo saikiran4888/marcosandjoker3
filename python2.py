@@ -1330,8 +1330,9 @@ async def india(ctx, *, state:str = None):
     deaths1 = (int(deaths)/int(confirmed))*100
     last_time = data['state_wise'][state]['lastupdatedtime']
     await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active} ({round(active1, 2)}%)**\nRecovered : **{recovered} ({round(recovered1, 2)}%)**\nDeaths : **{deaths} ({round(deaths1, 2)}%)**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**")
+
 @client.command(pass_context=True)
-async def countrystats(ctx, *, name:str = None):
+async def country(ctx, *, name:str = None):
     address = f"https://corona.lmao.ninja/v2/countries/{name}"
     data = requests.get(address).json()
     embed = discord.Embed(title=f"COVID-19 stats of {name}", description=None, color=0XFF69BF)
