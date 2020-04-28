@@ -1323,11 +1323,13 @@ async def india(ctx, *, state:str = None):
     cases_confirmed_today = data['state_wise'][state]['deltaconfirmed']
     cases_recovered_today = data['state_wise'][state]['deltarecovered']
     cases_death_today = data['state_wise'][state]['deltadeaths']
+    active1 = (int(active)/int(confirmed))*100
+    recovered1 = (int(recovered)/int(confirmed))*100
     state_code = data['state_wise'][state]['statecode']
     deaths = data['state_wise'][state]['deaths']
+    deaths1 = (int(deaths)/int(confirmed))*100
     last_time = data['state_wise'][state]['lastupdatedtime']
-    await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active}**\nRecovered : **{recovered}**\nDeaths : **{deaths}**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**")
-
+    await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active} ({round(active1, 2)}%)**\nRecovered : **{recovered} ({round(recovered1, 2)}%)**\nDeaths : **{deaths} ({round(deaths1, 2)}%)**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**")
 @client.command(pass_context=True)
 async def countrystats(ctx, *, name:str = None):
     address = f"https://corona.lmao.ninja/v2/countries/{name}"
