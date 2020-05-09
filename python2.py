@@ -1347,7 +1347,7 @@ async def district(ctx, *, state1:str=None):
         'x-rapidapi-key': "6b43bde4e3mshb7fd730f56f4c81p183a82jsn529486ba9d6e"
         }
     await ctx.send("Now please enter the district name only...")
-    msg = await client.wait_for('message', check=lambda message: message.author == ctx.author)
+    msg = await client.wait_for('message', check=lambda message: message.author == ctx.author, timeout=20)
     state = state1
     district2 = msg.content
     data = requests.request("GET", url, headers=headers).json()
@@ -1369,6 +1369,8 @@ async def district(ctx, *, state1:str=None):
     deaths1 = (int(deaths)/int(confirmed))*100
     last_time = data['state_wise'][state]['lastupdatedtime']
     await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active} ({round(active1, 2)}%)**\nRecovered : **{recovered} ({round(recovered1, 2)}%)**\nDeaths : **{deaths} ({round(deaths1, 2)}%)**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**\nNotes by State Govt:\n**{statenotes1}**")
+    except asyncio.TimeoutError:
+        await ctx.send("**Oh No!, You've taken a shit lot of time try again later**")                    
 
 @client.command(pass_context=True)
 async def districtlist(ctx, *, statename:str=None):
