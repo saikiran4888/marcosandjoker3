@@ -1173,21 +1173,7 @@ async def dark(ctx):
         await x.edit(content=data['joke'])
     else:
         await x.edit(content=f"{data['setup']} \n{data['delivery']}")
-@client.command(pass_context=True)
-async def mala(ctx):
-    if ctx.guild.name != "Test":
-        return;
-    else:
-        address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=happy birthday&rating=G&lang=en"
-        data = requests.get(address).json()
-        choices = ['The joy is in the air because your special day is here!', 'I hope your special day will bring you lots of happiness, love, and fun. You deserve them a lot. Enjoy!', 'All things are sweet and bright. May you have a lovely birthday Night.', 'Don’t ever change! Stay as amazing as you are, my friend', 'Let’s light the candles and celebrate this special day of your life. Happy birthday.', 'Here’s to the sweetest and loveliest person I know. Happy birthday!', 'May this special day bring you endless joy and tons of precious memories!', 'You are very special and that’s why you need to float with lots of smiles on your lovely face. Happy birthday.', 'The joy is in the air because your special day is here!']
-        r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
-        embed = discord.Embed(title=f":birthday: Happy Birthday Mala... {random.choice(choices)}... From your bestie Joker", color=discord.Color((r << 16) + (g << 8) + b))
-        embed.set_image(url=data['data']['image_original_url'])
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_footer(text="Once again Happy Birthday Mala... From your Joker")
-        await ctx.send(embed=embed)
-                     
+
 @client.event
 async def on_member_update(before, after):
     channel = client.get_channel(557273459244269582)
@@ -1316,7 +1302,6 @@ async def india(ctx, *, state:str = None):
         'x-rapidapi-key': "6b43bde4e3mshb7fd730f56f4c81p183a82jsn529486ba9d6e"
         }
     data = requests.request("GET", url, headers=headers).json()
-    data2 = requests.request("GET", url, headers=headers)
     active = data['state_wise'][state]['active']
     confirmed = data['state_wise'][state]['confirmed']
     recovered = data['state_wise'][state]['recovered']
@@ -1352,6 +1337,50 @@ async def country(ctx, *, name:str = None):
     embed.add_field(name="Tests Done So Far", value= data['tests'])
     embed.add_field(name="Tests Done Per Million", value= data['testsPerOneMillion'])
     embed.set_footer(text=f"Requested by {ctx.message.author}", icon_url=ctx.message.author.avatar_url)
-    await ctx.send(embed=embed)                     
+    await ctx.send(embed=embed)
+                    
+@client.command(pass_context=True)
+async def district(ctx, *, state1:str=None):
+    url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india"
+    headers = {
+        'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
+        'x-rapidapi-key': "6b43bde4e3mshb7fd730f56f4c81p183a82jsn529486ba9d6e"
+        }
+    await ctx.send("Now please enter the district name only...")
+    msg = await client.wait_for('message', check=lambda message: message.author == ctx.author)
+    state = state1
+    district2 = msg.content
+    data = requests.request("GET", url, headers=headers).json()
+    data2 = requests.request("GET", url, headers=headers)
+    if data['state_wise'][state]['statenotes'] == "":
+       statenotes1 = "No Notes From State Govt."
+    else:
+        statenotes1 =  data['state_wise'][state]['statenotes'].replace("<br>", " ")
+    active = data['state_wise'][state]['district'][district2]['active']
+    confirmed = data['state_wise'][state]['district'][district2]['confirmed']
+    recovered = data['state_wise'][state]['district'][district2]['recovered']
+    cases_confirmed_today = data['state_wise'][state]['district'][district2]['delta']['confirmed']
+    cases_recovered_today = data['state_wise'][state]['district'][district2]['delta']['recovered']
+    cases_death_today = data['state_wise'][state]['district'][district2]['delta']['deceased']
+    active1 = (int(active)/int(confirmed))*100
+    recovered1 = (int(recovered)/int(confirmed))*100
+    state_code = data['state_wise'][state]['statecode']
+    deaths = data['state_wise'][state]['district'][district2]['deceased']
+    deaths1 = (int(deaths)/int(confirmed))*100
+    last_time = data['state_wise'][state]['lastupdatedtime']
+    await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active} ({round(active1, 2)}%)**\nRecovered : **{recovered} ({round(recovered1, 2)}%)**\nDeaths : **{deaths} ({round(deaths1, 2)}%)**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**\nNotes by State Govt:\n**{statenotes1}**")
+
+@client.command(pass_context=True)
+async def districtlist(ctx, *, statename:str=None):
+    url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india"
+    headers = {
+        'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
+        'x-rapidapi-key': "6b43bde4e3mshb7fd730f56f4c81p183a82jsn529486ba9d6e"
+        }
+    data = requests.request("GET", url, headers=headers).json()
+    await ctx.send(f"District names for **{statename}** state:\n")
+    for district_name in data['state_wise'][statename]['district']:
+        await ctx.send(district_name.replace("Other State", " "))
+                    
                      
 client.run(os.getenv('TOKEN'))
