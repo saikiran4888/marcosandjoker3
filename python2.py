@@ -1368,9 +1368,7 @@ async def district(ctx, *, state1:str=None):
     deaths = data['state_wise'][state]['district'][district2]['deceased']
     deaths1 = (int(deaths)/int(confirmed))*100
     last_time = data['state_wise'][state]['lastupdatedtime']
-    await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active} ({round(active1, 2)}%)**\nRecovered : **{recovered} ({round(recovered1, 2)}%)**\nDeaths : **{deaths} ({round(deaths1, 2)}%)**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**\nNotes by State Govt:\n**{statenotes1}**")
-    except:
-        await ctx.send("**Oh No! You've taken a shit lot of time try again later**")                    
+    await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active} ({round(active1, 2)}%)**\nRecovered : **{recovered} ({round(recovered1, 2)}%)**\nDeaths : **{deaths} ({round(deaths1, 2)}%)**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**\nNotes by State Govt:\n**{statenotes1}**")                    
 
 @client.command(pass_context=True)
 async def districtlist(ctx, *, statename:str=None):
