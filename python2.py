@@ -1382,5 +1382,4 @@ async def districtlist(ctx, *, statename:str=None):
     for district_name in data['state_wise'][statename]['district']:
         await ctx.send(district_name.replace("Other State", " "))
                     
-                     
 client.run(os.getenv('TOKEN'))
