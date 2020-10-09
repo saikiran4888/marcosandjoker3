@@ -18,10 +18,10 @@ import sqlite3
 from dadjokes import Dadjoke
 
 
-async def status_task():
+"""async def status_task():
     while True:
         game = discord.Streaming(name="Virtual Reformed", url="https://www.twitch.tv/twitch")
-        await client.change_presence(status=discord.Status.online, activity=game)
+        await client.change_presence(status=discord.Status.online, activity=game)"""
         
       
 Forbidden= discord.Embed(title="Permission Denied", description="1) Please check whether you have permission to perform this action or not. \n2) Please check whether my role has permission to perform this action in this channel or not. \n3) Please check my role position.", color=0x00ff00)
@@ -34,7 +34,7 @@ async def on_ready():
     print('-----')
     print('-----')
     print("Created by I'm Joker")
-    client.loop.create_task(status_task())
+    "client.loop.create_task(status_task())"
 
 @client.command(pass_context = True)
 async def hlo(ctx):
