@@ -34,7 +34,8 @@ async def on_ready():
     print('-----')
     print('-----')
     print("Created by I'm Joker")
-    "client.loop.create_task(status_task())"
+    game = discord.Streaming(name="Nothing", url="https://www.twitch.tv/twitch")
+    await client.change_presence(status=discord.Status.online, activity=game)
 
 @client.command(pass_context = True)
 async def hlo(ctx):
