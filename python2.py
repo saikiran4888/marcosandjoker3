@@ -375,7 +375,7 @@ async def help(ctx, name: str=None):
         embed = discord.Embed(title="Welcome to misc section...", description="Skip <> and (). you don't have to use these while using a command...", color=ctx.author.color)
         embed.add_field(name="movie", value="Gives the information of the particular movie \nUsage: ``%movie <moviename>``", inline=False)
         embed.add_field(name="roleinfo", value="Gives info of that particular role (To use this command, You've to got 'Manage Roles' permission. \nUsage: ``%roleinfo <rolename>``")
-        embed.add_field(name="animeshow", value="Gives info about the anime show that you've searched. \nUsage: ``%animeshow <show name>``")
+        embed.add_field(name="anime", value="Gives info about the anime show that you've searched. \nUsage: ``%anime <show name>``")
         embed.add_field(name="urban", value="Searches the given word in 'Urban Dictionary' website. \nUsage: ``%urban <word>``")
         embed.add_field(name="lyrics", value="Sends the searched lyrics to your DM \nUsage: ``%lyrics <song name>``")
         embed.add_field(name="syn", value="Gives the synonyms of the word that you've entered \nUsage: ``%syn <word>``")
@@ -894,7 +894,7 @@ async def rules(ctx):
     await ctx.send(embed=embed)
     
 @client.command(pass_context=True)
-async def animeshow(ctx, *, name:str = None):
+async def anime(ctx, *, name:str = None):
     api_address = f"https://kitsu.io/api/edge/anime?filter[text]={name}"
     data = requests.get(api_address).json()
     url = data['data'][0]['links']['self']
