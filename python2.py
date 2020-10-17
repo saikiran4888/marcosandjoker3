@@ -778,7 +778,7 @@ async def on_member_join(member):
 async def on_message_edit(before,after):
     db = sqlite3.connect('first2.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT log_channel FROM first WHERE guild_id = {message.guild.id}")
+    cursor.execute(f"SELECT log_channel FROM first WHERE guild_id = {after.guild.id}")
     result = cursor.fetchone()
     if result is None:
         return()
