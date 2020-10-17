@@ -1383,7 +1383,7 @@ async def districtlist(ctx, *, statename:str=None):
 async def setlogchannel(ctx, channel:discord.TextChannel=None):
     db = sqlite3.connect('first2.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT welcome_channel FROM first WHERE guild_id = {ctx.guild.id}")
+    cursor.execute(f"SELECT log_channel FROM first WHERE guild_id = {ctx.guild.id}")
     result = cursor.fetchone()
     if result is None:
         sql = ("INSERT INTO first(guild_id, log_channel) VALUES(?,?)")
