@@ -16,12 +16,6 @@ import json
 import aiohttp
 import sqlite3
 from dadjokes import Dadjoke
-
-
-"""async def status_task():
-    while True:
-        game = discord.Streaming(name="Virtual Reformed", url="https://www.twitch.tv/twitch")
-        await client.change_presence(status=discord.Status.online, activity=game)"""
         
       
 Forbidden= discord.Embed(title="Permission Denied", description="1) Please check whether you have permission to perform this action or not. \n2) Please check whether my role has permission to perform this action in this channel or not. \n3) Please check my role position.", color=0x00ff00)
@@ -782,14 +776,14 @@ async def on_member_join(member):
     
 @client.event
 async def on_message_edit(before,after):
-    if before.guild.name == "Test":
-        return;
-    else:
-        
-        if after.author.bot:
-            return
-        else:
-            if before.content != after.content:
+    db = sqlite3.connect('first2.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT log_channel FROM first WHERE guild_id = {ctx.guild.id}")
+    result = cursor.fetchone()
+    if result is None:
+        return()
+    elif result is not None:
+        if before.content != after.content:
                 channel = client.get_channel(557273459244269582)
                 matter = f"**Message edited in {before.channel.mention} **[Jump to message](https://discordapp.com/channels/{before.guild.id}/{after.channel.id}/{after.id})"
                 embed = discord.Embed(title=f"{before.author.name}", description=matter, color=0XFFFFFF)
@@ -797,7 +791,9 @@ async def on_message_edit(before,after):
                 embed.add_field(name="After", value=after.content, inline=False)
                 embed.timestamp = datetime.datetime.utcnow()
                 embed.set_footer(text=f"ID: {before.id}")
-                await channel.send(embed=embed)        
+                await channel.send(embed=embed)                                    
+        elif after.author.bot:
+            return
 @client.event
 async def on_guild_channel_create(channel):
     if channel.guild.name == "Test":
@@ -1382,5 +1378,24 @@ async def districtlist(ctx, *, statename:str=None):
     await ctx.send(f"District names for **{statename}** state:\n")
     for district_name in data['state_wise'][statename]['district']:
         await ctx.send(district_name.replace("Other State", " "))
+                    
+@client.command(pass_context=True)
+async def setlogchannel(ctx, channel:discord.TextChannel=None):
+    db = sqlite3.connect('first2.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT welcome_channel FROM first WHERE guild_id = {ctx.guild.id}")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO first(guild_id, log_channel) VALUES(?,?)")
+        val = (ctx.guild.id, channel.id)
+        await ctx.send(f"Channel is set to {channel.mention}")
+    elif result is not None:
+        sql = ("UPDATE first SET log_channel = ? WHERE guild_id = ?")
+        val = (channel.id, ctx.guild.id)
+        await ctx.send(f"Channel is updated to {channel.mention}")
+    cursor.execute(sql, val)
+    db.commit()
+    cursor.close()
+ 
                     
 client.run(os.getenv('TOKEN'))
