@@ -780,11 +780,12 @@ async def on_message_edit(before,after):
     cursor = db.cursor()
     cursor.execute(f"SELECT log_channel FROM first WHERE guild_id = {after.guild.id}")
     result = cursor.fetchone()
+    res = ", ".join(result)                                   
+    channel = client.get_channel(int(res))                                   
     if result is None:
         return()
     elif result is not None:
         if before.content != after.content:
-                channel = client.get_channel(557273459244269582)
                 matter = f"**Message edited in {before.channel.mention} **[Jump to message](https://discordapp.com/channels/{before.guild.id}/{after.channel.id}/{after.id})"
                 embed = discord.Embed(title=f"{before.author.name}", description=matter, color=0XFFFFFF)
                 embed.add_field(name="Before", value=before.content, inline=False)
