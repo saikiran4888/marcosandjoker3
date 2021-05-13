@@ -6,4 +6,5 @@ praw
 status
 asyncio
 dadjokes
+babel
 
