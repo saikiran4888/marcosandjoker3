@@ -983,24 +983,40 @@ async def why(ctx):
 @client.command(pass_context=True)
 async def india(ctx, *, state:str = None):
     url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india"
+    url2 = 'https://api.covid19india.org/v4/min/data.min.json'
     headers = {
         'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
         'x-rapidapi-key': "6b43bde4e3mshb7fd730f56f4c81p183a82jsn529486ba9d6e"
         }
     data = requests.request("GET", url, headers=headers).json()
-    active = data['state_wise'][state]['active']
-    confirmed = data['state_wise'][state]['confirmed']
-    recovered = data['state_wise'][state]['recovered']
-    cases_confirmed_today = data['state_wise'][state]['deltaconfirmed']
-    cases_recovered_today = data['state_wise'][state]['deltarecovered']
-    cases_death_today = data['state_wise'][state]['deltadeaths']
-    active1 = (int(active)/int(confirmed))*100
-    recovered1 = (int(recovered)/int(confirmed))*100
+    data2 = requests.get(url2).json()
+    active = format_number(data['state_wise'][state]['active'], locale='en_IN')
+    confirmed = format_number(data['state_wise'][state]['confirmed'], locale='en_IN')
+    recovered = format_number(data['state_wise'][state]['recovered'], locale='en_IN')
+    cases_confirmed_today = format_number(data['state_wise'][state]['deltaconfirmed'], locale='en_IN')
+    cases_recovered_today = format_number(data['state_wise'][state]['deltarecovered'], locale='en_IN')
+    cases_death_today = format_number(data['state_wise'][state]['deltadeaths'], locale='en_IN')
+    active2 = data['state_wise'][state]['active']
+    confirmed2 = data['state_wise'][state]['confirmed']
+    recovered2 = data['state_wise'][state]['recovered']
+    active1 = (int(active2)/int(confirmed2))*100
+    recovered1 = (int(recovered2)/int(confirmed2))*100
     state_code = data['state_wise'][state]['statecode']
-    deaths = data['state_wise'][state]['deaths']
-    deaths1 = (int(deaths)/int(confirmed))*100
+    deaths = format_number(data['state_wise'][state]['deaths'], locale='en_IN')
+    deaths2 = data['state_wise'][state]['deaths']
+    deaths1 = (int(deaths2)/int(confirmed2))*100
     last_time = data['state_wise'][state]['lastupdatedtime']
-    await ctx.send(f"Confirmed : **{confirmed}**\nActive : **{active} ({round(active1, 2)}%)**\nRecovered : **{recovered} ({round(recovered1, 2)}%)**\nDeaths : **{deaths} ({round(deaths1, 2)}%)**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\nLast Updated : **{last_time}**")
+    population = format_number(data2[state_code]['meta']['population'], locale='en_IN')
+    tested = format_number(data2[state_code]['total']['tested'], locale='en_IN')
+    vaccinated = format_number(data2[state_code]['total']['vaccinated'], locale='en_IN')
+    sevendayrecovered = format_number(data2[state_code]['delta7']['recovered'], locale='en_IN')
+    sevendayconfirmed =  format_number(data2[state_code]['delta7']['confirmed'],locale = 'en_IN')
+    sevendaydeaths = format_number(data2[state_code]['delta7']['deceased'], locale='en_IN')
+    sevendaytested = format_number(data2[state_code]['delta7']['tested'], locale='en_IN')
+    sevendayvaccinated = format_number(data2[state_code]['delta7']['vaccinated'], locale='en_IN')
+    source = data2[state_code]['meta']['tested']['source']
+    
+    await ctx.send(f"State/UT: **{state} ({state_code})**\nPopulation: **{population}** (As per Census 2011)\nTested samples till date: **{tested}**\nConfirmed till date : **{confirmed}**\nActive till date : **{active} ({round(active1, 2)}%)**\nRecovered till date : **{recovered} ({round(recovered1, 2)}%)**\nDeaths : **{deaths} ({round(deaths1, 2)}%)**\nCases Registered Today : **{cases_confirmed_today}**\nRecovered Cases Today : **{cases_recovered_today}**\nDeath Cases Today : **{cases_death_today}**\n\nSeven Days Average:\nTested: **{sevendaytested}**\nConfirmed: **{sevendayconfirmed}**\nRecovered: **{sevendayrecovered}**\nDeaths: **{sevendaydeaths}**\nVaccinated: **{sevendayvaccinated}**\n\nLast Updated : **{last_time}**\nTotal doses vaccinated untill date: **{vaccinated}**\nSource: {source}")
 
 @client.command(pass_context=True)
 async def country(ctx, *, name:str = None):
