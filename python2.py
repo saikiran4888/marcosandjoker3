@@ -284,16 +284,43 @@ async def P(ctx, *, word:str=None):
 @client.command(pass_context=True)
 async def movie(ctx, *, name:str=None):
     await ctx.trigger_typing()
-    if name is None:
-        embed=discord.Embed(description = "Please specify a movie, *eg. ``%movie Bohemian Rhapsody``*", color = ctx.author.color)
-        await ctx.send(embed=embed)
-    key = "4210fd67"
-    url = "http://www.omdbapi.com/?t={}&apikey={}&plot=full".format(name, key)
-    response = requests.get(url)
-    x = json.loads(response.text)
+    url = f"http://www.omdbapi.com/?s={name}&apikey=4210fd67"
+    data = requests.get(url).json()
+    count = str(data['Search']).count('Title')
+    titles = list(data['Search'][x]['Title'] for x in range(count))
+    years = list(data['Search'][x]['Year'] for x in range(count))
+    list3 = list("%d. %s" % (n, a) for n, a in enumerate(titles, start=1))
+    list1 = list("{} ({})".format(title, year) for title, year in zip(list3, years))
+    list2 = '\n'.join(list1)
+    await ctx.send(f"Here are the results for your search:\n\n{list2}\n\nEnter the number of the movie to get more details")
+    num = await client.wait_for('message', check=lambda message: message.author == ctx.author, timeout=10)
+    num2 = int(num.content)
+    moviename = data['Search'][num2-1]['Title']
+    url = "http://www.omdbapi.com/?t={}&apikey=4210fd67&plot=full".format(moviename)
+    x = requests.get(url).json()
+    plot = x['Plot']
     embed=discord.Embed(title =x['Title'], description = "Here is your movie {}".format(ctx.message.author.name), color = ctx.author.color)
     if x["Poster"] != "N/A":
      embed.set_thumbnail(url = x["Poster"])
+    if len(plot) > 1024:
+        url2 = "http://www.omdbapi.com/?t={}&apikey=4210fd67&plot=short".format(moviename)
+        x = requests.get(url2).json()
+        plot = x['Plot']
+    else:
+        plot = plot
+    count1 = str(x["Ratings"]).count("Value")
+    if count1 == 2:
+        metacritic = "N/A"
+
+    elif x['Ratings'] ==[]:
+        metacritic = "N/A"
+        imdb = "N/A"
+        rotten = "N/A"
+    else:
+        metacritic = x['Ratings'][2]['Value']
+        imdb = x['Ratings'][0]['Value']
+        rotten = x['Ratings'][1]['Value']
+        
     embed.add_field(name = "__Title__", value = x["Title"])
     embed.add_field(name = "__Released__", value = x["Released"])
     embed.add_field(name = "__Rated__", value = x["Rated"])
@@ -302,12 +329,13 @@ async def movie(ctx, *, name:str=None):
     embed.add_field(name = "__Director__", value = x["Director"])
     embed.add_field(name = "__Writer__", value = x["Writer"])
     embed.add_field(name = "__Actors__", value = x["Actors"])
-    embed.add_field(name = "__Plot__", value = x["Plot"])
+    embed.add_field(name = "__Plot__", value = plot)
     embed.add_field(name = "__Released Countries__", value = x["Country"])
     embed.add_field(name = "__Language__", value = x["Language"])
     embed.add_field(name = "__IMDB Votes__", value = x["imdbVotes"])
-    embed.add_field(name = x["Ratings"][1]["Source"], value = x["Ratings"][1]["Value"])
-    embed.add_field(name = x["Ratings"][2]["Source"], value = x["Ratings"][2]["Value"])
+    embed.add_field(name = f"__IMDB Rating__", value = imdb)
+    embed.add_field(name = f"__Rotten Tomatoes__", value = rotten)
+    embed.add_field(name = f'__Metacritics__', value = metacritic)
     embed.add_field(name = "__Awards__", value = x['Awards'])
     embed.add_field(name = "__Box Office__", value = x['BoxOffice'])
     embed.add_field(name = "__DVD Release__", value = x["DVD"])
@@ -315,6 +343,7 @@ async def movie(ctx, *, name:str=None):
     embed.add_field(name = "__Website__", value = x["Website"])
     embed.add_field(name = "__Type__", value = x["Type"])
     embed.set_footer(text = "Information from the OMDB API")
+    await ctx.trigger_typing()
     await ctx.send(embed=embed)
  
 @client.command(pass_context=True)
