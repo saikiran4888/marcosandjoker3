@@ -18,9 +18,9 @@ import sqlite3
 from dadjokes import Dadjoke
 from babel.numbers import format_number
         
-      
+intents = discord.Intents.all()      
 Forbidden= discord.Embed(title="Permission Denied", description="1) Please check whether you have permission to perform this action or not. \n2) Please check whether my role has permission to perform this action in this channel or not. \n3) Please check my role position.", color=0x00ff00)
-client = commands.Bot(description="The Laughing Clown BOT", command_prefix=commands.when_mentioned_or("%"), pm_help = True)
+client = commands.Bot(description="The Laughing Clown BOT", command_prefix=commands.when_mentioned_or("%"), pm_help = True, intents=intents)
 client.remove_command('help')
 
             
@@ -1114,6 +1114,14 @@ async def districtlist(ctx, *, statename:str=None):
     for district_name in data['state_wise'][statename]['district']:
         await ctx.send(district_name.replace("Other State", " "))
                   
- 
+@client.event
+async def on_member_join(member):
+    channel1 = await client.fetch_channel(763959712428851221)
+    channel2 = await client.fetch_channel(681017446177439929)
+    bot1 = await client.fetch_user(518079526035783691)
+    main = await client.fetch_user(581111812599316511)
+    user = await client.fetch_user(472128507150073871)
+    msg = f"Hey {member.mention}! Welcome to {member.guild.name} server. I know it looks deserted lol but yeah welcome anyways. As you can see here we have 2 channels in this server namely {channel1.mention} and {channel2.mention}. As you can see the name of the channel {channel2.mention} indicates it's a strict NSFW Channel you know filled with porn and stuff so discretion is advised. But yeah you can always welcome at anywhere in the server and feel free to do anything. If you need any help just ping me. And thanks for joining with me with this testing stuff. Ohh forgot... Meet our boys here {main.mention} and {bot1.mention}. {main.mention} is the main bot here and it's available round the clock and {bot1.mention} is the testing bot. So after testing with the testing bot I include the command into the main bot. That's it for now and yeah congrats you are the only human here besides me lol. Feel free to do anything here and enjoy the stay.\n\nFrom,\nYours {user.mention}"
+    await channel1.send(msg)
                     
 client.run(os.getenv('TOKEN'))
