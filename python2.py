@@ -17,6 +17,11 @@ import aiohttp
 import sqlite3
 from dadjokes import Dadjoke
 from babel.numbers import format_number
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+import pytz
+from pytz import timezone
+
         
 intents = discord.Intents.all()      
 Forbidden= discord.Embed(title="Permission Denied", description="1) Please check whether you have permission to perform this action or not. \n2) Please check whether my role has permission to perform this action in this channel or not. \n3) Please check my role position.", color=0x00ff00)
@@ -477,19 +482,30 @@ async def tempmute(ctx, user: discord.Member, num: int, time: str, reason:str):
 
 
 @client.command(pass_context=True)
-async def spotify(ctx, *, user:discord.Member=None):
-    if user is None:
-        user = ctx.author
+async def spotify(ctx):
+    local_tz = pytz.timezone('Asia/Calcutta')
+    user = ctx.author
     activity = user.activity
     if activity is None:
         await ctx.send("{} is not playing anything on spotify!".format(user.display_name))
         return
     if activity.type == discord.ActivityType.listening and activity.name == "Spotify":
+        client_id = "3de4994a8c99485ab153804b7cfa6ff4"
+        client_secret = "b0c797bb009346e8b77608eadbfb3545"
+        client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+        sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+        result = sp.track(activity.track_id)
+        release_date = result['album']['release_date']
+        explicit = result['explicit']
         embed = discord.Embed(description="**React to :thumbsup: in 20 seconds to get the song's lyrics into your DMs**")
         embed.add_field(name="Artist(s)", value=", ".join(activity.artists))
         embed.add_field(name="Album", value=activity.album)
         embed.add_field(name="Track ID", value=activity.track_id)
+        embed.add_field(name="Release date", value = release_date)
+        embed.add_field(name="Explicit", value= explicit)
         embed.add_field(name="Duration", value=str(activity.duration)[3:].split(".", 1)[0])
+        embed.add_field(name="Song started at", value=activity.start.astimezone(local_tz).strftime("%d-%m-%Y %I:%M %p %Z"))
+        embed.add_field(name="Song ending at", value=activity.end.astimezone(local_tz).strftime("%d-%m-%Y %I:%M %p %Z"))
         embed.title = "**{}**".format(activity.title)
         embed.set_thumbnail(url=activity.album_cover_url)
         embed.url = "https://open.spotify.com/track/{}".format(activity.track_id)
