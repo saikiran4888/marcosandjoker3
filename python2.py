@@ -300,8 +300,8 @@ async def movie(ctx, *, name:str=None):
     await ctx.send(f"Here are the results for your search:\n\n{list2}\n\nEnter the number of the movie to get more details")
     num = await client.wait_for('message', check=lambda message: message.author == ctx.author, timeout=10)
     num2 = int(num.content)
-    moviename = data['Search'][num2-1]['Title']
-    url = "http://www.omdbapi.com/?t={}&apikey=4210fd67&plot=full".format(moviename)
+    movieid = data['Search'][num2-1]['imdbID']
+    url = "http://www.omdbapi.com/?i={}&apikey=4210fd67&plot=full".format(movieid)
     x = requests.get(url).json()
     plot = x['Plot']
     embed=discord.Embed(title =x['Title'], description = "Here is your movie {}".format(ctx.message.author.name), color = ctx.author.color)
@@ -1132,6 +1132,7 @@ async def districtlist(ctx, *, statename:str=None):
                   
 @client.event
 async def on_member_join(member):
+    role = discord.utils.get(member.guild.roles, id=843978887834370048)
     channel1 = await client.fetch_channel(763959712428851221)
     channel2 = await client.fetch_channel(681017446177439929)
     bot1 = await client.fetch_user(518079526035783691)
@@ -1139,5 +1140,6 @@ async def on_member_join(member):
     user = await client.fetch_user(472128507150073871)
     msg = f"Hey {member.mention}! Welcome to {member.guild.name} server. I know it looks deserted lol but yeah welcome anyways. As you can see here we have 2 channels in this server namely {channel1.mention} and {channel2.mention}. As you can see the name of the channel {channel2.mention} indicates it's a strict NSFW Channel you know filled with porn and 18+ stuff so discretion is advised. But yeah you can always welcome at anywhere in the server and feel free to do anything. If you need any help just ping me. And thanks for joining with me with this testing stuff. Ohh forgot... Meet our boys here {main.mention} and {bot1.mention}. {main.mention} is the main bot here and it's available round the clock and {bot1.mention} is the testing bot. So after testing with the testing bot I include the command into the main bot. I hope you're gonna have fantastic time using my bots for sure it's a hella fun ride. That's it for now and yeah congrats you are the only human here besides me lol. Feel free to do anything here and enjoy the stay.\n\nFrom,\nYours {user.mention}"
     await channel1.send(msg)
+    await member.add_roles(role)
                     
 client.run(os.getenv('TOKEN'))
