@@ -307,7 +307,7 @@ async def movie(ctx, *, name:str=None):
     embed=discord.Embed(title =x['Title'], description = "Here is your movie {}".format(ctx.message.author.name), color = ctx.author.color)
     if x["Poster"] != "N/A":
      embed.set_thumbnail(url = x["Poster"])
-    imdb = x['Ratings'][0]['Value]
+    imdb = x['Ratings'][0]['Value']
     if len(plot) > 1024:
         url2 = "http://www.omdbapi.com/?t={}&apikey=4210fd67&plot=short".format(moviename)
         x = requests.get(url2).json()
