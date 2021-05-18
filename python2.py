@@ -308,6 +308,7 @@ async def movie(ctx, *, name:str=None):
     if x["Poster"] != "N/A":
      embed.set_thumbnail(url = x["Poster"])
     imdb = x['Ratings'][0]['Value']
+    rotten = x['Ratings'][1]['Value']
     if len(plot) > 1024:
         url2 = "http://www.omdbapi.com/?t={}&apikey=4210fd67&plot=short".format(moviename)
         x = requests.get(url2).json()
