@@ -86,6 +86,14 @@ async def fams(ctx):
     embed.set_footer(text=f'Requested by {ctx.message.author.name}', icon_url=f'{ctx.message.author.avatar_url}')
     await ctx.send(embed=embed)
 
+@client.command(pass_context=True)
+async def aot(ctx):
+    api_address = f"https://api.giphy.com/v1/gifs/random?api_key={os.getenv('gif_key')}&tag=attack on titan&rating=G&lang=en"
+    data1 = requests.get(api_address).json()
+    gif_url = data1['data']['image_original_url']
+    await ctx.send(gif_url)
+        
+        
 @client.command(pass_context = True)
 async def avatar(ctx, user: discord.Member=None):
     if user is None:
@@ -251,7 +259,7 @@ async def clear(ctx, number: int = None):
     await ctx.delete_messages(mgs)
     
 @client.command(pass_context = True)
-async def p(ctx, *, word:str=None):
+async def P(ctx, *, word:str=None):
     if ctx.guild.name == "Test":
 
         if ctx.channel.is_nsfw():
@@ -273,7 +281,7 @@ async def p(ctx, *, word:str=None):
 
     
 @client.command(pass_context = True)
-async def P(ctx, *, word:str=None):
+async def p(ctx, *, word:str=None):
     if ctx.guild.name == "Test":
         if ctx.channel.is_nsfw():
             async with aiohttp.ClientSession() as session:
