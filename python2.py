@@ -43,8 +43,9 @@ async def on_ready():
     print('-----')
     print('-----')
     print("Created by I'm Joker")
-    game=discord.Game("Nothing")
-    await client.change_presence(status=discord.Status.do_not_disturb, activity=game)
+    game = discord.Streaming(name="Nothing", url="https://www.twitch.tv/twitch")
+    await client.change_presence(status=discord.Status.online, activity=game)game=discord.Game("Nothing")
+
 
 @client.command(pass_context=True)
 async def load(ctx, extension):
