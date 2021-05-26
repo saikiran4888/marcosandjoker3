@@ -26,7 +26,6 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import json
 from collections import Counter
-import discogs_client
 import pytz
 from pytz import timezone
 
