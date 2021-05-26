@@ -44,7 +44,7 @@ async def on_ready():
     print('-----')
     print('-----')
     print("Created by I'm Joker")
-    game=discord.Game("with Jasmine")
+    game=discord.Game("Nothing")
     await client.change_presence(status=discord.Status.do_not_disturb, activity=game)
 
 @client.command(pass_context=True)
