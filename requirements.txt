@@ -9,4 +9,3 @@ dadjokes
 babel
 spotipy
 feedparser
-discogs
