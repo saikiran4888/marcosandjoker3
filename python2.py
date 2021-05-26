@@ -34,7 +34,7 @@ import translators as ts
 
 intents = discord.Intents.all()
 Forbidden= discord.Embed(title="Permission Denied", description="1) Please check whether you have permission to perform this action or not. \n2) Please check whether my role has permission to perform this action in this channel or not. \n3) Please check my role position.", color=0x00ff00)
-client = commands.Bot(description="Second Bot for Experimentation", command_prefix='&', pm_help = True, intents=intents)
+client = commands.Bot(description="Second Bot for Experimentation", command_prefix='%', pm_help = True, intents=intents)
 
 
 
