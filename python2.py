@@ -44,7 +44,7 @@ async def on_ready():
     print('-----')
     print("Created by I'm Joker")
     game = discord.Streaming(name="Nothing", url="https://www.twitch.tv/twitch")
-    await client.change_presence(status=discord.Status.online, activity=game)game=discord.Game("Nothing")
+    await client.change_presence(status=discord.Status.online, activity=game)
 
 
 @client.command(pass_context=True)
