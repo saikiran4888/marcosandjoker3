@@ -356,7 +356,116 @@ class Entertainment(commands.Cog):
 
         except asyncio.TimeoutError:
             await ctx.send("Oh No! Timeout expired. Please execute the command once again.")
-    
+ 
+    @commands.command(pass_context=True)
+    async def season(self, ctx, *, series:str):
+        url = f"http://api.tvmaze.com/search/shows?q={series}"
+        data = requests.get(url).json()
+        count = str(data).count('score')
+        titles = list(data[x]['show']['name'] for x in range(count))
+        list1 = list("%d. %s" % (n, a) for n, a in enumerate(titles, start=1))
+        list2 = '\n'.join(list1)
+        await ctx.send(f"Here are the results for your search: \n\n{list2}\n\nEnter the number of the series to get more details. You've got 15 seconds to enter your option.")
+        num = await self.client.wait_for("message", check=lambda message: message.author == ctx.author, timeout=15)
+        try:
+            num2 = int(num.content)
+            seriesid = data[num2-1]['show']['id']
+            url = f"http://api.tvmaze.com/shows/{seriesid}/seasons"
+            data2 = requests.get(url).json()
+            seasoncount = str(data2).count('network')
+            list1 = list(data2[x]['name'] for x in range(seasoncount))
+            list2 = list("%d. %s" % (n,a) for n,a in enumerate(list1, start=1))
+            list3 = "\n".join(list2)
+            await ctx.send(f"Here are the results for your search: \n\n{list3}\n\nEnter the number of the season to get more details. If there is no name just enter the order no of season. You've got 15 seconds to enter your option.")
+            num1 = await self.client.wait_for('message', check=lambda message:message.author == ctx.author, timeout=15)
+            try:
+                num3 = int(num1.content)
+                url2 = f"http://api.tvmaze.com/shows/{seriesid}?embed[]=cast&embed[]=akas&embed[]=seasons&embed[]=episodes&embed[]=crew"
+                z = requests.get(url2).json()
+                url = data2[num3-1]['_links']['self']['href']
+                x = requests.get(url).json()
+                if x['name'] == "":
+                    name = f"Season {x['number']}"
+                else:
+                    name = x['name']
+                if z['genres'] == []:
+                    genres = "N/A"
+                else:
+                    genres = ", ".join(z['genres'])
+                if z['_embedded']['cast'] == []:
+                    cast = "N/A"
+                else:
+                    castcount = str(z['_embedded']['cast']).count('gender')
+                    if castcount > 10:
+                        castcount = 10
+                    else:
+                        castcount = castcount
+                    list1 = list(z['_embedded']['cast'][y]['person']['name'] for y in range(castcount))
+                    list2 = list(z['_embedded']['cast'][y]['character']['name'] for y in range(castcount))
+                    list3 = list("{} ({})".format(name, character) for name, character in zip(list1, list2))
+                    cast = ", ".join(list3)
+                if z['_embedded']['crew'] == []:
+                    crew = "N/A"
+                else:
+                    crewcount = str(z['_embedded']['crew']).count('gender')
+                    if crewcount > 10:
+                        crewcount = 10
+                    else:
+                        crewcount = crewcount
+                    list1 = list(z['_embedded']['crew'][y]['person']['name'] for y in range(crewcount))
+                    list2 = list(z['_embedded']['crew'][y]['type'] for y in range(crewcount))
+                    list3 = list("{} ({})".format(name, role) for name, role in zip(list1, list2))
+                    crew = ", ".join(list3)
+                number = x['number']
+                episodecount = x['episodeOrder']
+                premiered = x['premiereDate']
+                language = z['language']
+                ended = x['endDate']
+                runtime = z['runtime']
+                type = z['type']
+                avgruntime = z['averageRuntime']
+                if x['network'] == None:
+                    network = "N/A"
+                    networkcountry = "N/A"
+                else:
+                    network = x['network']['name']
+                    networkcountry = x['network']['country']['name']
+                if x['webChannel'] == None:
+                    web = "N\A"
+                else:
+                    web = x['webChannel']['name']
+                if x['summary'] == "":
+                    summary = "N/A"
+                elif x['summary'] == None:
+                    summary = 'N/A'
+                else:
+                    summary = x['summary'].replace("<p>", "").replace("</p>", "").replace("<b>", "").replace("</b>", "").replace("<i>", "").replace("</i>", "")
+                embed = discord.Embed(title=name, description="", color=ctx.author.color)
+                embed.add_field(name="Name", value=name)
+                embed.add_field(name="Number", value=number)
+                embed.add_field(name="Type", value=type)
+                embed.add_field(name="Episodes", value=episodecount)
+                embed.add_field(name="Premiered/Premiere", value=premiered)
+                embed.add_field(name="Ended/End", value=ended)
+                embed.add_field(name="Crew", value=crew)
+                embed.add_field(name="Cast", value=cast)
+                embed.add_field(name="Language", value=language)
+                embed.add_field(name="Genre(s)", value=genres)
+                embed.add_field(name="Summary", value=summary)
+                embed.add_field(name="Runtime/Episode", value=f"{runtime}min")
+                embed.add_field(name="Avg Runtime/Episode", value=f"{avgruntime}min")
+                embed.add_field(name="Network", value=network)
+                embed.add_field(name="Country", value=networkcountry)
+                embed.add_field(name="Web Channel", value=web)
+                if x['image'] != None:
+                    embed.set_thumbnail(url=x['image']['medium'])
+                embed.set_footer(text=f"Information provided by TVmaze API. Requested By | {ctx.author.name}", icon_url=ctx.author.avatar_url)
+                await ctx.send(embed=embed)
+            except asyncio.TimeoutError:
+                await ctx.send("Oh No! Timeout expired. Please execute the command once again.")
+        except asyncio.TimeoutError:
+            await ctx.send("Oh No! Timeout expired. Please execute the command once again.")
+
 
 def setup(client):
     client.add_cog(Entertainment(client))
