@@ -238,7 +238,125 @@ class Entertainment(commands.Cog):
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text=f"Requested By | {ctx.author.name}")
         await ctx.send(embed=embed)
- 
+
+    @commands.command(pass_context=True)
+    async def series(self, ctx, *, name:str=None):
+        url = f"http://api.tvmaze.com/search/shows?q={name}"
+        data = requests.get(url).json()
+        count = str(data).count('score')
+        titles = list(data[x]['show']['name'] for x in range(count))
+        list1 = list("%d. %s" % (n, a) for n, a in enumerate(titles, start=1))
+        list2 = '\n'.join(list1)
+        await ctx.send(f"Here are the results for your search: \n\n{list2}\n\nEnter the number of the movie to get more details. You've got 15 seconds to enter your option.")
+        num = await self.client.wait_for("message", check=lambda message: message.author == ctx.author, timeout=15)
+        try:
+            num2 = int(num.content)
+            seriesid = data[num2-1]['show']['id']
+            url = f"http://api.tvmaze.com/shows/{seriesid}?embed[]=cast&embed[]=akas&embed[]=seasons&embed[]=episodes&embed[]=crew"
+            x = requests.get(url).json()
+            seasons = str(x['_embedded']['seasons']).count('summary')
+            episodes = str(x['_embedded']['episodes']).count('summary')
+            name = x['name']
+            type = x['type']
+            language = x['language']
+            premiered = x['premiered']
+            if x['_embedded']['cast'] == []:
+                cast = "N/A"
+            else:
+                castcount = str(x['_embedded']['cast']).count('gender')
+                if castcount > 10:
+                    castcount = 10
+                else:
+                    castcount = castcount
+                list1 = list(x['_embedded']['cast'][y]['person']['name'] for y in range(castcount))
+                list2 = list(x['_embedded']['cast'][y]['character']['name'] for y in range(castcount))
+                list3 = list("{} ({})".format(name, character) for name, character in zip(list1, list2))
+                cast = ", ".join(list3)
+            if x['_embedded']['crew'] == []:
+                crew = "N/A"
+            else:
+                crewcount = str(x['_embedded']['crew']).count('gender')
+                if crewcount > 10:
+                    crewcount = 10
+                else:
+                    crewcount = crewcount
+                list1 = list(x['_embedded']['crew'][y]['person']['name'] for y in range(crewcount))
+                list2 = list(x['_embedded']['crew'][y]['type'] for y in range(crewcount))
+                list3 = list("{} ({})".format(name, role) for name, role in zip(list1, list2))
+                crew = ", ".join(list3)
+            if x['_embedded']['akas'] == []:
+                akas = "N/A"
+            else:
+                akascount = str(x['_embedded']['akas']).count('country')
+                if akascount > 10:
+                    akascount = 10
+                else:
+                    akascount = akascount
+                list1 = list(x['_embedded']['akas'][y]['name'] for y in range(akascount))
+                """list2 = list(x['_embedded']['akas'][y]['country']['name'] for y in range(akascount))
+                list3 = list("{} ({})". format(name, country) for name, country in zip(list1, list2))"""
+                akas = " ,".join(list1)
+            if x['genres'] == []:
+                genres = "N/A"
+            else:
+                genres = ", ".join(x['genres'])
+            summary = x['summary'].replace("<p>", "").replace("</p>", "").replace("<b>", "").replace("</b>", "").replace("<i>", "").replace("</i>", "")
+            if len(summary) > 1024:
+                summary = "Oh no! The summary is too large to post here."
+            status = x['status']
+            runtime = x['runtime']
+            averageruntime = x['averageRuntime']
+            officialsite = x['officialSite']
+            if x['schedule']['time'] == "":
+                time = "N/A"
+            else:
+                time = x['schedule']['time']
+            if x['schedule']['days'] == []:
+                days = "N/A"
+            else:
+                days = ", ".join(x['schedule']['days'])
+            if x['network'] == None:
+                network = "N/A"
+            else:
+                network = x['network']['name']
+                country = x['network']['country']['name']
+            if x['webChannel'] == None:
+                web = "N/A"
+            else:
+                web = x['webChannel']['name']
+            dvdcountry = x['dvdCountry']
+            lastupdated = datetime.fromtimestamp(x['updated']).strftime("%d-%m-%Y %I:%M %p")
+            embed = discord.Embed(title=name, description=" ", color=ctx.author.color)
+            if x['image'] != None:
+                embed.set_thumbnail(url=x['image']['original'])
+            embed.add_field(name="Name", value=name)
+            embed.add_field(name="Type", value=type)
+            embed.add_field(name="Language", value=language)
+            embed.add_field(name="Premiered", value=premiered)
+            embed.add_field(name="Genres", value=genres)
+            embed.add_field(name="Crew", value=crew)
+            embed.add_field(name="Cast", value= cast)
+            embed.add_field(name="Summary", value=summary)
+            embed.add_field(name="No.of Seasons", value=seasons)
+            embed.add_field(name="Total no.of Episodes", value= episodes)
+            embed.add_field(name="Status", value=status)
+            embed.add_field (name="Network", value=network)
+            embed.add_field(name="Country", value=country)
+            embed.add_field(name="Web Channel", value=web)
+            embed.add_field(name="Runtime/Episode", value=f"{runtime}min")
+            embed.add_field(name="Avg. Runtime/Episode", value=f"{averageruntime}min")
+            embed.add_field(name="Schedule Days", value=days)
+            embed.add_field(name="Schedule Time", value=time)
+            embed.add_field(name="DVD Country", value=dvdcountry)
+            embed.add_field(name="Aliases", value=akas)
+            embed.add_field(name="Official Site", value=f"[Click here to redirect to official site]({officialsite})")
+            embed.add_field(name="Last Updated", value=lastupdated)
+            embed.set_footer(text=f"Information provided by TVmaze API. Requested By | {ctx.author.name}", icon_url=ctx.author.avatar_url)
+            await ctx.send(embed=embed)
+
+        except asyncio.TimeoutError:
+            await ctx.send("Oh No! Timeout expired. Please execute the command once again.")
+    
 
 def setup(client):
     client.add_cog(Entertainment(client))
