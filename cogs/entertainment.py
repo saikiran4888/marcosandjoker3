@@ -465,7 +465,68 @@ class Entertainment(commands.Cog):
                 await ctx.send("Oh No! Timeout expired. Please execute the command once again.")
         except asyncio.TimeoutError:
             await ctx.send("Oh No! Timeout expired. Please execute the command once again.")
-
+    
+    @commands.command(pass_context=True)
+    async def movieartist(self, ctx, *, name:str=None):
+        try:
+            url = f"https://api.themoviedb.org/3/search/person?api_key=88dfba32d9f83e4a66810ca0ed6e7806&query={name}&page=1"
+            data = requests.get(url).json()
+            personId = data['results'][0]['id']
+            url2 = f"https://api.themoviedb.org/3/person/{personId}?api_key=88dfba32d9f83e4a66810ca0ed6e7806&append_to_response=combined_credits"
+            x = requests.get(url2).json()
+            name = x['name']
+            if x['gender'] == 2:
+                gender = "Male"
+            elif x['gender'] == 1:
+                gender = "Female"
+            else:
+                gender = "Transgender"
+            bdate = x['birthday']
+            bday = bdate[8:]
+            bmonth = int(bdate[5:7])
+            byear = bdate[:4]
+            pob = x['place_of_birth']
+            known_for = x['known_for_department']
+            biography = x['biography']
+            count1 = str(x['combined_credits']['cast']).count('credit_id')
+            if count1 > 10:
+                count1 = 10
+            else:
+                count1 = count1
+            months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            titles = list(x['combined_credits']['cast'][y]['title'] for y in range(count1))
+            characters = list(x['combined_credits']['cast'][y]['character'] for y in range(count1))
+            years = list(x['combined_credits']['cast'][y]['release_date'] for y in range(count1))
+            list1 = list("{%s} ({%.4s}" % (title, year) for title, year in zip(titles, years))
+            list2 = list("{}".format(character) for character in characters)
+            list3 = list("{} - {})".format(name, info) for name, info in zip(list1, list2))
+            credits = "\n".join(list3).replace('{', '').replace('}', '')
+            image = f"https://image.tmdb.org/t/p/original{x['profile_path']}"
+            embed = discord.Embed(name="Artist Data", description=" ", color=ctx.author.color)
+            embed.add_field(name="Name", value=name)
+            embed.add_field(name="Gender", value=gender)
+            embed.add_field(name="Birth", value=f"{bday} {months[bmonth-1]} {byear}")
+            embed.add_field(name="Place of Birth", value=pob)
+            if x['deathday'] != None:
+                ddate = x['deathday']
+                dday = ddate[8:]
+                dmonth = int(ddate[5:7])
+                dyear = ddate[:4]
+                embed.add_field(name="Death", value=f"{dday} {months[dmonth-1]} {dyear}")
+            embed.add_field(name="Known for Department", value=known_for)
+            for chunk in [biography[i:i+1024] for i in range(0, len(biography), 1024)]:
+                embed.add_field(name="Biography", value=chunk)
+            embed.add_field(name="Selected Filmography", value=credits)
+            if x['also_known_as'] != []:
+                aliases = ", ".join(list(x['also_known_as']))
+                embed.add_field(name="Aliases", value=aliases)
+            if x["homepage"] != None:
+                embed.add_field(name="Website", value=f"[Redirect to website]({x['homepage']})")
+            embed.set_image(url=image)
+            await ctx.send(embed=embed)
+        except IndexError as e:
+            await ctx.send(f"Oh No! I can't find any info about **{name}**. Maybe it's not in the database or check the spelling and try again")
+    
 
 def setup(client):
     client.add_cog(Entertainment(client))
