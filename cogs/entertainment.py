@@ -318,6 +318,7 @@ class Entertainment(commands.Cog):
                 days = ", ".join(x['schedule']['days'])
             if x['network'] == None:
                 network = "N/A"
+                country = "N/A"
             else:
                 network = x['network']['name']
                 country = x['network']['country']['name']
