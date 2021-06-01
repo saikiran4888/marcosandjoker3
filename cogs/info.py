@@ -14,7 +14,6 @@ import os
 import functools
 import time
 import datetime
-from datetime import datetime
 import sqlite3
 from io import BytesIO
 import requests
@@ -71,7 +70,7 @@ class Info(commands.Cog):
         embed.add_field(name="**Currently connected servers**", value="1", inline = True)
         embed.add_field(name="**Currently connected users**", value=str(len(set(self.client.get_all_members()))), inline = True)
         embed.add_field(name="If you have any queries about this BOT, DM me...", value=User.mention)
-        embed.timestamp(datetime.datetime.utcnow())
+        embed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=embed)
 
     @commands.command(pass_context=True)
@@ -82,7 +81,7 @@ class Info(commands.Cog):
             embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png')
             embed.set_image(url = user.avatar_url)
             embed.set_footer(text=f"Requested by {user.name}", icon_url=f'{user.avatar_url}')
-            "embed.timestamp = datetime.datetime.utcnow()"
+            embed.timestamp = datetime.datetime.utcnow()
             await ctx.send(embed=embed)
         else:
             user = ctx.author
@@ -90,7 +89,7 @@ class Info(commands.Cog):
             embed.add_field(name='User: {}'.format(user.name), value='Avatar:', inline=True)
             embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/516953091656908810/519072295080296469/Joker.png')
             embed.set_footer(text=f"Requested by {user.name}", icon_url=f"{user.avatar_url}")
-            "embed.timestamp = datetime.datetime.utcnow()"
+            embed.timestamp = datetime.datetime.utcnow()
             embed.set_image(url = user.avatar_url)
             await ctx.send(embed=embed)
 
@@ -132,7 +131,7 @@ class Info(commands.Cog):
             noun = data['noun']['syn']
             noun2 = ", ".join(noun)
             embed = discord.Embed(title=f"Here's the synonym(s) for {word} that I could find...", description=noun2, color=ctx.author.color)
-            "embed.timestamp = datetime.datetime.utcnow()"
+            embed.timestamp = datetime.datetime.utcnow()
             embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
             await ctx.send(embed=embed)
 
@@ -208,7 +207,7 @@ class Info(commands.Cog):
                 embed.add_field(name="Humidity", value=f"{data['main']['humidity']}%")
                 embed.add_field(name="Cloudliness", value=f"{data['clouds']['all']}%")
                 embed.add_field(name="Last Updated", value=updated)
-                """embed.timestamp = datetime.datetime.utcnow()"""
+                embed.timestamp = datetime.datetime.utcnow()
                 embed.set_footer(text=f"Powered by OpenWeather API, Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
                 await ctx.send(embed=embed)
 
