@@ -14,7 +14,6 @@ import os
 import functools
 import time
 import datetime
-from datetime import datetime
 import sqlite3
 import aiohttp
 from io import BytesIO
@@ -107,6 +106,7 @@ class Secret(commands.Cog):
                     embed = discord.Embed(title=name, description=" ", color=color)
                     embed.url = data['url']
                     image = data['url']
+                    embed.timestamp = datetime.datetime.utcnow()
                     embed.set_image(url=image)
                     embed.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
                     await ctx.send(embed=embed)
@@ -133,6 +133,7 @@ class Secret(commands.Cog):
                     embed.url = data['message']
                     image = data['message']
                     embed.set_image(url=image)
+                    embed.timestamp = datetime.datetime.utcnow()
                     embed.set_footer(text=f"Requested By {ctx.author.name}", icon_url=ctx.author.avatar_url)
                     await ctx.send(embed=embed)
                 elif name == "help":
