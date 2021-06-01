@@ -15,6 +15,7 @@ import functools
 import time
 import datetime
 from datetime import date
+from datetime import datetime as datetime1
 import sqlite3
 from io import BytesIO
 import requests
@@ -328,7 +329,7 @@ class Entertainment(commands.Cog):
             else:
                 web = x['webChannel']['name']
             dvdcountry = x['dvdCountry']
-            lastupdated = datetime.fromtimestamp(x['updated']).strftime("%d-%m-%Y %I:%M %p")
+            lastupdated = datetime1.fromtimestamp(x['updated']).strftime("%d-%m-%Y %I:%M %p")
             embed = discord.Embed(title=name, description=" ", color=ctx.author.color)
             if x['image'] != None:
                 embed.set_thumbnail(url=x['image']['original'])
