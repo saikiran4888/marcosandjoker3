@@ -14,6 +14,7 @@ import os
 import functools
 import time
 import datetime
+from datetime import datetime as datetime1
 import sqlite3
 from io import BytesIO
 import requests
@@ -187,9 +188,9 @@ class Info(commands.Cog):
                 sunriseraw = data['sys']['sunrise']
                 sunsetraw = data['sys']['sunset']
                 updatedraw =  data['dt']
-                updated = datetime.fromtimestamp(updatedraw).strftime("%d-%m-%Y %I:%M %p")
-                sunrise = datetime.fromtimestamp(sunriseraw).strftime("%d-%m-%Y %I:%M %p")
-                sunset = datetime.fromtimestamp(sunsetraw).strftime("%d-%m-%Y %I:%M %p")
+                updated = datetime1fromtimestamp(updatedraw).strftime("%d-%m-%Y %I:%M %p")
+                sunrise = datetime1.fromtimestamp(sunriseraw).strftime("%d-%m-%Y %I:%M %p")
+                sunset = datetime1.fromtimestamp(sunsetraw).strftime("%d-%m-%Y %I:%M %p")
                 embed = discord.Embed(title="Weather Forecast...", description="Here's your weather forecast that you've requested", color=discord.Colour.blue())
                 embed.set_thumbnail(url=f"http://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png")
                 embed.add_field(name="City", value=data['name'])
