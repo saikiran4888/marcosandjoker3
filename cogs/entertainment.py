@@ -484,9 +484,9 @@ class Entertainment(commands.Cog):
             else:
                 gender = "Transgender"
             bdate = x['birthday']
-            bday = bdate[8:]
+            bday = int(bdate[8:])
             bmonth = int(bdate[5:7])
-            byear = bdate[:4]
+            byear = int(bdate[:4])
             age = today.year - byear - ((today.month, today.day) < (bmonth, bday))
             age1 = f'(Age {today.year - byear - ((today.month, today.day) < (bmonth, bday))})'
             if x['deathday'] != None:
