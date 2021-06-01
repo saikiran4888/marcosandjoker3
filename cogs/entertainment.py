@@ -14,7 +14,6 @@ import os
 import functools
 import time
 import datetime
-from datetime import datetime
 from datetime import date
 import sqlite3
 from io import BytesIO
@@ -109,6 +108,7 @@ class Entertainment(commands.Cog):
                 embed.add_field(name = "__Production__", value = x["Production"])
                 embed.add_field(name = "__Website__", value = x["Website"])
                 embed.add_field(name = "__Type__", value = x["Type"])
+                embed.timestamp = datetime.datetime.utcnow()
                 embed.set_footer(text = "Information from the OMDB API")
                 await ctx.trigger_typing()
                 await ctx.send(embed=embed)
@@ -145,6 +145,7 @@ class Entertainment(commands.Cog):
             embed.url = "https://open.spotify.com/track/{}".format(activity.track_id)
             embed.color = activity.color
             embed.set_footer(text="{} - is currently playing this song".format(ctx.author))
+            embed.timestamp = datetime.datetime.utcnow()
             messaage = await ctx.send(embed=embed)
             await messaage.add_reaction(emoji="👍")
             await asyncio.sleep(2)
@@ -353,6 +354,7 @@ class Entertainment(commands.Cog):
             embed.add_field(name="Aliases", value=akas)
             embed.add_field(name="Official Site", value=f"[Click here to redirect to official site]({officialsite})")
             embed.add_field(name="Last Updated", value=lastupdated)
+            embed.timestamp = datetime.datetime.utcnow()
             embed.set_footer(text=f"Information provided by TVmaze API. Requested By | {ctx.author.name}", icon_url=ctx.author.avatar_url)
             await ctx.send(embed=embed)
 
@@ -459,6 +461,7 @@ class Entertainment(commands.Cog):
                 embed.add_field(name="Network", value=network)
                 embed.add_field(name="Country", value=networkcountry)
                 embed.add_field(name="Web Channel", value=web)
+                embed.timestamp = datetime.datetime.utcnow()
                 if x['image'] != None:
                     embed.set_thumbnail(url=x['image']['medium'])
                 embed.set_footer(text=f"Information provided by TVmaze API. Requested By | {ctx.author.name}", icon_url=ctx.author.avatar_url)
@@ -536,6 +539,7 @@ class Entertainment(commands.Cog):
             if x["homepage"] != None:
                 embed.add_field(name="Website", value=f"[Redirect to website]({x['homepage']})")
             embed.set_image(url=image)
+            embed.timestamp = datetime.datetime.utcnow()
             await ctx.send(embed=embed)
         except IndexError as e:
             await ctx.send(f"Oh No! I can't find any info about **{name}**. Maybe it's not in the database or check the spelling and try again")
