@@ -15,6 +15,7 @@ import functools
 import time
 import datetime
 from datetime import datetime
+from datetime import date
 import sqlite3
 from io import BytesIO
 import requests
@@ -469,6 +470,7 @@ class Entertainment(commands.Cog):
     @commands.command(pass_context=True)
     async def movieartist(self, ctx, *, name:str=None):
         try:
+            today = date.today()
             url = f"https://api.themoviedb.org/3/search/person?api_key=88dfba32d9f83e4a66810ca0ed6e7806&query={name}&page=1"
             data = requests.get(url).json()
             personId = data['results'][0]['id']
@@ -485,6 +487,16 @@ class Entertainment(commands.Cog):
             bday = bdate[8:]
             bmonth = int(bdate[5:7])
             byear = bdate[:4]
+            age = today.year - byear - ((today.month, today.day) < (bmonth, bday))
+            age1 = f'(Age {today.year - byear - ((today.month, today.day) < (bmonth, bday))})'
+            if x['deathday'] != None:
+                ddate = x['deathday']
+                dday = int(ddate[8:])
+                dmonth = int(ddate[5:7])
+                dyear = int(ddate[:4])
+                dead = today.year - dyear - ((today.month, today.day) < (dmonth, dday))
+                aged = int(age) - int(dead)
+                age1 = ""
             pob = x['place_of_birth']
             known_for = x['known_for_department']
             biography = x['biography']
