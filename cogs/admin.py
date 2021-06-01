@@ -14,7 +14,6 @@ import os
 import functools
 import time
 import datetime
-from datetime import datetime
 import sqlite3
 from io import BytesIO
 import requests
@@ -66,6 +65,7 @@ class Admin(commands.Cog):
             for reaction in reactions[:len(options)]:
                 await react_message.add_reaction(reaction)
             embed.set_footer(text='poll ID: {}'.format(react_message.id))
+            embed.timestamp = datetime.datetime.utcnow()
             await react_message.edit(embed=embed)
 
     @commands.command(pass_Context=True)
@@ -135,6 +135,7 @@ class Admin(commands.Cog):
         embed.add_field(name="Time of creation", value=role.created_at.strftime("%d-%m-%Y %H:%M:%S"), inline=False)
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
+        embed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=embed)
 
 
