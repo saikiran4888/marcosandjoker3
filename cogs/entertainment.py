@@ -522,14 +522,14 @@ class Entertainment(commands.Cog):
             embed = discord.Embed(name="Artist Data", description=" ", color=ctx.author.color)
             embed.add_field(name="Name", value=name)
             embed.add_field(name="Gender", value=gender)
-            embed.add_field(name="Birth", value=f"{bday} {months[bmonth-1]} {byear}")
+            embed.add_field(name="Birth", value=f"{bday} {months[bmonth-1]} {byear} {age1}")
             embed.add_field(name="Place of Birth", value=pob)
             if x['deathday'] != None:
                 ddate = x['deathday']
                 dday = ddate[8:]
                 dmonth = int(ddate[5:7])
                 dyear = ddate[:4]
-                embed.add_field(name="Death", value=f"{dday} {months[dmonth-1]} {dyear}")
+                embed.add_field(name="Death", value=f"{dday} {months[dmonth-1]} {dyear} (Aged {aged})")
             embed.add_field(name="Known for Department", value=known_for)
             for chunk in [biography[i:i+1024] for i in range(0, len(biography), 1024)]:
                 embed.add_field(name="Biography", value=chunk)
