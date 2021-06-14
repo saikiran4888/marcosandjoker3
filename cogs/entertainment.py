@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from discord.ext.commands import bot, has_permissions, CheckFailure
+from discord import Spotify
 import asyncio
 import colorsys
 import random
@@ -120,66 +121,62 @@ class Entertainment(commands.Cog):
     async def spotify(self, ctx):
         local_tz = pytz.timezone('Asia/Calcutta')
         user = ctx.author
-        activity = user.activity
-        if activity is None:
-            await ctx.send("{} is not playing anything on spotify!".format(user.display_name))
-            return
-        if activity.type == discord.ActivityType.listening and activity.name == "Spotify":
-            client_id = "3de4994a8c99485ab153804b7cfa6ff4"
-            client_secret = "b0c797bb009346e8b77608eadbfb3545"
-            client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
-            sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-            result = sp.track(activity.track_id)
-            release_date = result['album']['release_date']
-            explicit = result['explicit']
-            embed = discord.Embed(description="**React to :thumbsup: in 20 seconds to get the song's lyrics into your DMs**")
-            embed.add_field(name="Artist(s)", value=", ".join(activity.artists))
-            embed.add_field(name="Album", value=activity.album)
-            embed.add_field(name="Track ID", value=activity.track_id)
-            embed.add_field(name="Release date", value = release_date)
-            embed.add_field(name="Explicit", value= explicit)
-            embed.add_field(name="Duration", value=str(activity.duration)[3:].split(".", 1)[0])
-            embed.add_field(name="Song started at", value=activity.start.astimezone(local_tz).strftime("%d-%m-%Y %I:%M %p %Z"))
-            embed.add_field(name="Song ending at", value=activity.end.astimezone(local_tz).strftime("%d-%m-%Y %I:%M %p %Z"))
-            embed.title = "**{}**".format(activity.title)
-            embed.set_thumbnail(url=activity.album_cover_url)
-            embed.url = "https://open.spotify.com/track/{}".format(activity.track_id)
-            embed.color = activity.color
-            embed.set_footer(text="{} - is currently playing this song".format(ctx.author))
-            embed.timestamp = datetime.datetime.utcnow()
-            messaage = await ctx.send(embed=embed)
-            await messaage.add_reaction(emoji="👍")
-            await asyncio.sleep(2)
-            artist = ", ".join(activity.artists)
-            try:
-                reaction, user = await self.client.wait_for('reaction_add', check=lambda reaction, user: reaction.emoji == '👍', timeout=20)
-                con = f"{activity.title} {artist}"
-                address = f"https://some-random-api.ml/lyrics?title={con}"
-                data = requests.get(address).json()
-                if 'error' in data:
-                    await ctx.send(f"**{data['error']}**")
-                elif data['author'] in activity.artist:
-                    lyrics = data['lyrics']
-                    if len(lyrics) < 2048:
-                        for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                            embed = discord.Embed(title=data['author'], description=f"{chunk} \n [Source website]({data['links']['genius']})", color=0XFF69BF)
-                            embed.set_author(name=data['title'], url=data['thumbnail']['genius'])
-                            embed.set_thumbnail(url=data['thumbnail']['genius'])
-                            embed.timestamp = datetime.datetime.utcnow()
-                            await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
-                            await ctx.author.send(embed=embed)
-
+        for activity in user.activities:
+            if isinstance(activity, Spotify):
+                client_id = "3de4994a8c99485ab153804b7cfa6ff4"
+                client_secret = "b0c797bb009346e8b77608eadbfb3545"
+                client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+                sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+                result = sp.track(activity.track_id)
+                release_date = result['album']['release_date']
+                explicit = result['explicit']
+                embed = discord.Embed(description="**React to :thumbsup: in 20 seconds to get the song's lyrics into your DMs**")
+                embed.add_field(name="Artist(s)", value=", ".join(activity.artists))
+                embed.add_field(name="Album", value=activity.album)
+                embed.add_field(name="Track ID", value=activity.track_id)
+                embed.add_field(name="Release date", value = release_date)
+                embed.add_field(name="Explicit", value= explicit)
+                embed.add_field(name="Duration", value=str(activity.duration)[3:].split(".", 1)[0])
+                embed.add_field(name="Song started at", value=activity.start.astimezone(local_tz).strftime("%d-%m-%Y %I:%M %p %Z"))
+                embed.add_field(name="Song ending at", value=activity.end.astimezone(local_tz).strftime("%d-%m-%Y %I:%M %p %Z"))
+                embed.title = "**{}**".format(activity.title)
+                embed.set_thumbnail(url=activity.album_cover_url)
+                embed.url = "https://open.spotify.com/track/{}".format(activity.track_id)
+                embed.color = activity.color
+                embed.set_footer(text="{} - is currently playing this song".format(ctx.author))
+                messaage = await ctx.send(embed=embed)
+                await messaage.add_reaction(emoji="👍")
+                await asyncio.sleep(2)
+                artist = ", ".join(activity.artists)
+                try:
+                    reaction, user = await self.client.wait_for('reaction_add', check=lambda reaction, user: reaction.emoji == '👍', timeout=20)
+                    con = f"{activity.title} {artist}"
+                    address = f"https://some-random-api.ml/lyrics?title={con}"
+                    data = requests.get(address).json()
+                    if 'error' in data:
+                        await ctx.send(f"**{data['error']}**")
+                    elif data['author'] in activity.artist:
+                        lyrics = data['lyrics']
+                        if len(lyrics) < 2048:
+                            for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
+                                embed = discord.Embed(title=data['author'], description=f"{chunk} \n [Source website]({data['links']['genius']})", color=0XFF69BF)
+                                embed.set_author(name=data['title'], url=data['thumbnail']['genius'])
+                                embed.set_thumbnail(url=data['thumbnail']['genius'])
+                                embed.timestamp = datetime.datetime.utcnow()
+                                await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
+                                await ctx.author.send(embed=embed)
+                            else:
+                                await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
+                                for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
+                                    await ctx.author.send(chunk)
                     else:
-                        await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
-                        for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                            await ctx.author.send(chunk)
-                else:
-                    await ctx.send("**Sorry, I could'nt find the lyrics of this song...**")
-            except asyncio.TimeoutError:
-                return    
+                        await ctx.send("**Sorry, I could'nt find the lyrics of this song...**")
+                except asyncio.TimeoutError:
+                    return
         else:
             await ctx.send("**Wait, You aren't listening any on spotify...**")
-            return                                   
+            return
+
     
     @commands.command(pass_context=True)
     async def lyrics(self, ctx, *, track:str=None):
