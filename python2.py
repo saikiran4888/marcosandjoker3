@@ -87,7 +87,7 @@ async def jasmine(ctx):
         "You're fun, smart, crazy, soft, joyful, cute, gentle, fragile,naughty, confident, competetive, amazing, loud, stunning, beautiful, energetic, badass, bold sometimes annoying in a sweet way and in a single sentence, you're a 'Wholesome package!' lol.'",
         "You're an angel at times, but you can turn into a devil if someone screws with you lol.",
         "Your love towards someone is a bounty as well as your hate towards someone is a curse. And I've got to feel them both lol and trust me that's not a good curse.",] 
-        embed = discord.Embed(title=':heart: Jasmine :heart:', description=f"{secrets.choice(matter)} \n\nP.S. Ik these words and me cant't help you get you out from situation directly. But I hope that when you feel down, these words and your smile like in the below pic may help you to restore your courage and can make you cope with the situation. And no matter what, don't lose that goddamn cute smile from you that's something that make you spl. I Love You :heart: always.", color=ctx.author.color)
+        embed = discord.Embed(title=':heart: Jasmine :heart:', description=f"{secrets.choice(matter)} \n\nP.S. Ik these words and me cant't help you get you out from situation directly. But I hope that when you feel down, these words and your smile like in the below pic may help you to restore your courage and can make you cope with the situation. And no matter what, don't lose that goddamn cute smile from you that's something that make you spl. I Love You :heart: always and forever.", color=ctx.author.color)
         embed.set_image(url=secrets.choice(image_urls))
         embed.timestamp = datetime1.utcnow()
         embed.set_footer(text="Made for Jasmine.", icon_url=ctx.author.avatar_url)
