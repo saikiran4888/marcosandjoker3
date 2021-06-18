@@ -97,8 +97,7 @@ async def jasmine(ctx):
         "Your eyes. Gawwd... That's another thing I like in you. They are huge yet beautiful and cute. Fill them with happy tears, Not with sad tears.",
         "You have unique set of preferences lol. Like you know, I haven't met any other girl who likes the horror, gore, scary movies and also romantic Anime lmao. That uniqueness is what makes you different from others.",
         "Tbh, one should be grateful enternally to have you by their side.",
-        "You know Aladdin movie from Disney? The name of the princess is Jasmine too as well as yours. Coincidence? I think not. Maybe your parents thought you will be a princess when you were born and guess what they're not wrong. Idk about others but you are a princess to me. And you are as beautiful as the Disney's Princess Jasmine.",
-        ""]
+        "You know Aladdin movie from Disney? The name of the princess is Jasmine too as well as yours. Coincidence? I think not. Maybe your parents thought you will be a princess when you were born and guess what they're not wrong. Idk about others but you are a princess to me. And you are as beautiful as the Disney's Princess Jasmine."]
         embed = discord.Embed(title=':heart: Jasmine :heart:', description=f"{secrets.choice(matter)} \n\nP.S. Ik these words and me cant't help you get you out from situation directly. But I hope that when you feel down, these words and your smile like in the below pic may help you to restore your courage and can make you cope with the situation. And no matter what, don't lose that goddamn cute smile from you that's something that make you spl.", color=ctx.author.color)
         embed.set_image(url=secrets.choice(image_urls))
         embed.timestamp = datetime1.utcnow()
