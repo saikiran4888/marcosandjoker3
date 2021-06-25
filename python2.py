@@ -68,7 +68,7 @@ async def meme2(ctx):
             
 @client.command(pass_context=True)
 async def jasmine(ctx):
-    if ctx.author.id == 500047002395213855 | 815085146796720148:
+    if ctx.author.id == 500047002395213855 or 815085146796720148:
         image_urls = ['https://media.discordapp.net/attachments/602215920257073303/853499332652957726/Screenshot_2020-11-29-02-20-32-703_com.instagram.android.jpg',
         'https://media.discordapp.net/attachments/602215920257073303/853499233327775754/IMG_20210530_031612.jpg',
         'https://media.discordapp.net/attachments/602215920257073303/853499022822866944/117795822_334989120959570_3844434461125443401_n.jpg',
