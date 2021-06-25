@@ -165,17 +165,15 @@ class Entertainment(commands.Cog):
                                 embed.timestamp = datetime.datetime.utcnow()
                                 await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
                                 await ctx.author.send(embed=embed)
-                            else:
-                                await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
-                                for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
-                                    await ctx.author.send(chunk)
+                        else:
+                            await ctx.send(f"**{ctx.author.name},** The lyrics of **{data['author']} - {data['title']}** is sent to your DM please check your DM's...")
+                            for chunk in [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]:
+                                await ctx.author.send(chunk)
                     else:
                         await ctx.send("**Sorry, I could'nt find the lyrics of this song...**")
                 except asyncio.TimeoutError:
                     return
-        else:
-            await ctx.send("**Wait, You aren't listening any on spotify...**")
-            return
+
 
     
     @commands.command(pass_context=True)
