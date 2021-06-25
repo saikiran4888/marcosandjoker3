@@ -69,15 +69,12 @@ async def meme2(ctx):
 @client.command(pass_context=True)
 async def jasmine(ctx):
     if ctx.author.id == 500047002395213855 or 815085146796720148:
-        image_urls = ['https://media.discordapp.net/attachments/602215920257073303/853499332652957726/Screenshot_2020-11-29-02-20-32-703_com.instagram.android.jpg',
-        'https://media.discordapp.net/attachments/602215920257073303/853499233327775754/IMG_20210530_031612.jpg',
-        'https://media.discordapp.net/attachments/602215920257073303/853499022822866944/117795822_334989120959570_3844434461125443401_n.jpg',
-        'https://media.discordapp.net/attachments/602215920257073303/853499023075966986/162786008_568694504089596_1713524929316943303_n.jpg',
-        'https://media.discordapp.net/attachments/602215920257073303/853499022433845248/131302316_126559875945682_3011887340275736852_n.jpg',
-        'https://media.discordapp.net/attachments/602215920257073303/853498483859259432/insta_2481415130999694478.png',
-        'https://media.discordapp.net/attachments/602215920257073303/853498482731384842/insta_2556048203032302528_12642553284.png',
-        'https://media.discordapp.net/attachments/602215920257073303/853499022433845248/131302316_126559875945682_3011887340275736852_n.jpg',
-        'https://media.discordapp.net/attachments/602215920257073303/853499022026342400/106898211_1372065732986874_7527788480294741112_n.jpg',
+        image_urls = ['https://media.discordapp.net/attachments/520660764646834176/856923642939572224/75817ecd-dc65-456e-8724-bf0b6bbd7472.gif',
+        'https://media.discordapp.net/attachments/520660764646834176/856923658110631946/0df76510-1b11-442a-8d6e-450f7cb58d38.gif',
+        'https://media.discordapp.net/attachments/520660764646834176/856923673679757372/19c8e4cd-aa54-4526-bd91-00654e82bdac.gif',
+        'https://media.discordapp.net/attachments/520660764646834176/856923695200468992/f8759d06-a5b7-46ec-9743-3fef41576210.gif',
+        'https://media.discordapp.net/attachments/520660764646834176/856923753485303828/3ae92e01-4409-41f8-bcb0-11e2fa7cf129.gif',
+        'https://media.discordapp.net/attachments/520660764646834176/856923781615321158/4b3125ee-e143-4e93-9b57-aab8854ceb4f.gif',
         'https://images-ext-2.discordapp.net/external/EgC7ZM6UebVuefPbp9QndnX_o6DWU_QtdOWEPjDkyYU/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/500047002395213855/b94f7e28fddd2d3b5994a12796ec6e43.webp',
         'https://media.discordapp.net/attachments/520660764646834176/855087366741164062/Screenshot_2021-06-17-19-40-14-270_com.instagram.android.jpg',
         'https://media.discordapp.net/attachments/520660764646834176/855087367034241084/Screenshot_2021-06-17-19-40-08-912_com.instagram.android.jpg',
@@ -86,7 +83,7 @@ async def jasmine(ctx):
         'https://media.discordapp.net/attachments/520660764646834176/855087368146780161/Screenshot_2021-06-17-19-39-11-575_com.instagram.android.jpg',
         'https://media.discordapp.net/attachments/520660764646834176/855087368432517150/Screenshot_2021-06-17-19-39-05-094_com.instagram.android.jpg',
         'https://media.discordapp.net/attachments/520660764646834176/855087368717860864/Screenshot_2021-06-17-19-37-01-172_com.instagram.android.jpg']
-
+        
         matter = ["You're the person who has a big heart. Others might hate her saying that she's 'weird' and all. And I've got a word for them that is.... 'Fuck'em all' they don't understand that they're missing a fortune.",
         "You're the person that someone needs to talk when they're feeling lost. You're honest and trustworthy person. You've got every quality even more to find in a friend.",
         "You're that type of person who's shy at first but opens up eventually once they get to know you. It's like you'll become insperable to them. I think that's something we both got in common.",
