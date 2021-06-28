@@ -93,8 +93,8 @@ class Covid(commands.Cog):
         active_cases = (data['active']/data['cases'])*100
         recovered_cases = (data['recovered']/data['cases'])*100
         death_percentage = (data['deaths']/data['cases'])*100
-        lastupdatedraw = data['updated']
-        lastupdated = datetime1.fromtimestamp(lastupdatedraw).strftime("%d-%m-%Y")
+        """lastupdatedraw = data['updated']
+        lastupdated = datetime1.fromtimestamp(lastupdatedraw).strftime("%d-%m-%Y")"""
         embed.add_field(name="Continent", value= data['continent'])
         embed.add_field(name="Population", value=format_number(data['population'], locale="en_IN"))
         embed.add_field(name="Confirmed Cases So Far", value= format_number(data['cases'], locale='en_IN'))
@@ -116,7 +116,7 @@ class Covid(commands.Cog):
         embed.set_thumbnail(url=data['countryInfo']['flag'])
         embed.add_field(name="Tests Done So Far", value= format_number(data['tests'], locale='en_IN'))
         embed.add_field(name="Tests Done Per Million", value= format_number(data['testsPerOneMillion'], locale='en_IN'))
-        embed.add_field(name="Last Updated", value= lastupdated)
+        """embed.add_field(name="Last Updated", value= lastupdated)"""
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text=f"Requested by {ctx.message.author}", icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
