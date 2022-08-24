@@ -67,42 +67,6 @@ async def meme2(ctx):
             
             
 @client.command(pass_context=True)
-async def jasmine(ctx):
-    if ctx.author.id == 500047002395213855 or 815085146796720148:
-        image_urls = ['https://media.discordapp.net/attachments/520660764646834176/856923642939572224/75817ecd-dc65-456e-8724-bf0b6bbd7472.gif',
-        'https://media.discordapp.net/attachments/520660764646834176/856923658110631946/0df76510-1b11-442a-8d6e-450f7cb58d38.gif',
-        'https://media.discordapp.net/attachments/520660764646834176/856923673679757372/19c8e4cd-aa54-4526-bd91-00654e82bdac.gif',
-        'https://media.discordapp.net/attachments/520660764646834176/856923695200468992/f8759d06-a5b7-46ec-9743-3fef41576210.gif',
-        'https://media.discordapp.net/attachments/520660764646834176/856923753485303828/3ae92e01-4409-41f8-bcb0-11e2fa7cf129.gif',
-        'https://media.discordapp.net/attachments/520660764646834176/856923781615321158/4b3125ee-e143-4e93-9b57-aab8854ceb4f.gif',
-        'https://images-ext-2.discordapp.net/external/EgC7ZM6UebVuefPbp9QndnX_o6DWU_QtdOWEPjDkyYU/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/500047002395213855/b94f7e28fddd2d3b5994a12796ec6e43.webp',
-        'https://media.discordapp.net/attachments/520660764646834176/855087366741164062/Screenshot_2021-06-17-19-40-14-270_com.instagram.android.jpg',
-        'https://media.discordapp.net/attachments/520660764646834176/855087367034241084/Screenshot_2021-06-17-19-40-08-912_com.instagram.android.jpg',
-        'https://media.discordapp.net/attachments/520660764646834176/855087367462453248/Screenshot_2021-06-17-19-39-48-411_com.instagram.android.jpg',
-        'https://media.discordapp.net/attachments/520660764646834176/855087367844659270/Screenshot_2021-06-17-19-39-17-840_com.instagram.android.jpg',
-        'https://media.discordapp.net/attachments/520660764646834176/855087368146780161/Screenshot_2021-06-17-19-39-11-575_com.instagram.android.jpg',
-        'https://media.discordapp.net/attachments/520660764646834176/855087368432517150/Screenshot_2021-06-17-19-39-05-094_com.instagram.android.jpg',
-        'https://media.discordapp.net/attachments/520660764646834176/855087368717860864/Screenshot_2021-06-17-19-37-01-172_com.instagram.android.jpg']
-        
-        matter = ["You're the person who has a big heart. Others might hate her saying that she's 'weird' and all. And I've got a word for them that is.... 'Fuck'em all' they don't understand that they're missing a fortune.",
-        "You're the person that someone needs to talk when they're feeling lost. You're honest and trustworthy person. You've got every quality even more to find in a friend.",
-        "You're that type of person who's shy at first but opens up eventually once they get to know you. It's like you'll become insperable to them. I think that's something we both got in common.",
-        "You always try to have a laugh and be the best person around no matter how many problems you face and how many worse situation you are. And you try to make others feel good when they're off despite you're in a quicksand of worse situations.",
-        "You're fun, smart, crazy, soft, joyful, cute, gentle, fragile,naughty, confident, competetive, amazing, loud, stunning, beautiful, energetic, badass, bold sometimes annoying in a sweet way and in a single sentence, you're a 'Wholesome package!' lol.'",
-        "You're an angel at times, but you can turn into a devil if someone screws with you lol.",
-        "Your love towards someone is a bounty as well as your hate towards someone is a curse. And I've got to feel them both lol and trust me that's not a good curse.",
-        "Your eyes. Gawwd... That's another thing I like in you. They are huge yet beautiful and cute. Fill them with happy tears, Not with sad tears.",
-        "You have unique set of preferences lol. Like you know, I haven't met any other girl who likes the horror, gore, scary movies and also romantic Anime lmao. That uniqueness is what makes you different from others.",
-        "Tbh, one should be grateful enternally to have you by their side.",
-        "You know Aladdin movie from Disney? The name of the princess is Jasmine too as well as yours. Coincidence? I think not. Maybe your parents thought you will be a princess when you were born and guess what they're not wrong. Idk about others but you are a princess to me. And you are as beautiful as the Disney's Princess Jasmine."]
-        embed = discord.Embed(title=':heart: Jasmine :heart:', description=f"{secrets.choice(matter)} \n\nP.S. Ik these words and me cant't help you get you out from situation directly. But I hope that when you feel down, these words and your smile like in the below pic may help you to restore your courage and can make you cope with the situation. And no matter what, don't lose that goddamn cute smile from you that's something that make you spl.", color=ctx.author.color)
-        embed.set_image(url=secrets.choice(image_urls))
-        embed.timestamp = datetime1.utcnow()
-        embed.set_footer(text="Made for Jasmine.", icon_url=ctx.author.avatar_url)
-        await ctx.send(embed=embed)
-    else:
-        await ctx.send("You're not Jasmine! This command is made only for Jasmine!")    
-@client.command(pass_context=True)
 async def unload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')
     await ctx.send(f'{extension} extension is unloaded.')
