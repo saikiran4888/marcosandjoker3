@@ -1,0 +1,1 @@
+This is cogs section of the discord bot "The Laughing Clown"
